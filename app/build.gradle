@@ -1,0 +1,195 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'kotlin-allopen'
+
+allOpen {
+
+    annotation 'com.github.nothing2512.football_v2.testing.OpenClass'
+}
+
+android {
+    compileSdkVersion build_versions.target_sdk
+    buildToolsVersion build_versions.build_tools
+    defaultConfig {
+        applicationId "com.github.nothing2512.football_v2"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+    androidExtensions {
+        experimental true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
+    }
+    lintOptions {
+        lintConfig rootProject.file('lint.xml')
+    }
+}
+
+dependencies {
+
+    implementation deps.support.app_compat
+    implementation deps.support.recyclerview
+    implementation deps.support.cardview
+    implementation deps.support.design
+    implementation deps.support.core_ktx
+    implementation deps.support.paging
+    implementation deps.support.annotations
+    implementation deps.support.legacy
+    implementation deps.support.design
+    implementation deps.support.constraint_layout
+
+    implementation deps.coroutine.core
+    implementation deps.coroutine.android
+
+    implementation deps.room.runtime
+
+    implementation deps.lifecycle.viewmodel_ktx
+    implementation deps.lifecycle.livedata_ktx
+    implementation deps.lifecycle.runtime
+    implementation deps.lifecycle.java8
+
+    implementation deps.retrofit.runtime
+    implementation deps.retrofit.gson
+
+    implementation deps.kotlin.stdlib
+
+    implementation deps.timber
+    implementation deps.shimmer
+
+    implementation deps.espresso.idling
+
+    implementation deps.coil
+
+    implementation deps.koin.core
+    implementation deps.koin.ext
+    implementation deps.koin.viewmodel
+    implementation deps.koin.scope
+    implementation deps.koin.androidx
+
+    kapt deps.room.compiler
+    kapt deps.lifecycle.compiler
+
+    testImplementation deps.coroutine.test
+    testImplementation deps.junit
+    testImplementation deps.mock_web_server
+    testImplementation deps.arch_core.testing
+    testImplementation deps.mockk.test
+    testImplementation deps.test.hamcrest
+    testImplementation deps.koin.test
+
+    androidTestImplementation deps.junit
+
+    androidTestImplementation deps.support.app_compat
+    androidTestImplementation deps.support.recyclerview
+    androidTestImplementation deps.support.cardview
+    androidTestImplementation deps.support.design
+
+    androidTestImplementation deps.espresso.core
+    androidTestImplementation deps.espresso.contrib
+    androidTestImplementation deps.espresso.intents
+
+    androidTestImplementation deps.arch_core.testing
+    androidTestImplementation (deps.mockk.instrumented) {
+        exclude module: deps.objenesis.module
+    }
+    androidTestImplementation deps.objenesis.main
+
+    androidTestImplementation deps.test.junit
+    androidTestImplementation deps.test.core
+    androidTestImplementation deps.test.rules
+}
+
+addRepos(repositories)
+
+project.tasks.whenTaskAdded {
+    if (it.name == "testReleaseUnitTest") {
+        it.enabled = false
+    }
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { details ->
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-runtime')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-testing')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-rxjava2')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-common')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-migration')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.room'
+                && !details.requested.name.contains('room-compiler')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.paging'
+                && !details.requested.name.contains('paging-runtime-ktx')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.paging'
+                && !details.requested.name.contains('paging-runtime')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.arch.core'
+                && !details.requested.name.contains('core-runtime')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.lifecycle'
+                && !details.requested.name.contains('livecycle-livedata')) {
+            details.useVersion deps.versions.detail
+        }
+        if (details.requested.group == 'androidx.lifecycle'
+                && !details.requested.name.contains('livecycle-livedata-core')) {
+            details.useVersion deps.versions.detail
+        }
+    }
+}
+

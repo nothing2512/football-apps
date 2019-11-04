@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="leagueData"
+            type="com.github.nothing2512.football_v2.binding.LeagueBinding" />
+
+        <variable
+            name="viewModel"
+            type="com.github.nothing2512.football_v2.ui.league.LeagueViewModel" />
+
+        <variable
+            name="activity"
+            type="androidx.fragment.app.FragmentActivity" />
+
+        <import
+            alias="constants"
+            type="com.github.nothing2512.football_v2.utils.Constants" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/background"
+            tools:context=".ui.league.activity.LeagueActivity">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/leagueShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:shimmer_duration="1000">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imsBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_background_height"
+                        android:scaleType="centerCrop"
+                        android:scaleX="-1"
+                        android:src="@drawable/background_gradient"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btsBack"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:onClick="@{() -> leagueData.onBackPress.invoke()}"
+                        android:padding="@dimen/spacing"
+                        android:src="@drawable/left_arrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/scard"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/card_spacing_small"
+                        android:layout_marginTop="@dimen/card_spacing_big"
+                        android:layout_marginEnd="@dimen/card_spacing_small"
+                        android:layout_marginBottom="@dimen/card_spacing_small"
+                        android:paddingTop="@dimen/spacing"
+                        app:cardBackgroundColor="@color/main_grey"
+                        app:cardCornerRadius="@dimen/spacing"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <View
+                                android:id="@+id/stitle"
+                                android:layout_width="@dimen/league_title_placeholder_width"
+                                android:layout_height="@dimen/league_title_placeholder_height"
+                                android:layout_marginTop="@dimen/spacing"
+                                android:background="@color/main_grey"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <View
+                                android:id="@+id/sformedYear"
+                                android:layout_width="@dimen/league_year_place_holder_width"
+                                android:layout_height="@dimen/league_year_place_holder_"
+                                android:layout_marginBottom="@dimen/spacing"
+                                android:background="@color/main_grey"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/stitle" />
+
+                            <View
+                                android:id="@+id/imsBadge"
+                                android:layout_width="@dimen/badge_size"
+                                android:layout_height="@dimen/badge_size"
+                                android:layout_marginStart="@dimen/double_spacing"
+                                android:background="@color/main_grey"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/sformedYear"
+                                tools:ignore="ContentDescription" />
+
+                            <TableLayout
+                                android:id="@+id/stable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing"
+                                android:layout_marginTop="@dimen/spacing"
+                                android:padding="@dimen/spacing"
+                                app:layout_constraintBottom_toBottomOf="@id/imsBadge"
+                                app:layout_constraintStart_toEndOf="@id/imsBadge"
+                                app:layout_constraintTop_toTopOf="@id/imsBadge">
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:layout_marginEnd="@dimen/spacing"
+                                        android:textColor="@android:color/black"
+                                        tools:ignore="TooDeepLayout" />
+
+                                    <View
+                                        android:layout_width="@dimen/content_placeholder_width"
+                                        android:layout_height="@dimen/content_placeholder_height"
+                                        android:background="@color/main_grey"
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView android:textColor="@android:color/black" />
+
+                                    <View
+                                        android:layout_width="@dimen/content_placeholder_width"
+                                        android:layout_height="@dimen/content_placeholder_height"
+                                        android:background="@color/main_grey"
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView android:textColor="@android:color/black" />
+
+                                    <View
+                                        android:layout_width="@dimen/content_placeholder_width"
+                                        android:layout_height="@dimen/content_placeholder_height"
+                                        android:background="@color/main_grey"
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                            </TableLayout>
+
+                            <View
+                                android:id="@+id/btsWebsite"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:background="@color/main_grey"
+                                android:padding="@dimen/spacing"
+                                app:layout_constraintEnd_toStartOf="@id/btsFacebook"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/stable"
+                                tools:ignore="ContentDescription" />
+
+                            <View
+                                android:id="@+id/btsFacebook"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:background="@color/main_grey"
+                                android:padding="@dimen/spacing"
+                                android:src="@mipmap/ic_launcher"
+                                app:layout_constraintEnd_toStartOf="@id/btsTwitter"
+                                app:layout_constraintStart_toEndOf="@id/btsWebsite"
+                                app:layout_constraintTop_toBottomOf="@id/stable"
+                                tools:ignore="ContentDescription" />
+
+                            <View
+                                android:id="@+id/btsTwitter"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:background="@color/main_grey"
+                                android:padding="@dimen/spacing"
+                                android:src="@mipmap/ic_launcher"
+                                app:layout_constraintEnd_toStartOf="@id/btsYoutube"
+                                app:layout_constraintStart_toEndOf="@id/btsFacebook"
+                                app:layout_constraintTop_toBottomOf="@id/stable"
+                                tools:ignore="ContentDescription" />
+
+                            <View
+                                android:id="@+id/btsYoutube"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:background="@color/main_grey"
+                                android:padding="@dimen/spacing"
+                                android:src="@mipmap/ic_launcher"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/btsTwitter"
+                                app:layout_constraintTop_toBottomOf="@id/stable"
+                                tools:ignore="ContentDescription" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/sdummyState"
+                        android:layout_width="0.0000001dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imsBackground" />
+
+                    <ImageView
+                        android:id="@+id/btsStatePrevius"
+                        android:layout_width="@dimen/state_width"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:src="@drawable/state_left_disabled"
+                        app:layout_constraintBottom_toBottomOf="@id/tvsStatePrevius"
+                        app:layout_constraintEnd_toStartOf="@id/sdummyState"
+                        app:layout_constraintTop_toBottomOf="@id/imsBackground"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btsStateNext"
+                        android:layout_width="@dimen/state_width"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:src="@drawable/state_right_enabled"
+                        app:layout_constraintBottom_toBottomOf="@id/tvsStateNext"
+                        app:layout_constraintStart_toEndOf="@id/sdummyState"
+                        app:layout_constraintTop_toBottomOf="@id/imsBackground"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvsStatePrevius"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing"
+                        android:textSize="@dimen/state_text_size"
+                        app:layout_constraintEnd_toEndOf="@id/btsStatePrevius"
+                        app:layout_constraintStart_toStartOf="@id/btsStatePrevius"
+                        app:layout_constraintTop_toTopOf="@id/btsStatePrevius" />
+
+                    <TextView
+                        android:id="@+id/tvsStateNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing"
+                        android:textSize="@dimen/state_text_size"
+                        app:layout_constraintEnd_toEndOf="@id/btsStateNext"
+                        app:layout_constraintStart_toStartOf="@id/btsStateNext"
+                        app:layout_constraintTop_toTopOf="@id/btsStateNext" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toBottomOf="@id/tvsStateNext">
+
+                        <include layout="@layout/shimmer_item" />
+
+                        <include layout="@layout/shimmer_item" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_background_height"
+                        android:scaleType="centerCrop"
+                        android:scaleX="-1"
+                        android:src="@drawable/background_gradient"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btBack"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:onClick="@{() -> leagueData.onBackPress.invoke()}"
+                        android:padding="@dimen/spacing"
+                        android:src="@drawable/left_arrow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btLeagueLoved"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:padding="@dimen/spacing"
+                        android:src="@drawable/love_inactive"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/card_spacing_small"
+                        android:layout_marginTop="@dimen/card_spacing_big"
+                        android:layout_marginEnd="@dimen/card_spacing_small"
+                        android:layout_marginBottom="@dimen/card_spacing_small"
+                        android:paddingTop="@dimen/spacing"
+                        app:cardCornerRadius="@dimen/spacing"
+                        app:layout_constraintBottom_toBottomOf="@id/imBackground"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/leagueTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing"
+                                android:text='@{leagueData.strLeague ?? ""}'
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/card_text_title_size"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/formedYear"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/spacing"
+                                android:text='@{leagueData.intFormedYear ?? ""}'
+                                android:textColor="@color/main_grey"
+                                android:textSize="@dimen/card_text_year_size"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/leagueTitle" />
+
+                            <ImageView
+                                android:id="@+id/imBadge"
+                                source='@{leagueData.strBadge ?? ""}'
+                                android:layout_width="@dimen/badge_size"
+                                android:layout_height="@dimen/badge_size"
+                                android:layout_marginStart="@dimen/double_spacing"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/formedYear"
+                                tools:ignore="ContentDescription" />
+
+                            <TableLayout
+                                android:id="@+id/table"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing"
+                                android:layout_marginTop="@dimen/spacing"
+                                android:padding="@dimen/spacing"
+                                app:layout_constraintBottom_toBottomOf="@id/imBadge"
+                                app:layout_constraintStart_toEndOf="@id/imBadge"
+                                app:layout_constraintTop_toTopOf="@id/imBadge">
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:layout_marginEnd="@dimen/spacing"
+                                        android:text="@string/first_event"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:text='@{leagueData.dateFirstEvent ?? ""}'
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:text="@string/gender"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:text='@{leagueData.strGender ?? ""}'
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                                <TableRow>
+
+                                    <TextView
+                                        android:text="@string/country"
+                                        android:textColor="@android:color/black" />
+
+                                    <TextView
+                                        android:text='@{leagueData.strCountry ?? ""}'
+                                        android:textColor="@color/main_grey" />
+                                </TableRow>
+
+                            </TableLayout>
+
+                            <ImageView
+                                android:id="@+id/btWebsite"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:onClick="@{() -> leagueData.onWebsitePress.invoke()}"
+                                android:padding="@dimen/spacing"
+                                android:src="@drawable/domain"
+                                app:layout_constraintEnd_toStartOf="@id/btFacebook"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/table"
+                                tools:ignore="ContentDescription" />
+
+                            <ImageView
+                                android:id="@+id/btFacebook"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:onClick="@{() -> leagueData.onFacebookPress.invoke()}"
+                                android:padding="@dimen/spacing"
+                                android:src="@drawable/facebook"
+                                app:layout_constraintEnd_toStartOf="@id/btTwitter"
+                                app:layout_constraintStart_toEndOf="@id/btWebsite"
+                                app:layout_constraintTop_toBottomOf="@id/table"
+                                tools:ignore="ContentDescription" />
+
+                            <ImageView
+                                android:id="@+id/btTwitter"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:onClick="@{() -> leagueData.onTwitterPress.invoke()}"
+                                android:padding="@dimen/spacing"
+                                android:src="@drawable/twitter"
+                                app:layout_constraintEnd_toStartOf="@id/btYoutube"
+                                app:layout_constraintStart_toEndOf="@id/btFacebook"
+                                app:layout_constraintTop_toBottomOf="@id/table"
+                                tools:ignore="ContentDescription" />
+
+                            <ImageView
+                                android:id="@+id/btYoutube"
+                                android:layout_width="@dimen/image_url_size"
+                                android:layout_height="@dimen/image_url_size"
+                                android:onClick="@{() -> leagueData.onYoutubePress.invoke()}"
+                                android:padding="@dimen/spacing"
+                                android:src="@drawable/youtube"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/btTwitter"
+                                app:layout_constraintTop_toBottomOf="@id/table"
+                                tools:ignore="ContentDescription" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/dummyState"
+                        android:layout_width="0.0000001dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/imBackground" />
+
+                    <ImageView
+                        android:id="@+id/btStatePrevius"
+                        android:layout_width="@dimen/state_width"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:background="@{viewModel.statePrevius}"
+                        android:onClick="@{() -> viewModel.setFragment(activity, constants.STATE_PREVIUS)}"
+                        app:layout_constraintBottom_toBottomOf="@id/tvStatePrevius"
+                        app:layout_constraintEnd_toStartOf="@id/dummyState"
+                        app:layout_constraintTop_toBottomOf="@id/imBackground"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btStateNext"
+                        android:layout_width="@dimen/state_width"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:background="@{viewModel.stateNext}"
+                        android:onClick="@{() -> viewModel.setFragment(activity, constants.STATE_NEXT)}"
+                        app:layout_constraintBottom_toBottomOf="@id/tvStateNext"
+                        app:layout_constraintStart_toEndOf="@id/dummyState"
+                        app:layout_constraintTop_toBottomOf="@id/imBackground"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvStatePrevius"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing"
+                        android:text="@string/previus_event"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/state_text_size"
+                        app:layout_constraintEnd_toEndOf="@id/btStatePrevius"
+                        app:layout_constraintStart_toStartOf="@id/btStatePrevius"
+                        app:layout_constraintTop_toTopOf="@id/btStatePrevius" />
+
+                    <TextView
+                        android:id="@+id/tvStateNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/spacing"
+                        android:text="@string/next_event"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/state_text_size"
+                        app:layout_constraintEnd_toEndOf="@id/btStateNext"
+                        app:layout_constraintStart_toStartOf="@id/btStateNext"
+                        app:layout_constraintTop_toTopOf="@id/btStateNext" />
+
+                    <FrameLayout
+                        android:id="@+id/mainFrame"
+                        activity="@{activity}"
+                        fragment="@{viewModel.fragment}"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/double_spacing"
+                        app:layout_constraintTop_toBottomOf="@id/btStateNext" />
+
+                    <View
+                        android:id="@+id/dummySpacing"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dummy_bottom_spacing"
+                        app:layout_constraintTop_toBottomOf="@id/mainFrame" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/imContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:onClick="@{() -> leagueData.onDescriptionClicked.invoke()}"
+                android:src="@drawable/main_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> leagueData.onDescriptionClicked.invoke()}"
+                android:paddingStart="@dimen/spacing"
+                android:paddingTop="@dimen/double_spacing"
+                android:paddingEnd="@dimen/spacing"
+                android:text="@string/description_sub_title"
+                android:textAlignment="center"
+                android:textColor="@color/main_grey"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toTopOf="@id/divider" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:onClick="@{() -> leagueData.onDescriptionClicked.invoke()}"
+                android:src="@drawable/arrow_top"
+                app:layout_constraintBottom_toBottomOf="@id/tvDescription"
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:layout_marginBottom="@dimen/spacing"
+                android:onClick="@{() -> leagueData.onDescriptionClicked.invoke()}"
+                android:src="@color/main_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/imContent"
+                app:layout_constraintStart_toStartOf="@id/imContent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

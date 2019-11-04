@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="fouls"
+            type="com.github.nothing2512.football_v2.binding.FoulBinding" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing">
+
+        <ImageView
+            android:id="@+id/cardType"
+            android:layout_width="@dimen/card_fouls_width"
+            android:layout_height="0dp"
+            android:src="@{fouls.type}"
+            app:layout_constraintBottom_toBottomOf="@id/text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing"
+            android:text="@{fouls.name}"
+            android:textAlignment="textEnd"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/fouls_text_item_size"
+            app:layout_constraintEnd_toStartOf="@id/cardType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

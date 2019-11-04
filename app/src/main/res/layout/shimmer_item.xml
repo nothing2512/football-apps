@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/event_list_item_height"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing">
+
+    <View
+        android:id="@+id/imThumbPlaceholder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/event_thumb_height"
+        android:background="@color/secondary_grey"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/placeholder_text_normal"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/secondary_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imThumbPlaceholder" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/secondary_grey"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
