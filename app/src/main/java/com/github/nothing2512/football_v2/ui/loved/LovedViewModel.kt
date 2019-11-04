@@ -41,7 +41,7 @@ class LovedViewModel constructor(
 
         val events = MutableLiveData<List<EventEntity>>()
 
-        launchMain { eventRepository.getLoved().observeForever { events.postValue(it) } }
+        launchMain { eventRepository.getLoved()?.observeForever { events.postValue(it) } }
 
         return events
     }
@@ -50,7 +50,7 @@ class LovedViewModel constructor(
 
         val leagues = MutableLiveData<List<LeagueEntity>>()
 
-        launchMain { leagueRepository.getLoved().observeForever { leagues.postValue(it) } }
+        launchMain { leagueRepository.getLoved()?.observeForever { leagues.postValue(it) } }
 
         return leagues
     }

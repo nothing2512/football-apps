@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.EventBinding
 import com.github.nothing2512.football_v2.binding.FoulBinding
+import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
 import com.github.nothing2512.football_v2.databinding.ActivityEventBinding
 import com.github.nothing2512.football_v2.ui.event.adapter.FoulAdapter
 import com.github.nothing2512.football_v2.utils.*
@@ -77,23 +78,35 @@ class EventActivity : AppCompatActivity() {
                         binding.awayFouls.adapter = FoulAdapter(awayFoul, Constants.TYPE_AWAY)
                     }
 
-                    it.data?.love?.let { love ->
-
-                        if (love) binding.btLoveEvent.bind(R.drawable.love_active, false)
-                        else binding.btLoveEvent.bind(R.drawable.love_inactive, false)
-
-                        binding.btLoveEvent.setOnClickListener {
-
-                            if (love) eventViewModel.unlove(eventId)
-                            else eventViewModel.love(eventId)
-                        }
-                    }
+                    setLove(it.data)
 
                     stopLoading()
                 }
 
             }
         })
+    }
+
+    private fun setLove(data: EventEntity?) {
+
+        val love = data?.love == 1
+
+        if (love) binding.btLoveEvent.bind(R.drawable.love_active, false)
+        else binding.btLoveEvent.bind(R.drawable.love_inactive, false)
+
+        binding.btLoveEvent.setOnClickListener {
+
+            if (love) {
+                eventViewModel.unlove(data)
+                data?.love = 0
+            }
+            else {
+                eventViewModel.love(data)
+                data?.love = 1
+            }
+
+            setLove(data)
+        }
     }
 
     private fun setFouls(fouls: String?, @ColorInt color: Int) =

@@ -1,6 +1,7 @@
 ext.deps = [:]
 
 def activity = [:]
+def anko = [:]
 def arch_core = [:]
 def build_versions = [:]
 def coroutine = [:]
@@ -17,6 +18,7 @@ def support = [:]
 def test = [:]
 def versions = [:]
 
+versions.anko = "0.10.8"
 versions.arch_core = "2.1.0"
 versions.activity = '1.0.0-rc01'
 versions.android_gradle_plugin = '3.5.1'
@@ -57,6 +59,14 @@ versions.test = "1.1.1"
 versions.work = "2.1.0"
 
 ext.versions = versions
+
+anko.common = "org.jetbrains.anko:anko-commons:$versions.anko"
+anko.anko = "org.jetbrains.anko:anko:$versions.anko"
+anko.design = "org.jetbrains.anko:anko-design:$versions.anko"
+anko.sqlite = "org.jetbrains.anko:anko-sqlite:$versions.anko"
+anko.recyclerview = "org.jetbrains.anko:anko-recyclerview-v7:$versions.anko"
+anko.cardview = "org.jetbrains.anko:anko-cardview-v7:$versions.anko"
+anko.constraint_layout = "org.jetbrains.anko:anko-constraint-layout:$versions.anko"
 
 objenesis.main = "org.objenesis:objenesis:$versions.objenesis"
 objenesis.module = "objenesis"
@@ -124,6 +134,7 @@ koin.scope = "org.koin:koin-androidx-scope:$versions.koin"
 koin.viewmodel = "org.koin:koin-androidx-viewmodel:$versions.koin"
 koin.androidx = "org.koin:koin-androidx-ext:$versions.koin"
 
+deps.anko = anko
 deps.activity = activity
 deps.arch_core = arch_core
 deps.coroutine = coroutine

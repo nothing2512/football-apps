@@ -25,8 +25,8 @@ interface EventDao {
     @Query("SELECT e.* FROM `evententity` e, `searchentity` s WHERE s.idEvent = e.idEvent AND s.keyword = :query")
     fun search(query: String): LiveData<List<EventEntity>>
 
-    @Query("SELECT * FROM `evententity` WHERE `idLeague` = :idLeague AND `state` = :status")
-    fun getInLeague(idLeague: Int, status: Int): LiveData<List<EventEntity>>
+    @Query("SELECT * FROM `evententity` WHERE `idLeague` = :idLeague AND `state` = :state")
+    fun getInLeague(idLeague: Int, state: Int): LiveData<List<EventEntity>>
 
     @Query("UPDATE `EventEntity` SET `love` = :love WHERE `idEvent` = :idEvent")
     fun setLove(love: Boolean, idEvent: Int)

@@ -28,6 +28,7 @@ object TestUtil {
         "time",
         "thumb",
         "soccer",
+        0,
         0
     )
 
@@ -55,7 +56,8 @@ object TestUtil {
         "twitter",
         "youtube",
         "description",
-        "badge"
+        "badge",
+        0
     )
 
     val NEXT_EVENT = EventEntity(
@@ -76,6 +78,7 @@ object TestUtil {
         "time",
         "thumb",
         "soccer",
+        0,
         0
     )
 
@@ -97,7 +100,8 @@ object TestUtil {
         "time",
         "thumb",
         "soccer",
-        1
+        1,
+        0
     )
 
     const val INT = 1

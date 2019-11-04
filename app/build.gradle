@@ -75,6 +75,14 @@ dependencies {
     implementation deps.support.design
     implementation deps.support.constraint_layout
 
+    implementation deps.anko.common
+    implementation deps.anko.anko
+    implementation deps.anko.design
+    implementation deps.anko.sqlite
+    implementation deps.anko.recyclerview
+    implementation deps.anko.cardview
+    implementation deps.anko.constraint_layout
+
     implementation deps.coroutine.core
     implementation deps.coroutine.android
 

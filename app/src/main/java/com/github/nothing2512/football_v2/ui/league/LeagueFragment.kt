@@ -10,16 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.databinding.FragmentLeagueBinding
-import com.github.nothing2512.football_v2.utils.getBinding
+import com.github.nothing2512.football_v2.ui.view.LeagueFragmentUI
+import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
+import org.jetbrains.anko.AnkoContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LeagueFragment : Fragment() {
 
     private val leagueViewModel: LeagueViewModel by viewModel()
-    private lateinit var binding: FragmentLeagueBinding
+
+    private lateinit var leagueShimmer: ShimmerFrameLayout
+    private lateinit var leagueRecyclerview: RecyclerView
     private lateinit var adapter: LeagueAdapter
 
     override fun onCreateView(
@@ -27,9 +31,13 @@ class LeagueFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = getBinding(inflater, R.layout.fragment_league, container)
+        val ankoContext = context?.let { AnkoContext.create(it, this, false) }
+        val v = ankoContext?.let { LeagueFragmentUI<LeagueFragment>().createView(it) }
 
-        return binding.root
+        v?.findViewById<ShimmerFrameLayout>(R.id.shimmer)?.let { leagueShimmer = it }
+        v?.findViewById<RecyclerView>(R.id.leagueRecyclerview)?.let { leagueRecyclerview = it }
+
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,8 +47,9 @@ class LeagueFragment : Fragment() {
             .getLeagues(context)
             .observe(this, Observer {
                 launchMain {
+                    leagueShimmer.hide()
                     adapter = LeagueAdapter(it)
-                    binding.leagueRecyclerview.apply {
+                    leagueRecyclerview.apply {
                         isNestedScrollingEnabled = true
                         layoutManager = LinearLayoutManager(context)
                         addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))

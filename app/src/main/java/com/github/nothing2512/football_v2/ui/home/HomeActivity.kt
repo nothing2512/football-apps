@@ -1,34 +1,33 @@
 package com.github.nothing2512.football_v2.ui.home
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
-import androidx.appcompat.widget.SearchView
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.SearchView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.databinding.ActivityHomeBinding
-import com.github.nothing2512.football_v2.ui.loved.LovedActivity
-import com.github.nothing2512.football_v2.utils.getBinding
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.github.nothing2512.football_v2.ui.view.HomeActivityUI
 import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
 import com.github.nothing2512.football_v2.utils.show
+import org.jetbrains.anko.setContentView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
     private val homeViewModel: HomeViewModel by viewModel()
 
-    private lateinit var binding: ActivityHomeBinding
+    lateinit var swipe: SwipeRefreshLayout
+    lateinit var searchView: SearchView
+    lateinit var btBackHome: ImageView
+    lateinit var imBackground: ImageView
+    lateinit var content: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = getBinding(R.layout.activity_home)
-
-        binding.lifecycleOwner = this
-        binding.activity = this
-        binding.viewModel = homeViewModel
-
+        HomeActivityUI(homeViewModel).setContentView(this)
         launchMain { subscribeUI() }
     }
 
@@ -36,27 +35,21 @@ class HomeActivity : AppCompatActivity() {
 
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        binding.btHomeLove.setOnClickListener {
-            startActivity(Intent(applicationContext, LovedActivity::class.java))
-        }
-
-        binding.swipe.setOnRefreshListener {
+        swipe.setOnRefreshListener {
 
             homeViewModel.refresh()
-            binding.swipe.isRefreshing = false
-            binding.btBackHome.show()
-            binding.imBackground.requestFocus()
+            swipe.isRefreshing = false
+            btBackHome.show()
+            imBackground.requestFocus()
         }
 
-        binding.imBackground.requestFocus()
-
-        binding.searchView.apply {
+        searchView.apply {
 
             setOnQueryTextFocusChangeListener { _, hasFocus ->
 
-                if (hasFocus && query.isNullOrEmpty() && !binding.searchView.isVisible)
+                if (hasFocus && query.isNullOrEmpty() && !searchView.isVisible)
                     clearFocus()
-                if (!hasFocus && !binding.btBackHome.isVisible) isIconified = true
+                if (!hasFocus && !btBackHome.isVisible) isIconified = true
             }
 
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -64,8 +57,8 @@ class HomeActivity : AppCompatActivity() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
                     homeViewModel.submitQuery()
-                    if (!query.isNullOrEmpty()) binding.btBackHome.show()
-                    binding.imBackground.requestFocus()
+                    if (!query.isNullOrEmpty()) btBackHome.show()
+                    imBackground.requestFocus()
                     clearFocus()
                     return true
                 }
@@ -81,13 +74,13 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
 
-        if (binding.btBackHome.isVisible) {
+        if (btBackHome.isVisible) {
             homeViewModel.setQuery("")
             homeViewModel.submitQuery()
             launchMain {
-                binding.btBackHome.hide()
-                binding.searchView.clearFocus()
-                binding.searchView.isIconified = true
+                btBackHome.hide()
+                searchView.clearFocus()
+                searchView.isIconified = true
             }
         } else finish()
     }

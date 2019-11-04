@@ -116,7 +116,7 @@
                     app:commitIcon="@drawable/search"
                     app:goIcon="@drawable/search"
                     app:layout_constraintBottom_toTopOf="@id/imContent"
-                    app:queryHint="Search Match"
+                    app:queryHint="@string/search_match"
                     app:searchHintIcon="@drawable/search"
                     app:searchIcon="@drawable/search"
                     app:voiceIcon="@drawable/search" />

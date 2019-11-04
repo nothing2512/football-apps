@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.LeagueBinding
+import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
 import com.github.nothing2512.football_v2.databinding.ActivityLeagueBinding
 import com.github.nothing2512.football_v2.utils.*
 import com.github.nothing2512.football_v2.vo.Status
@@ -73,22 +73,33 @@ class LeagueActivity : AppCompatActivity() {
                         applicationContext
                     )
 
-                    it.data?.love?.let { love ->
-
-                        if (love) binding.btLeagueLoved.bind(R.drawable.love_active, false)
-                        else binding.btLeagueLoved.bind(R.drawable.love_inactive, false)
-
-                        binding.btLeagueLoved.setOnClickListener {
-
-                            if (love) leagueViewModel.unlove(leagueId)
-                            else leagueViewModel.love(leagueId)
-                        }
-                    }
+                    setLove(it.data)
 
                     stopLoading()
                 }
             }
         })
+    }
+
+    private fun setLove(data: LeagueEntity?) {
+
+        val love = data?.love == 1
+
+        if (love) binding.btLeagueLoved.bind(R.drawable.love_active, false)
+        else binding.btLeagueLoved.bind(R.drawable.love_inactive, false)
+
+        binding.btLeagueLoved.setOnClickListener {
+
+            if (love) {
+                leagueViewModel.unlove(data)
+                data?.love = 0
+            }
+            else {
+                leagueViewModel.love(data)
+                data?.love = 1
+            }
+            setLove(data)
+        }
     }
 
     private fun startLoading() {

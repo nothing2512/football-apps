@@ -1,45 +1,50 @@
 package com.github.nothing2512.football_v2.ui.league
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
-import com.github.nothing2512.football_v2.databinding.LeagueItemBinding
-import com.github.nothing2512.football_v2.utils.getBinding
+import com.github.nothing2512.football_v2.ui.view.LeagueItemUI
+import org.jetbrains.anko.AnkoContext
 
 class LeagueAdapter(
     private val data: List<LeagueItemBindingData>? = null,
     private val entities: List<LeagueEntity>? = null
 ) : RecyclerView.Adapter<LeagueAdapter.MainHolder>() {
 
-    init {
-
-        if (data == null && entities == null)
-            throw KotlinNullPointerException("no data found")
+    override fun setHasStableIds(hasStableIds: Boolean) {
+        super.setHasStableIds(true)
     }
 
     constructor(data: List<LeagueEntity>) : this(null, data)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder =
-        MainHolder(getBinding(R.layout.league_item, parent))
+        when {
+            data != null -> MainHolder(
+                LeagueItemUI(data[viewType]).createView(
+                    AnkoContext.create(
+                        parent.context,
+                        parent
+                    )
+                )
+            )
+            entities != null -> MainHolder(
+                LeagueItemUI(
+                    LeagueItemBindingData.parse(
+                        parent.context,
+                        entities[viewType]
+                    )
+                ).createView(AnkoContext.create(parent.context, parent))
+            )
+            else -> throw KotlinNullPointerException("no data found")
+        }
 
     override fun getItemCount(): Int = data?.size ?: (entities?.size ?: 0)
 
-    override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        if (data != null) holder.bind(data[position])
-        else if (entities != null) holder.bind(entities[position])
-    }
+    override fun onBindViewHolder(holder: MainHolder, position: Int) {}
 
-    class MainHolder(private val binding: LeagueItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    override fun getItemViewType(position: Int) = position
 
-        fun bind(league: LeagueItemBindingData) {
-            binding.leagueData = league
-        }
-
-        fun bind(league: LeagueEntity) {
-            binding.leagueData = LeagueItemBindingData.parse(itemView.context, league)
-        }
-    }
+    class MainHolder(view: View) : RecyclerView.ViewHolder(view)
 }

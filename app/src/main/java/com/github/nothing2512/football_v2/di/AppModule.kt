@@ -1,8 +1,8 @@
 package com.github.nothing2512.football_v2.di
 
 import android.content.Context
-import androidx.room.Room
-import com.github.nothing2512.football_v2.data.source.local.FootballDatabase
+import com.github.nothing2512.football_v2.data.source.anko.DatabaseHelper
+import com.github.nothing2512.football_v2.data.source.anko.FootballDatabase
 import com.github.nothing2512.football_v2.data.source.remote.NetworkService
 import com.github.nothing2512.football_v2.data.source.remote.adapter.CallAdapterFactory
 import com.github.nothing2512.football_v2.repositories.EventRepository
@@ -23,8 +23,7 @@ val appModule = module {
 
     single { provideService() }
     single { provideDatabase(androidContext()) }
-    single { get<FootballDatabase>().eventDao() }
-    single { get<FootballDatabase>().leagueDao() }
+    single { DatabaseHelper(get()) }
     single { EventRepository(AppExecutors(), get(), get()) }
     single { LeagueRepository(AppExecutors(), get(), get()) }
 
@@ -41,9 +40,4 @@ private fun provideService() = Retrofit.Builder()
     .build()
     .create(NetworkService::class.java)
 
-private fun provideDatabase(context: Context) = Room.databaseBuilder(
-    context,
-    FootballDatabase::class.java,
-    "Football-v2.db"
-).fallbackToDestructiveMigration()
-    .build()
+private fun provideDatabase(context: Context) = FootballDatabase.getInstance(context)

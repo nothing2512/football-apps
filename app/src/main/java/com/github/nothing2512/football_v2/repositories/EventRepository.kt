@@ -2,7 +2,7 @@ package com.github.nothing2512.football_v2.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.nothing2512.football_v2.data.source.local.dao.EventDao
+import com.github.nothing2512.football_v2.data.source.anko.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
 import com.github.nothing2512.football_v2.data.source.local.entity.SearchEntity
 import com.github.nothing2512.football_v2.data.source.remote.ApiResponse
@@ -21,7 +21,7 @@ import kotlinx.coroutines.withContext
 @OpenForTesting
 class EventRepository(
     private val appExecutors: AppExecutors,
-    private val eventDao: EventDao,
+    private val helper: DatabaseHelper,
     private val service: NetworkService
 ) {
 
@@ -36,9 +36,9 @@ class EventRepository(
             NetworkBoundService<EventResponse, EventResponse>(appExecutors) {
             override fun saveCallResult(item: EventResponse) {
                 item.events?.forEach {
-                    if(it.isFootball()) {
+                    if (it.isFootball()) {
                         it.state = Constants.STATE_NEXT
-                        eventDao.insert(it)
+                        helper.insert(it)
                     }
                 }
             }
@@ -49,7 +49,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<EventResponse> {
                 val event = MutableLiveData<EventResponse>()
 
-                eventDao.getInLeague(idLeague, Constants.STATE_NEXT).observeForever {
+                helper.getNextEvent(idLeague)?.observeForever {
                     event.postValue(EventResponse(it))
                 }
 
@@ -74,7 +74,7 @@ class EventRepository(
                 item.events?.forEach {
                     if (it.isFootball()) {
                         it.state = Constants.STATE_PREVIUS
-                        eventDao.insert(it)
+                        helper.insert(it)
                     }
                 }
             }
@@ -85,7 +85,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<EventResponse> {
                 val event = MutableLiveData<EventResponse>()
 
-                eventDao.getInLeague(idLeague, Constants.STATE_PREVIUS).observeForever {
+                helper.getPreviusEvent(idLeague)?.observeForever {
                     event.postValue(EventResponse(it))
                 }
 
@@ -111,8 +111,8 @@ class EventRepository(
                 item.event?.forEach {
                     if (it.isFootball()) {
                         it.state = Constants.STATE_NEXT
-                        eventDao.insert(SearchEntity(it.idEvent, query))
-                        eventDao.insert(it)
+                        helper.insert(SearchEntity(it.idEvent, query))
+                        helper.insert(it)
                     }
                 }
             }
@@ -123,7 +123,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<SearchResponse> {
                 val event = MutableLiveData<SearchResponse>()
 
-                eventDao.search(query).observeForever {
+                helper.search(query)?.observeForever {
                     event.postValue(SearchResponse(it ?: ArrayList()))
                 }
 
@@ -147,14 +147,14 @@ class EventRepository(
 
             override fun saveCallResult(item: EventResponse) {
                 item.events?.get(0)?.let {
-                    eventDao.insert(it)
+                    helper.insert(it)
                 }
             }
 
             override fun shouldFetch(data: EventEntity?): Boolean =
                 data == null
 
-            override fun loadFromDb(): LiveData<EventEntity> = eventDao.get(idEvent)
+            override fun loadFromDb(): LiveData<EventEntity> = helper.getEvent(idEvent) ?: MutableLiveData()
 
             override fun createCall(): LiveData<ApiResponse<EventResponse>> =
                 EspressoIdlingResource.handle {
@@ -166,13 +166,15 @@ class EventRepository(
         event.observeForever { detailEvent.postValue(it) }
     }
 
-    suspend fun setLove(love: Boolean, idEvent: Int) {
+    suspend fun setLove(love: Boolean, event: EventEntity?) {
         withContext(Dispatchers.IO) {
-            eventDao.setLove(love, idEvent)
+            if (love) event?.love = 1
+            else event?.love = 0
+            helper.insert(event)
         }
     }
 
     suspend fun getLoved() = withContext(Dispatchers.IO) {
-        eventDao.getLoved()
+        helper.getLovedEvent()
     }
 }

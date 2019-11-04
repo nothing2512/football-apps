@@ -10,32 +10,39 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.databinding.FragmentSearchBinding
 import com.github.nothing2512.football_v2.ui.event.EventViewModel
 import com.github.nothing2512.football_v2.ui.event.adapter.EventAdapter
-import com.github.nothing2512.football_v2.utils.getBinding
+import com.github.nothing2512.football_v2.ui.view.EventFragmentUI
 import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
 import com.github.nothing2512.football_v2.utils.show
 import com.github.nothing2512.football_v2.vo.Status
+import org.jetbrains.anko.AnkoContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
     private val eventViewModel: EventViewModel by viewModel()
 
-    private lateinit var binding: FragmentSearchBinding
     private var query: String = ""
+
+    private lateinit var eventShimmer: ShimmerFrameLayout
+    private lateinit var eventRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = getBinding(inflater, R.layout.fragment_search, container)
+        val ankoContext = context?.let { AnkoContext.create(it, this, false) }
+        val v = ankoContext?.let { EventFragmentUI<SearchFragment>().createView(it) }
 
-        return binding.root
+        v?.findViewById<ShimmerFrameLayout>(R.id.shimmer)?.let { eventShimmer = it }
+        v?.findViewById<RecyclerView>(R.id.eventRecyclerView)?.let { eventRecyclerView = it }
+
+        return v
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +50,7 @@ class SearchFragment : Fragment() {
 
         launchMain {
 
-            binding.searchRecyclerView.apply {
+            eventRecyclerView.apply {
                 adapter = EventAdapter()
                 layoutManager = LinearLayoutManager(context)
                 addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
@@ -69,26 +76,27 @@ class SearchFragment : Fragment() {
             when (it.status) {
 
                 Status.ERROR -> {
-                    binding.searchShimmer.hide()
-                    binding.searchRecyclerView.show()
+                    eventShimmer.hide()
+                    eventRecyclerView.show()
 
                     Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 }
 
                 Status.SUCCESS -> {
-                    binding.searchShimmer.hide()
-                    binding.searchRecyclerView.show()
+                    eventShimmer.hide()
+                    eventRecyclerView.show()
 
                     it.data?.event?.let { search ->
-                        binding.searchRecyclerView.adapter = EventAdapter(search)
+                        eventRecyclerView.adapter = EventAdapter(search)
                     }
+                    eventRecyclerView.clearFocus()
                 }
 
                 Status.LOADING -> {
 
-                    binding.searchShimmer.show()
-                    binding.searchRecyclerView.hide()
-                    binding.searchRecyclerView.adapter = EventAdapter(ArrayList())
+                    eventShimmer.show()
+                    eventRecyclerView.hide()
+                    eventRecyclerView.adapter = EventAdapter(ArrayList())
                 }
             }
         })

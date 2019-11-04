@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
-import com.github.nothing2512.football_v2.data.source.local.dao.LeagueDao
+import com.github.nothing2512.football_v2.data.source.anko.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
 import com.github.nothing2512.football_v2.data.source.remote.ApiResponse
 import com.github.nothing2512.football_v2.data.source.remote.NetworkService
@@ -22,9 +22,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @OpenForTesting
-class LeagueRepository (
+class LeagueRepository(
     private val appExecutors: AppExecutors,
-    private val leagueDao: LeagueDao,
+    private val helper: DatabaseHelper,
     private val service: NetworkService
 ) {
 
@@ -37,14 +37,15 @@ class LeagueRepository (
             NetworkBoundService<LeagueEntity, LeagueResponse>(appExecutors) {
 
             override fun saveCallResult(item: LeagueResponse) {
-                leagueDao.insert(item.leagues[0])
+                helper.insert(item.leagues[0])
             }
 
             override fun shouldFetch(data: LeagueEntity?): Boolean =
                 data == null
 
 
-            override fun loadFromDb(): LiveData<LeagueEntity> = leagueDao.get(idLeague)
+            override fun loadFromDb(): LiveData<LeagueEntity> =
+                helper.getLeague(idLeague) ?: MutableLiveData()
 
             override fun createCall(): LiveData<ApiResponse<LeagueResponse>> =
                 EspressoIdlingResource.handle {
@@ -87,13 +88,15 @@ class LeagueRepository (
         leagues.postValue(football)
     }
 
-    suspend fun setLoved(love: Boolean, idLeague: Int) {
+    suspend fun setLoved(love: Boolean, league: LeagueEntity?) {
         withContext(Dispatchers.IO) {
-            leagueDao.setLove(love, idLeague)
+            if (love) league?.love = 1
+            else league?.love = 0
+            helper.insert(league)
         }
     }
 
     suspend fun getLoved() = withContext(Dispatchers.IO) {
-        leagueDao.getLoved()
+        helper.getLovedLeague()
     }
 }
