@@ -3,8 +3,6 @@ package com.github.nothing2512.football_v2.ui.loved
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
 import com.github.nothing2512.football_v2.repositories.EventRepository
 import com.github.nothing2512.football_v2.repositories.LeagueRepository
 import com.github.nothing2512.football_v2.testing.TestUtil
@@ -56,9 +54,7 @@ class LovedViewModelTest : KoinTest {
     fun loadLeagues() {
 
         val data = listOf(TestUtil.LEAGUE_ENTITY)
-        val leagues = MutableLiveData<List<LeagueEntity>>()
-        leagues.value = data
-        coEvery { leagueRepository.getLoved() } returns leagues
+        coEvery { leagueRepository.getLoved() } returns data
         viewModel = LovedViewModel(eventRepository, leagueRepository)
         viewModel.getLeagues()
         coVerify { leagueRepository.getLoved() }
@@ -70,9 +66,7 @@ class LovedViewModelTest : KoinTest {
     fun loadEvents() {
 
         val data = listOf(TestUtil.EVENT_ENTITY)
-        val events = MutableLiveData<List<EventEntity>>()
-        events.value = data
-        coEvery { eventRepository.getLoved() } returns events
+        coEvery { eventRepository.getLoved() } returns data
         viewModel = LovedViewModel(eventRepository, leagueRepository)
         viewModel.getEvents()
         coVerify { eventRepository.getLoved() }

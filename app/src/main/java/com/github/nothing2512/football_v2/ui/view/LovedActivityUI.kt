@@ -7,9 +7,12 @@ import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.ui.loved.LovedActivity
 import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.bindFragment
 import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.resources.Dimens
+import com.github.nothing2512.football_v2.utils.resources.Id
+import com.github.nothing2512.football_v2.utils.resources.Strings
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -27,145 +30,173 @@ class LovedActivityUI(private val lovedViewModel: LovedViewModel) : AnkoComponen
 
                 imageView {
 
-                    id = R.id.imBackground
+                    id = Id.imBackground
                     isFocusable = true
                     scaleType = ImageView.ScaleType.CENTER_CROP
                     scaleX = -1f
                     setImageResource(R.drawable.background_gradient)
-                }.lparams(matchParent, dip(300)) {
+                }.lparams(matchParent, dip(Dimens.MAIN_BACKGROUND_HEIGHT)) {
                     topToTop = PARENT_ID
                 }
 
                 imageView {
 
-                    id = R.id.btBackHome
+                    id = Id.btBackHome
                     backgroundResource = R.drawable.left_arrow
-                    hide()
                     onClick {
                         ui.owner.onBackPressed()
                     }
-                }.lparams(dip(37), dip(37)) {
-                    setMargins(dip(11), dip(11), dip(11), dip(11))
+                }.lparams(dip(Dimens.ICON_SIZE), dip(
+                    Dimens.ICON_SIZE)) {
+                    setMargins(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING)
+                    )
                     topToTop = PARENT_ID
                     startToStart = PARENT_ID
                 }
 
-                imageView {
+                textView(Strings.APP_NAME) {
 
-                    id = R.id.btHomeLove
-                    backgroundResource = R.drawable.love_active
-                    onClick {
-                        startActivity<LovedActivity>()
-                    }
-                }.lparams(dip(37), dip(37)) {
-                    setMargins(dip(11), dip(11), dip(11), dip(11))
-                    endToEnd = PARENT_ID
-                    topToTop = PARENT_ID
-                }
-
-                textView {
-
-                    id = R.id.tvTitle
-                    textResource = R.string.app_name
+                    id = Id.tvTitle
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     textColorResource = R.color.background
-                    textSize = 32f
+                    textSize = Dimens.TITLE_TEXT_SIZE
                     setTypeface(typeface, Typeface.BOLD)
                 }.lparams(0, wrapContent) {
-                    setMargins(0, dip(66), 0, dip(22))
+                    setMargins(
+                        0,
+                        dip(Dimens.TITLE_TEXT_SPACING),
+                        0,
+                        dip(Dimens.DOUBLE_SPACING)
+                    )
                     endToEnd = PARENT_ID
                     startToStart = PARENT_ID
-                    topToTop = R.id.imBackground
+                    topToTop = Id.imBackground
                 }
 
-                textView {
+                textView(Strings.APP_DESC) {
 
-                    id = R.id.tvDesc
-                    textResource = R.string.app_desc
+                    id = Id.tvDesc
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     textColorResource = R.color.background
-                    textSize = 22f
+                    textSize = Dimens.TITLE_DESC_SIZE
                 }.lparams(0, wrapContent) {
-                    setMargins(0, dip(22), 0, dip(22))
+                    setMargins(
+                        0,
+                        dip(Dimens.DOUBLE_SPACING),
+                        0,
+                        dip(Dimens.DOUBLE_SPACING)
+                    )
                     endToEnd = PARENT_ID
                     startToStart = PARENT_ID
-                    topToBottom = R.id.tvTitle
+                    topToBottom = Id.tvTitle
                 }
 
                 imageView {
 
-                    id = R.id.imContent
+                    id = Id.imContent
                     backgroundResource = R.drawable.main_content
                 }.lparams(matchParent, 0) {
-                    bottomToTop = R.id.content
-                    topToTop = R.id.tvContent
+                    bottomToTop = Id.content
+                    topToTop = Id.tvContent
                 }
 
                 view {
 
-                    id = R.id.dummyView
+                    id = Id.dummyView
                     translationZ = dip(-2).toFloat()
-                }.lparams(matchParent, dip(256)) {
+                }.lparams(matchParent, dip(Dimens.MAIN_DUMMY_HEIGHT)) {
                     topToTop = PARENT_ID
                 }
 
-                textView {
+                textView(Strings.LEAGUE) {
 
-                    id = R.id.tvLeagueLoved
+                    id = Id.tvLeagueLoved
                     onClick {
                         lovedViewModel.setFragment(Constants.STATE_LEAGUE)
                     }
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     textColor = R.color.main_grey
-                    textSize = 22f
-                    textResource = R.string.league
+                    textSize = Dimens.TITLE_DESC_SIZE
                     textColorResource = android.R.color.black
-                    setPadding(dip(11), dip(22), dip(11), 0)
+                    setPadding(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.DOUBLE_SPACING),
+                        dip(Dimens.SPACING),
+                        0
+                    )
                 }.lparams(0, matchParent) {
-                    setMargins(dip(11), dip(22), dip(11), 0)
-                    topToBottom = R.id.dummyView
+                    setMargins(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.DOUBLE_SPACING),
+                        dip(Dimens.SPACING),
+                        0
+                    )
+                    topToBottom = Id.dummyView
                     startToStart = PARENT_ID
-                    endToStart = R.id.tvEvent
+                    endToStart = Id.tvEvent
                 }
 
-                textView {
+                textView(Strings.EVENT) {
 
-                    id = R.id.tvEvent
+                    id = Id.tvEvent
                     onClick {
                         lovedViewModel.setFragment(Constants.STATE_EVENT)
                     }
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     textColor = R.color.main_grey
-                    textSize = 22f
-                    textResource = R.string.league
+                    textSize = Dimens.TITLE_DESC_SIZE
                     textColorResource = android.R.color.black
-                    setPadding(dip(11), dip(22), dip(11), 0)
+                    setPadding(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.DOUBLE_SPACING),
+                        dip(Dimens.SPACING),
+                        0
+                    )
                 }.lparams(0, matchParent) {
-                    setMargins(dip(11), dip(22), dip(11), 0)
-                    topToBottom = R.id.dummyView
-                    startToEnd = R.id.tvLeagueLoved
+                    setMargins(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.DOUBLE_SPACING),
+                        dip(Dimens.SPACING),
+                        0
+                    )
+                    topToBottom = Id.dummyView
+                    startToEnd = Id.tvLeagueLoved
                     endToEnd = PARENT_ID
                 }
 
                 imageView {
 
-                    id = R.id.divider
+                    id = Id.divider
                     backgroundColor = R.color.main_grey
                 }.lparams(matchParent, dip(1)) {
-                    setMargins(dip(22), dip(11), dip(22), 0)
-                    topToBottom = R.id.tvEvent
+                    setMargins(
+                        dip(Dimens.DOUBLE_SPACING),
+                        dip(Dimens.SPACING),
+                        dip(Dimens.DOUBLE_SPACING),
+                        0
+                    )
+                    topToBottom = Id.tvEvent
                 }
 
                 frameLayout {
-                    id = R.id.content
+                    id = Id.content
                     backgroundColor = R.color.content
                     isFocusable = false
                     isNestedScrollingEnabled = false
                     scrollBarSize = 0
                     bindFragment(ui.owner, lovedViewModel.fragment)
                 }.lparams(matchParent, wrapContent) {
-                    setMargins(dip(11), dip(11), dip(11), dip(11))
-                    topToBottom = R.id.divider
+                    setMargins(
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING),
+                        dip(Dimens.SPACING)
+                    )
+                    topToBottom = Id.divider
                 }
 
             }.lparams(matchParent, wrapContent)

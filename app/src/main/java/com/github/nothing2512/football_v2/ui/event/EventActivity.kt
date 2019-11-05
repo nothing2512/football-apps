@@ -1,49 +1,62 @@
 package com.github.nothing2512.football_v2.ui.event
 
-import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.binding.EventBinding
 import com.github.nothing2512.football_v2.binding.FoulBinding
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.databinding.ActivityEventBinding
 import com.github.nothing2512.football_v2.ui.event.adapter.FoulAdapter
-import com.github.nothing2512.football_v2.utils.*
+import com.github.nothing2512.football_v2.ui.view.event.EventActivityUI
+import com.github.nothing2512.football_v2.utils.bindImage
+import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.launchMain
+import com.github.nothing2512.football_v2.utils.resources.Constants
+import com.github.nothing2512.football_v2.utils.show
 import com.github.nothing2512.football_v2.vo.Status
+import org.jetbrains.anko.setContentView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class EventActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityEventBinding
 
     private var awayFoul = ArrayList<FoulBinding>()
     private var homeFoul = ArrayList<FoulBinding>()
 
     private val eventViewModel: EventViewModel by viewModel()
+    private val event = MutableLiveData<EventEntity>()
+
+    lateinit var homeFouls: RecyclerView
+    lateinit var awayFouls: RecyclerView
+    lateinit var swipe: SwipeRefreshLayout
+    lateinit var btLoveEvent: ImageView
+    lateinit var imThumb: ImageView
+    lateinit var card: CardView
+    lateinit var bar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        launchMain {
-
-            binding = getBinding(R.layout.activity_event)
-            subscribeUI()
-        }
+        EventActivityUI(event).setContentView(this)
+        launchMain { subscribeUI() }
     }
 
     private fun subscribeUI() {
 
         val eventId = intent.getIntExtra(Constants.EXTRA_ID, 0)
 
-        binding.homeFouls.layoutManager = LinearLayoutManager(this)
-        binding.awayFouls.layoutManager = LinearLayoutManager(this)
+        homeFouls.layoutManager = LinearLayoutManager(this)
+        awayFouls.layoutManager = LinearLayoutManager(this)
 
-        binding.swipe.setOnRefreshListener { getData(eventId) }
+        swipe.setOnRefreshListener { getData(eventId) }
         getData(eventId)
     }
 
@@ -63,24 +76,22 @@ class EventActivity : AppCompatActivity() {
                 Status.SUCCESS -> {
 
                     it.data?.let { event ->
-                        binding.eventData = EventBinding.parse(
-                            event,
-                            { finish() },
-                            {}
-                        )
 
-                        homeFoul = setFouls(event.strHomeYellowCards, Color.YELLOW)
-                        homeFoul.addAll(setFouls(event.strHomeRedCards, Color.RED))
-                        awayFoul = setFouls(event.strAwayYellowCards, Color.YELLOW)
-                        awayFoul.addAll(setFouls(event.strAwayRedCards, Color.RED))
+                        homeFoul = setFouls(event.strHomeYellowCards, Constants.YELLOW)
+                        homeFoul.addAll(setFouls(event.strHomeRedCards, Constants.RED))
+                        awayFoul = setFouls(event.strAwayYellowCards, Constants.YELLOW)
+                        awayFoul.addAll(setFouls(event.strAwayRedCards, Constants.RED))
 
-                        binding.homeFouls.adapter = FoulAdapter(homeFoul, Constants.TYPE_HOME)
-                        binding.awayFouls.adapter = FoulAdapter(awayFoul, Constants.TYPE_AWAY)
+                        if (homeFoul.isNotEmpty()) homeFouls.adapter = FoulAdapter(homeFoul, Constants.TYPE_HOME)
+
+                        if (awayFoul.isNotEmpty()) awayFouls.adapter = FoulAdapter(awayFoul, Constants.TYPE_AWAY)
                     }
 
                     setLove(it.data)
 
                     stopLoading()
+
+                    event.postValue(it.data)
                 }
 
             }
@@ -91,16 +102,15 @@ class EventActivity : AppCompatActivity() {
 
         val love = data?.love == 1
 
-        if (love) binding.btLoveEvent.bind(R.drawable.love_active, false)
-        else binding.btLoveEvent.bind(R.drawable.love_inactive, false)
+        if (love) btLoveEvent.bindImage(R.drawable.love_active, false)
+        else btLoveEvent.bindImage(R.drawable.love_inactive, false)
 
-        binding.btLoveEvent.setOnClickListener {
+        btLoveEvent.setOnClickListener {
 
             if (love) {
                 eventViewModel.unlove(data)
                 data?.love = 0
-            }
-            else {
+            } else {
                 eventViewModel.love(data)
                 data?.love = 1
             }
@@ -119,18 +129,17 @@ class EventActivity : AppCompatActivity() {
         }
 
     private fun startLoading() {
-
-        binding.scroll.hide()
-        binding.shimmer.show()
+        bar.show()
+        card.hide()
     }
 
     private fun stopLoading() {
 
-        binding.swipe.isRefreshing = false
-        binding.scroll.show()
-        binding.shimmer.stop()
-        binding.awayFouls.isFocusable = false
-        binding.homeFouls.isFocusable = false
-        binding.imThumb.requestFocus()
+        swipe.isRefreshing = false
+        awayFouls.isFocusable = false
+        homeFouls.isFocusable = false
+        imThumb.requestFocus()
+        bar.hide()
+        card.show()
     }
 }

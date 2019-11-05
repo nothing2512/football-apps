@@ -5,12 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
-import com.github.nothing2512.football_v2.repositories.LeagueRepository
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.league.LeagueViewModel
-import com.github.nothing2512.football_v2.utils.AppExecutors
-import com.github.nothing2512.football_v2.utils.data.source.LeagueDaoUtil
-import com.github.nothing2512.football_v2.utils.data.source.NetworkServiceUtil
 import com.github.nothing2512.football_v2.utils.repository.LeagueRepositoryUtil
 import com.github.nothing2512.football_v2.vo.Resource
 

@@ -8,6 +8,7 @@ import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.home.HomeActivity
 import com.github.nothing2512.football_v2.utils.RecyclerViewAssertions
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -36,6 +37,6 @@ class LeagueFragmentTest {
 
     @Test
     fun loadLeague() {
-        onView(withId(R.id.leagueRecyclerview)).check(RecyclerViewAssertions(TestUtil.LEAGUE_BINDING_COUNT))
+        onView(withId(Id.leagueRecyclerView)).check(RecyclerViewAssertions(TestUtil.LEAGUE_BINDING_COUNT))
     }
 }

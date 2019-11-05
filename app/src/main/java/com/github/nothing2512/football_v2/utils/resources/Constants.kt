@@ -1,4 +1,4 @@
-package com.github.nothing2512.football_v2.utils
+package com.github.nothing2512.football_v2.utils.resources
 
 object Constants {
 
@@ -7,8 +7,6 @@ object Constants {
     const val SERVICE_LATENCY_IN_MILLIS: Long = 2000
 
     const val IDLING = "GLOBAL"
-
-    const val THREAD_COUNT = 3
 
     const val STATE_NEXT = 0
     const val STATE_PREVIUS = 1
@@ -25,4 +23,7 @@ object Constants {
 
     const val STATE_LEAGUE = 0
     const val STATE_EVENT = 1
+
+    const val YELLOW = 0
+    const val RED = 1
 }

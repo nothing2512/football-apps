@@ -9,6 +9,7 @@ import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.home.HomeActivity
 import com.github.nothing2512.football_v2.utils.RecyclerViewAssertions
 import com.github.nothing2512.football_v2.utils.post
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -39,6 +40,6 @@ class SearchFragmentTest {
     fun loadSearch() {
         koinRule.homeViewModel.query.post(countingExecutorRule, TestUtil.STRING)
         koinRule.homeViewModel.submitQuery()
-        onView(withId(R.id.searchRecyclerView)).check(RecyclerViewAssertions(TestUtil.SEARCH_COUNT))
+        onView(withId(Id.eventRecyclerView)).check(RecyclerViewAssertions(TestUtil.SEARCH_COUNT))
     }
 }

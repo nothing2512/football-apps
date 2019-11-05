@@ -1,10 +1,7 @@
 package com.github.nothing2512.football_v2.data.source.local.entity
 
 import android.content.ContentValues
-import androidx.room.Entity
-import com.google.gson.annotations.SerializedName
 
-@Entity(primaryKeys = ["idLeague"])
 data class LeagueEntity(
     val idLeague: Int,
     val strLeague: String,

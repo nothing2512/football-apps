@@ -1,9 +1,7 @@
 package com.github.nothing2512.football_v2.utils
 
 import android.app.Activity
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
@@ -34,16 +32,6 @@ fun ShimmerFrameLayout.stop() {
 
 fun <VDB : ViewDataBinding> Activity.getBinding(layout: Int): VDB =
     DataBindingUtil.setContentView(this, layout)
-
-fun <VDB : ViewDataBinding> getBinding(
-    inflater: LayoutInflater,
-    layout: Int,
-    parent: ViewGroup?
-): VDB =
-    DataBindingUtil.inflate(inflater, layout, parent, false)
-
-fun <VDB : ViewDataBinding> getBinding(layout: Int, parent: ViewGroup?): VDB =
-    DataBindingUtil.inflate(LayoutInflater.from(parent?.context), layout, parent, false)
 
 fun <T> ViewModel.launchMain(block: suspend CoroutineScope.() -> T) {
     viewModelScope.launch {

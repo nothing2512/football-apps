@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.github.nothing2512.football_v2.testing.OpenForTesting
 import com.github.nothing2512.football_v2.ui.event.fragments.SearchFragment
 import com.github.nothing2512.football_v2.ui.league.LeagueFragment
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.launchMain
 
 @OpenForTesting
@@ -31,11 +31,8 @@ class HomeViewModel: ViewModel() {
             if (!query.value.isNullOrEmpty()) {
 
                 val f = fragments[1] as SearchFragment
-                if (fragment.value is LeagueFragment) {
-
-                    fragment.postValue(f)
-                    title.postValue(Constants.SEARCH_TITLE)
-                }
+                if (fragment.value is LeagueFragment) fragment.postValue(f)
+                title.postValue(Constants.SEARCH_TITLE)
                 f.setQuery(query.value)
             } else if (fragment.value is SearchFragment) {
                 fragment.postValue(fragments[0])

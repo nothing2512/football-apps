@@ -3,7 +3,7 @@ package com.github.nothing2512.football_v2.utils.rule
 import androidx.arch.core.executor.testing.CountingTaskExecutorRule
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import org.junit.runner.Description
 import java.util.*
 import java.util.concurrent.CopyOnWriteArrayList

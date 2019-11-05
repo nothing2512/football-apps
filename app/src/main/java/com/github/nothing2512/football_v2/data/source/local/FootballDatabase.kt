@@ -1,25 +1,81 @@
 package com.github.nothing2512.football_v2.data.source.local
 
-import androidx.room.Database
-import androidx.room.RoomDatabase
-import com.github.nothing2512.football_v2.data.source.local.dao.EventDao
-import com.github.nothing2512.football_v2.data.source.local.dao.LeagueDao
-import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
-import com.github.nothing2512.football_v2.data.source.local.entity.SearchEntity
+import android.annotation.SuppressLint
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import com.github.nothing2512.football_v2.testing.OpenForTesting
+import org.jetbrains.anko.db.*
 
-@Database(
-    version = 1,
-    exportSchema = false,
-    entities = [
-        LeagueEntity::class,
-        EventEntity::class,
-        SearchEntity::class
-    ]
-)
-abstract class FootballDatabase : RoomDatabase() {
+@Suppress("LeakingThis")
+@OpenForTesting
+@SuppressLint("StaticFieldLeak")
+class FootballDatabase(context: Context, dbName: String = "football")
+    : ManagedSQLiteOpenHelper(context, dbName, null, 1) {
 
-    abstract fun leagueDao(): LeagueDao
+    init {
+        instance = this
+    }
 
-    abstract fun eventDao(): EventDao
+    companion object {
+
+        private var instance: FootballDatabase? = null
+
+        @Synchronized
+        fun getInstance(context: Context) = instance ?: FootballDatabase(context)
+    }
+
+    override fun onCreate(db: SQLiteDatabase?) {
+
+        db?.createTable(
+            "event", true,
+            "idEvent" to INTEGER + PRIMARY_KEY + UNIQUE,
+            "idLeague" to INTEGER,
+            "strEvent" to TEXT,
+            "strLeague" to TEXT,
+            "strHomeTeam" to TEXT,
+            "strAwayTeam" to TEXT,
+            "intAwayScore" to INTEGER ,
+            "intHomeScore" to INTEGER,
+            "intRound" to INTEGER,
+            "strHomeYellowCards" to TEXT,
+            "strAwayYellowCards" to TEXT,
+            "strHomeRedCards" to TEXT,
+            "strAwayRedCards" to TEXT,
+            "dateEvent" to TEXT,
+            "strTime" to TEXT,
+            "strThumb" to TEXT,
+            "strSport" to TEXT,
+            "state" to INTEGER,
+            "love" to INTEGER
+        )
+
+        db?.createTable(
+            "league", true,
+            "idLeague" to INTEGER + PRIMARY_KEY + UNIQUE,
+            "strLeague" to TEXT,
+            "intFormedYear" to TEXT,
+            "dateFirstEvent" to TEXT,
+            "strGender" to TEXT,
+            "strCountry" to TEXT,
+            "strWebsite" to TEXT,
+            "strFacebook" to TEXT,
+            "strTwitter" to TEXT,
+            "strYoutube" to TEXT,
+            "strDescriptionEN" to TEXT,
+            "strBadge" to TEXT,
+            "love" to INTEGER
+        )
+
+        db?.createTable(
+            "search", true,
+            "idEvent" to INTEGER + PRIMARY_KEY,
+            "keyword" to TEXT
+        )
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.dropTable("event", true)
+        db?.dropTable("league", true)
+        db?.dropTable("search", true)
+    }
 }

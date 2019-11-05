@@ -1,46 +1,58 @@
 package com.github.nothing2512.football_v2.ui.league
 
 import android.os.Bundle
-import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import androidx.core.widget.NestedScrollView
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.binding.LeagueBinding
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
-import com.github.nothing2512.football_v2.databinding.ActivityLeagueBinding
+import com.github.nothing2512.football_v2.ui.view.league.LeagueActivityUI
 import com.github.nothing2512.football_v2.utils.*
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.vo.Status
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.setContentView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class LeagueActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityLeagueBinding
-
     private val leagueViewModel: LeagueViewModel by viewModel()
+    private val league = MutableLiveData<LeagueEntity>()
+
+    lateinit var swipe: SwipeRefreshLayout
+    lateinit var btLeagueLoved: ImageView
+    lateinit var scroll: NestedScrollView
+    lateinit var divider: ImageView
+    lateinit var tvDescription: TextView
+    lateinit var imContent: ImageView
+    lateinit var arrow: ImageView
+    lateinit var imBackground: ImageView
+    lateinit var mainFrame: FrameLayout
+    lateinit var card: CardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        launchMain {
-            binding = getBinding(R.layout.activity_league)
-            subscribeUI()
-        }
+        LeagueActivityUI(league, leagueViewModel).setContentView(this)
+        launchMain { subscribeUI() }
     }
 
     private fun subscribeUI() {
 
         val leagueId = intent.getIntExtra(Constants.EXTRA_ID, 0)
 
-        binding.activity = this
-        binding.lifecycleOwner = this
-        binding.viewModel = leagueViewModel
-
         leagueViewModel.setLeagueId(leagueId)
         leagueViewModel.setFragment(this, Constants.STATE_NEXT)
 
-        binding.swipe.setOnRefreshListener { getData(leagueId) }
+        swipe.setOnRefreshListener { getData(leagueId) }
 
         getData(leagueId)
 
@@ -63,15 +75,7 @@ class LeagueActivity : AppCompatActivity() {
 
                 Status.SUCCESS -> {
 
-                    val description = it.data?.strDescriptionEN ?: ""
-                    val dialog = LeagueDialog(this, description, binding.root as ViewGroup)
-
-                    binding.leagueData = LeagueBinding.parse(
-                        it.data,
-                        { dialog.show() },
-                        { finish() },
-                        applicationContext
-                    )
+                    league.postValue(it.data)
 
                     setLove(it.data)
 
@@ -85,16 +89,15 @@ class LeagueActivity : AppCompatActivity() {
 
         val love = data?.love == 1
 
-        if (love) binding.btLeagueLoved.bind(R.drawable.love_active, false)
-        else binding.btLeagueLoved.bind(R.drawable.love_inactive, false)
+        if (love) btLeagueLoved.bindImage(R.drawable.love_active, false)
+        else btLeagueLoved.bindImage(R.drawable.love_inactive, false)
 
-        binding.btLeagueLoved.setOnClickListener {
+        btLeagueLoved.setOnClickListener {
 
             if (love) {
                 leagueViewModel.unlove(data)
                 data?.love = 0
-            }
-            else {
+            } else {
                 leagueViewModel.love(data)
                 data?.love = 1
             }
@@ -103,27 +106,14 @@ class LeagueActivity : AppCompatActivity() {
     }
 
     private fun startLoading() {
-
-        binding.scroll.hide()
-        binding.divider.hide()
-        binding.tvDescription.hide()
-        binding.imContent.hide()
-        binding.arrow.hide()
-
-        binding.leagueShimmer.start()
+        card.hide()
     }
 
     private fun stopLoading() {
 
-        binding.mainFrame.isFocusable = false
-        binding.imBackground.requestFocus()
-        binding.swipe.isRefreshing = false
-        binding.scroll.show()
-        binding.divider.show()
-        binding.tvDescription.show()
-        binding.imContent.show()
-        binding.arrow.show()
-
-        binding.leagueShimmer.stop()
+        mainFrame.clearFocus()
+        imBackground.requestFocus()
+        swipe.isRefreshing = false
+        card.show()
     }
 }

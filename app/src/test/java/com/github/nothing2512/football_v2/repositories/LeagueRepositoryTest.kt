@@ -3,8 +3,7 @@ package com.github.nothing2512.football_v2.repositories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
-import com.github.nothing2512.football_v2.data.source.local.dao.LeagueDao
-import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
+import com.github.nothing2512.football_v2.data.source.local.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.remote.NetworkService
 import com.github.nothing2512.football_v2.testing.InstantAppExecutors
 import com.github.nothing2512.football_v2.testing.TestUtil
@@ -37,21 +36,19 @@ class LeagueRepositoryTest : KoinTest {
     val koinRule = KoinRule()
 
     private val appExecutors = InstantAppExecutors()
-    private val leagueDao = mockk<LeagueDao>()
+    private val helper = mockk<DatabaseHelper>()
     private val service = mockk<NetworkService>()
     private lateinit var repository: LeagueRepository
 
     @Test
     fun loadLeague() {
         val data = TestUtil.LEAGUE_ENTITY
-        val league = MutableLiveData<LeagueEntity>()
-        league.value = data
-        every { leagueDao.get(TestUtil.INT) } returns league
-        repository = LeagueRepository(appExecutors, leagueDao, service)
+        every { helper.getLeague(TestUtil.INT) } returns data
+        repository = LeagueRepository(appExecutors, helper, service)
         suspend {
             repository.getDetail(TestUtil.INT)
             coVerify { repository.getDetail(TestUtil.INT) }
-            confirmVerified(leagueDao)
+            confirmVerified(helper)
             assertThat(repository.league.value?.data, `is`(data))
         }
     }
@@ -74,15 +71,13 @@ class LeagueRepositoryTest : KoinTest {
     @Test
     fun loadLovedLeagues() {
         val data = listOf(TestUtil.LEAGUE_ENTITY)
-        val leagues = MutableLiveData<List<LeagueEntity>>()
-        leagues.value = data
-        every { leagueDao.getLoved() } returns leagues
-        repository = LeagueRepository(appExecutors, leagueDao, service)
+        every { helper.getLovedLeague() } returns data
+        repository = LeagueRepository(appExecutors, helper, service)
         suspend {
             repository.getLoved()
             coVerify { repository.getLoved() }
-            confirmVerified(leagueDao)
-            assertThat(repository.getLoved().value, `is`(data))
+            confirmVerified(helper)
+            assertThat(repository.getLoved(), `is`(data))
         }
     }
 }

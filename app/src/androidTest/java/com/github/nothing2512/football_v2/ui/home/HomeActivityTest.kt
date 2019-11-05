@@ -10,6 +10,7 @@ import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.event.fragments.SearchFragment
 import com.github.nothing2512.football_v2.utils.post
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -40,14 +41,14 @@ class HomeActivityTest {
 
     @Test
     fun testLeagueFragment() {
-        onView(withId(R.id.btBackHome)).check(matches(not(isDisplayed())))
+        onView(withId(Id.btBackHome)).check(matches(not(isDisplayed())))
     }
 
     @Test
     fun testSearchFragment() {
         koinRule.homeViewModel.query.post(countingExecutorRule, TestUtil.STRING)
         koinRule.homeViewModel.submitQuery()
-        onView(withId(R.id.btBackHome)).check(matches(not(isDisplayed())))
+        onView(withId(Id.btBackHome)).check(matches(not(isDisplayed())))
         assertTrue(koinRule.homeViewModel.fragment.value is SearchFragment)
     }
 }

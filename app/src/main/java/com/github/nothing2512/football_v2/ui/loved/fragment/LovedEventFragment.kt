@@ -4,19 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.facebook.shimmer.ShimmerFrameLayout
-import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.ui.event.adapter.EventAdapter
 import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
-import com.github.nothing2512.football_v2.ui.view.EventFragmentUI
+import com.github.nothing2512.football_v2.ui.view.event.EventFragmentUI
+import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.show
-import com.github.nothing2512.football_v2.utils.stop
 import org.jetbrains.anko.AnkoContext
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -24,7 +24,7 @@ class LovedEventFragment : Fragment() {
 
     private val lovedViewModel: LovedViewModel by sharedViewModel()
 
-    private lateinit var eventShimmer: ShimmerFrameLayout
+    private lateinit var bar: ProgressBar
     private lateinit var eventRecyclerView: RecyclerView
 
     override fun onCreateView(
@@ -33,10 +33,13 @@ class LovedEventFragment : Fragment() {
     ): View? {
 
         val ankoContext = context?.let { AnkoContext.create(it, this, false) }
-        val v = ankoContext?.let { EventFragmentUI<LovedEventFragment>().createView(it) }
+        val v = ankoContext?.let {
+            EventFragmentUI<LovedEventFragment>()
+                .createView(it)
+        }
 
-        v?.findViewById<ShimmerFrameLayout>(R.id.shimmer)?.let { eventShimmer = it }
-        v?.findViewById<RecyclerView>(R.id.eventRecyclerView)?.let { eventRecyclerView = it }
+        v?.findViewById<ProgressBar>(Id.bar)?.let { bar = it }
+        v?.findViewById<RecyclerView>(Id.eventRecyclerView)?.let { eventRecyclerView = it }
 
         return v
     }
@@ -45,7 +48,7 @@ class LovedEventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lovedViewModel.getEvents().observe(this, Observer {
             launchMain {
-                eventShimmer.stop()
+                bar.hide()
                 eventRecyclerView.show()
                 eventRecyclerView.apply {
                     isNestedScrollingEnabled = true

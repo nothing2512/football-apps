@@ -2,8 +2,8 @@ package com.github.nothing2512.football_v2.utils
 
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.VisibleForTesting
 import com.github.nothing2512.football_v2.testing.OpenForTesting
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -11,7 +11,6 @@ import java.util.concurrent.Executors
 class AppExecutors
 constructor(
     val diskIO: Executor = Executors.newSingleThreadExecutor(),
-    val networkIO: Executor = Executors.newFixedThreadPool(Constants.THREAD_COUNT),
     val mainThread: Executor = MainThreadExecutor()
 ) {
 

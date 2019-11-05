@@ -1,8 +1,8 @@
 package com.github.nothing2512.football_v2.di
 
 import android.content.Context
-import com.github.nothing2512.football_v2.data.source.anko.DatabaseHelper
-import com.github.nothing2512.football_v2.data.source.anko.FootballDatabase
+import com.github.nothing2512.football_v2.data.source.local.DatabaseHelper
+import com.github.nothing2512.football_v2.data.source.local.FootballDatabase
 import com.github.nothing2512.football_v2.data.source.remote.NetworkService
 import com.github.nothing2512.football_v2.data.source.remote.adapter.CallAdapterFactory
 import com.github.nothing2512.football_v2.repositories.EventRepository
@@ -12,7 +12,7 @@ import com.github.nothing2512.football_v2.ui.home.HomeViewModel
 import com.github.nothing2512.football_v2.ui.league.LeagueViewModel
 import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
 import com.github.nothing2512.football_v2.utils.AppExecutors
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

@@ -13,6 +13,9 @@ import com.github.nothing2512.football_v2.ui.loved.LovedActivity
 import com.github.nothing2512.football_v2.utils.bindFragment
 import com.github.nothing2512.football_v2.utils.bindText
 import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.resources.Dimens
+import com.github.nothing2512.football_v2.utils.resources.Id
+import com.github.nothing2512.football_v2.utils.resources.Strings
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -24,7 +27,7 @@ class HomeActivityUI(private val homeViewModel: HomeViewModel) : AnkoComponent<H
 
         swipeRefreshLayout {
 
-            id = R.id.swipe
+            id = Id.swipe
 
             nestedScrollView {
 
@@ -35,130 +38,176 @@ class HomeActivityUI(private val homeViewModel: HomeViewModel) : AnkoComponent<H
 
                     ui.owner.imBackground = imageView {
 
-                        id = R.id.imBackground
+                        id = Id.imBackground
                         isFocusable = true
                         scaleType = ImageView.ScaleType.CENTER_CROP
                         scaleX = -1f
                         setImageResource(R.drawable.background_gradient)
-                    }.lparams(matchParent, dip(300)) {
+                    }.lparams(matchParent, dip(Dimens.MAIN_BACKGROUND_HEIGHT)) {
                         topToTop = PARENT_ID
                     }
 
                     ui.owner.btBackHome = imageView {
 
-                        id = R.id.btBackHome
+                        id = Id.btBackHome
                         backgroundResource = R.drawable.left_arrow
                         hide()
                         onClick {
                             ui.owner.onBackPressed()
                         }
-                    }.lparams(dip(37), dip(37)) {
-                        setMargins(dip(11), dip(11), dip(11), dip(11))
+                    }.lparams(
+                        dip(Dimens.ICON_SIZE), dip(
+                            Dimens.ICON_SIZE
+                        )
+                    ) {
+                        setMargins(
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING)
+                        )
                         topToTop = PARENT_ID
                         startToStart = PARENT_ID
                     }
 
                     imageView {
 
-                        id = R.id.btHomeLove
+                        id = Id.btHomeLove
                         backgroundResource = R.drawable.love_active
                         onClick {
                             startActivity<LovedActivity>()
                         }
-                    }.lparams(dip(37), dip(37)) {
-                        setMargins(dip(11), dip(11), dip(11), dip(11))
+                    }.lparams(
+                        dip(Dimens.ICON_SIZE), dip(
+                            Dimens.ICON_SIZE
+                        )
+                    ) {
+                        setMargins(
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING)
+                        )
                         endToEnd = PARENT_ID
                         topToTop = PARENT_ID
                     }
 
-                    textView {
+                    textView(Strings.APP_NAME) {
 
-                        id = R.id.tvTitle
-                        textResource = R.string.app_name
+                        id = Id.tvTitle
                         textAlignment = TEXT_ALIGNMENT_CENTER
                         textColorResource = R.color.background
-                        textSize = 32f
+                        textSize = Dimens.TITLE_TEXT_SIZE
                         setTypeface(typeface, BOLD)
                     }.lparams(0, wrapContent) {
-                        setMargins(0, dip(66), 0, dip(22))
+                        setMargins(
+                            0,
+                            dip(Dimens.TITLE_TEXT_SPACING),
+                            0,
+                            dip(Dimens.DOUBLE_SPACING)
+                        )
                         endToEnd = PARENT_ID
                         startToStart = PARENT_ID
-                        topToTop = R.id.imBackground
+                        topToTop = Id.imBackground
                     }
 
-                    textView {
+                    textView(Strings.APP_DESC) {
 
-                        id = R.id.tvDesc
-                        textResource = R.string.app_desc
+                        id = Id.tvDesc
                         textAlignment = TEXT_ALIGNMENT_CENTER
                         textColorResource = R.color.background
-                        textSize = 22f
+                        textSize = Dimens.TITLE_DESC_SIZE
                     }.lparams(0, wrapContent) {
-                        setMargins(0, dip(22), 0, dip(22))
+                        setMargins(
+                            0,
+                            dip(Dimens.DOUBLE_SPACING),
+                            0,
+                            dip(Dimens.DOUBLE_SPACING)
+                        )
                         endToEnd = PARENT_ID
                         startToStart = PARENT_ID
-                        topToBottom = R.id.tvTitle
+                        topToBottom = Id.tvTitle
                     }
 
                     imageView {
 
-                        id = R.id.imContent
+                        id = Id.imContent
                         backgroundResource = R.drawable.main_content
                     }.lparams(matchParent, 0) {
-                        bottomToTop = R.id.content
-                        topToTop = R.id.tvContent
+                        bottomToTop = Id.content
+                        topToTop = Id.tvContent
                     }
 
                     ui.owner.searchView = searchView {
 
-                        id = R.id.searchView
+                        id = Id.searchView
                         gravity = Gravity.END
                         layoutDirection = LAYOUT_DIRECTION_RTL
-                        queryHint = resources.getString(R.string.search_match)
+                        queryHint = Strings.SEARCH_MATCH
                     }.lparams(matchParent, wrapContent) {
-                        setMargins(0, dip(11), dip(11), dip(11))
-                        bottomToTop = R.id.imContent
+                        setMargins(
+                            0,
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING)
+                        )
+                        bottomToTop = Id.imContent
                     }
 
                     view {
 
-                        id = R.id.dummyView
+                        id = Id.dummyView
                         translationZ = dip(-2).toFloat()
-                    }.lparams(matchParent, dip(256)) {
+                    }.lparams(matchParent, dip(Dimens.MAIN_DUMMY_HEIGHT)) {
                         topToTop = PARENT_ID
                     }
 
                     textView {
 
-                        id = R.id.tvContent
+                        id = Id.tvContent
                         bindText(ui.owner, homeViewModel.title)
                         textAlignment = TEXT_ALIGNMENT_CENTER
                         textColor = R.color.main_grey
-                        textSize = 22f
-                    }.lparams(matchParent, matchParent) {
-                        setMargins(dip(11), dip(22), dip(11), 0)
-                        topToBottom = R.id.dummyView
+                        textSize = Dimens.TITLE_DESC_SIZE
+                    }.lparams(matchParent, wrapContent) {
+                        setMargins(
+                            dip(Dimens.SPACING),
+                            dip(Dimens.DOUBLE_SPACING),
+                            dip(Dimens.SPACING),
+                            0
+                        )
+                        topToBottom = Id.dummyView
                     }
 
                     imageView {
 
-                        id = R.id.divider
+                        id = Id.divider
                         backgroundColor = R.color.main_grey
                     }.lparams(matchParent, dip(1)) {
-                        setMargins(dip(22), dip(11), dip(22), 0)
-                        topToBottom = R.id.tvContent
+                        setMargins(
+                            dip(Dimens.DOUBLE_SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.DOUBLE_SPACING),
+                            0
+                        )
+                        topToBottom = Id.tvContent
                     }
 
                     ui.owner.content = frameLayout {
-                        id = R.id.content
+                        id = Id.content
                         backgroundColor = R.color.content
                         isFocusable = false
                         isNestedScrollingEnabled = false
                         scrollBarSize = 0
                         bindFragment(ui.owner, homeViewModel.fragment)
                     }.lparams(matchParent, wrapContent) {
-                        setMargins(dip(11), dip(11), dip(11), dip(11))
-                        topToBottom = R.id.divider
+                        setMargins(
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING),
+                            dip(Dimens.SPACING)
+                        )
+                        topToBottom = Id.divider
                     }
 
                 }.lparams(matchParent, wrapContent)

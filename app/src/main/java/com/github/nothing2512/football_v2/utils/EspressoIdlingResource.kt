@@ -4,6 +4,7 @@ import android.os.Handler
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.test.espresso.idling.CountingIdlingResource
+import com.github.nothing2512.football_v2.utils.resources.Constants
 
 object EspressoIdlingResource {
 

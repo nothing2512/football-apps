@@ -1,4 +1,4 @@
-package com.github.nothing2512.football_v2.ui.view
+package com.github.nothing2512.football_v2.ui.view.league
 
 import android.graphics.Typeface
 import android.view.View.TEXT_ALIGNMENT_CENTER
@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
 import com.github.nothing2512.football_v2.utils.bindImage
+import com.github.nothing2512.football_v2.utils.resources.Dimens
+import com.github.nothing2512.football_v2.utils.resources.Id
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
@@ -16,40 +18,59 @@ class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<V
         constraintLayout {
 
             layoutParams = ViewGroup.LayoutParams(matchParent, dip(120)).apply {
-                setPadding(dip(11), dip(11), dip(11), dip(11))
+                setPadding(
+                    dip(Dimens.SPACING),
+                    dip(Dimens.SPACING),
+                    dip(Dimens.SPACING),
+                    dip(Dimens.SPACING)
+                )
             }
             onClick { league?.onClick?.invoke() }
 
             imageView {
-                id = R.id.imLogo
+                id = Id.imLogo
                 bindImage(league?.logo, false)
-            }.lparams(dip(90), dip(90)) {
+            }.lparams(
+                dip(Dimens.LOGO_ITEM_SIZE), dip(
+                    Dimens.LOGO_ITEM_SIZE
+                )
+            ) {
                 bottomToBottom = PARENT_ID
                 startToStart = PARENT_ID
                 topToTop = PARENT_ID
             }
 
             textView {
-                id = R.id.tvName
+                id = Id.tvName
                 text = league?.name
                 textAlignment = TEXT_ALIGNMENT_CENTER
                 textColorResource = android.R.color.black
                 setTypeface(typeface, Typeface.BOLD)
             }.lparams(0, wrapContent) {
-                setMargins(dip(11), dip(22), dip(11), 0)
-                startToEnd = R.id.imLogo
+                setMargins(
+                    dip(Dimens.SPACING),
+                    dip(Dimens.DOUBLE_SPACING),
+                    dip(Dimens.SPACING),
+                    0
+                )
+                startToEnd = Id.imLogo
                 topToTop = PARENT_ID
             }
 
             textView {
-                id = R.id.tvDesc
+                id = Id.tvDesc
                 maxLines = 2
                 text = league?.desc
                 textColorResource = R.color.main_grey
             }.lparams(0, wrapContent) {
-                setMargins(dip(11), dip(11), dip(11), 0)
-                startToEnd = R.id.imLogo
-                topToBottom = R.id.tvName
+                setMargins(
+                    dip(Dimens.SPACING),
+                    dip(Dimens.SPACING),
+                    dip(Dimens.SPACING),
+                    0
+                )
+                startToEnd = Id.imLogo
+                topToBottom = Id.tvName
             }
         }
     }

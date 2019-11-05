@@ -2,7 +2,7 @@ package com.github.nothing2512.football_v2.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.github.nothing2512.football_v2.data.source.anko.DatabaseHelper
+import com.github.nothing2512.football_v2.data.source.local.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
 import com.github.nothing2512.football_v2.data.source.local.entity.SearchEntity
 import com.github.nothing2512.football_v2.data.source.remote.ApiResponse
@@ -11,12 +11,13 @@ import com.github.nothing2512.football_v2.data.source.remote.response.EventRespo
 import com.github.nothing2512.football_v2.data.source.remote.response.SearchResponse
 import com.github.nothing2512.football_v2.testing.OpenForTesting
 import com.github.nothing2512.football_v2.utils.AppExecutors
-import com.github.nothing2512.football_v2.utils.Constants
 import com.github.nothing2512.football_v2.utils.EspressoIdlingResource
 import com.github.nothing2512.football_v2.utils.NetworkBoundService
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.vo.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 @OpenForTesting
 class EventRepository(
@@ -34,6 +35,9 @@ class EventRepository(
 
         val event = object :
             NetworkBoundService<EventResponse, EventResponse>(appExecutors) {
+
+            override fun onSuccessCall(item: EventResponse) = item
+
             override fun saveCallResult(item: EventResponse) {
                 item.events?.forEach {
                     if (it.isFootball()) {
@@ -49,9 +53,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<EventResponse> {
                 val event = MutableLiveData<EventResponse>()
 
-                helper.getNextEvent(idLeague)?.observeForever {
-                    event.postValue(EventResponse(it))
-                }
+                event.postValue(EventResponse(helper.getNextEvent(idLeague)))
 
                 return event
             }
@@ -70,6 +72,9 @@ class EventRepository(
 
         val event = object :
             NetworkBoundService<EventResponse, EventResponse>(appExecutors) {
+
+            override fun onSuccessCall(item: EventResponse) = item
+
             override fun saveCallResult(item: EventResponse) {
                 item.events?.forEach {
                     if (it.isFootball()) {
@@ -85,9 +90,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<EventResponse> {
                 val event = MutableLiveData<EventResponse>()
 
-                helper.getPreviusEvent(idLeague)?.observeForever {
-                    event.postValue(EventResponse(it))
-                }
+                event.postValue(EventResponse(helper.getPreviusEvent(idLeague)))
 
                 return event
             }
@@ -107,12 +110,23 @@ class EventRepository(
         val search = object :
             NetworkBoundService<SearchResponse, SearchResponse>(appExecutors) {
 
+            override fun onSuccessCall(item: SearchResponse) = item
+
             override fun saveCallResult(item: SearchResponse) {
+
                 item.event?.forEach {
                     if (it.isFootball()) {
                         it.state = Constants.STATE_NEXT
-                        helper.insert(SearchEntity(it.idEvent, query))
+                        helper.insert(
+                            SearchEntity(
+                                it.idEvent,
+                                query
+                            )
+                        )
                         helper.insert(it)
+                    } else {
+                        Timber.e(it.strEvent)
+                        Timber.e(it.strSport)
                     }
                 }
             }
@@ -123,9 +137,7 @@ class EventRepository(
             override fun loadFromDb(): LiveData<SearchResponse> {
                 val event = MutableLiveData<SearchResponse>()
 
-                helper.search(query)?.observeForever {
-                    event.postValue(SearchResponse(it ?: ArrayList()))
-                }
+                event.postValue(SearchResponse(helper.search(query) ?: ArrayList()))
 
                 return event
             }
@@ -145,6 +157,9 @@ class EventRepository(
         val event = object :
             NetworkBoundService<EventEntity, EventResponse>(appExecutors) {
 
+            override fun onSuccessCall(item: EventResponse) =
+                if (item.events?.isNotEmpty() == true) item.events[0] else null
+
             override fun saveCallResult(item: EventResponse) {
                 item.events?.get(0)?.let {
                     helper.insert(it)
@@ -154,7 +169,10 @@ class EventRepository(
             override fun shouldFetch(data: EventEntity?): Boolean =
                 data == null
 
-            override fun loadFromDb(): LiveData<EventEntity> = helper.getEvent(idEvent) ?: MutableLiveData()
+            override fun loadFromDb(): LiveData<EventEntity> =
+                MutableLiveData<EventEntity>().apply {
+                    postValue(helper.getEvent(idEvent))
+                }
 
             override fun createCall(): LiveData<ApiResponse<EventResponse>> =
                 EspressoIdlingResource.handle {

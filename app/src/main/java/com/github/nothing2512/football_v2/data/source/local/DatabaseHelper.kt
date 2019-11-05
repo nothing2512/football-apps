@@ -1,18 +1,18 @@
-package com.github.nothing2512.football_v2.data.source.anko
+package com.github.nothing2512.football_v2.data.source.local
 
 import android.content.ContentValues
-import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
 import com.github.nothing2512.football_v2.data.source.local.entity.SearchEntity
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.testing.OpenForTesting
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.select
-import org.jetbrains.anko.db.update
 import org.jetbrains.anko.doAsync
-import timber.log.Timber
 
+@OpenForTesting
+@Suppress("SameParameterValue")
 class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
 
     fun getEvent(idEvent: Int) = footballDatabase?.use {
@@ -20,11 +20,8 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
             "idEvent = {idEvent}",
             "idEvent" to idEvent
         ).exec {
-            val liveData = MutableLiveData<EventEntity>()
             val data = parseList<EventEntity>(classParser())
-            if (data.isEmpty()) liveData.postValue(null)
-            else liveData.postValue(data[0])
-            liveData
+            if (data.isEmpty()) null else data[0]
         }
     }
 
@@ -33,11 +30,8 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
             "idLeague = {idLeague}",
             "idLeague" to idLeague
         ).exec {
-            val liveData = MutableLiveData<LeagueEntity>()
             val data = parseList<LeagueEntity>(classParser())
-            if (data.isEmpty()) liveData.postValue(null)
-            else liveData.postValue(data[0])
-            liveData
+            if (data.isEmpty()) null else data[0]
         }
     }
 
@@ -46,11 +40,7 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
             "idLeague = {idLeague} and state = {state}",
             "idLeague" to idLeague,
             "state" to Constants.STATE_NEXT
-        ).exec {
-            val liveData = MutableLiveData<List<EventEntity>>()
-            liveData.postValue(parseList(classParser()))
-            liveData
-        }
+        ).exec { parseList<EventEntity>(classParser()) }
     }
 
     fun getPreviusEvent(idLeague: Int) = footballDatabase?.use {
@@ -58,54 +48,32 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
             "idLeague = {idLeague} and state = {state}",
             "idLeague" to idLeague,
             "state" to Constants.STATE_PREVIUS
-        ).exec {
-            val liveData = MutableLiveData<List<EventEntity>>()
-            liveData.postValue(parseList(classParser()))
-            liveData
-        }
+        ).exec { parseList<EventEntity>(classParser()) }
     }
 
     fun getLovedLeague() = footballDatabase?.use {
         select("league").whereArgs(
             "love = {love}",
             "love" to 1
-        ).exec {
-            val liveData = MutableLiveData<List<LeagueEntity>>()
-            liveData.postValue(parseList(classParser()))
-            liveData
-        }
+        ).exec { parseList<LeagueEntity>(classParser()) }
     }
 
     fun getLovedEvent() = footballDatabase?.use {
         select("event").whereArgs(
             "love = {love}",
             "love" to 1
-        ).exec {
-            val liveData = MutableLiveData<List<EventEntity>>()
-            liveData.postValue(parseList(classParser()))
-            liveData
-        }
-    }
-
-    fun loveEvent(idEvent: Int) {
-        footballDatabase?.use {
-            update("event", "love" to 1)
-                .whereArgs(
-                    "idEvent = {idEvent}",
-                    "idEvent" to idEvent
-                )
-        }
+        ).exec { parseList<EventEntity>(classParser()) }
     }
 
     fun search(keyword: String) = footballDatabase?.use {
 
-        val liveData = MutableLiveData<List<EventEntity>>()
         val cursor = rawQuery(
             "SELECT e.* FROM event e, search s WHERE e.idEvent = s.idEVent AND s.keyword = ?",
             arrayOf(keyword)
         )
+        val data = cursor.parseList<EventEntity>(classParser())
         cursor.close()
-        liveData
+        data
     }
 
     fun insert(search: SearchEntity) {
@@ -120,7 +88,7 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         insert("league", null, league?.getvalue())
     }
 
-    fun insert(table: String, columnHack: String?, value: ContentValues?) {
+    private fun insert(table: String, columnHack: String?, value: ContentValues?) {
         doAsync {
             footballDatabase?.use {
                 replace(table, columnHack, value)

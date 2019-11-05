@@ -8,6 +8,7 @@ import androidx.test.rule.ActivityTestRule
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.ui.loved.fragment.LovedEventFragment
 import com.github.nothing2512.football_v2.ui.loved.fragment.LovedLeagueFragment
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -37,13 +38,13 @@ class LovedActivityTest {
 
     @Test
     fun testLeagueFragment() {
-        onView(withId(R.id.tvLeagueLoved)).perform(click())
+        onView(withId(Id.tvLeagueLoved)).perform(click())
         assertTrue(koinRule.lovedViewModel.fragment.value is LovedLeagueFragment)
     }
 
     @Test
     fun testEventFragment() {
-        onView(withId(R.id.tvEvent)).perform((click()))
+        onView(withId(Id.tvEvent)).perform((click()))
         assertTrue(koinRule.lovedViewModel.fragment.value is LovedEventFragment)
     }
 }

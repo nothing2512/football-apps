@@ -1,14 +1,12 @@
 package com.github.nothing2512.football_v2.db
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.nothing2512.football_v2.data.source.local.FootballDatabase
+import com.github.nothing2512.football_v2.data.source.local.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.local.entity.SearchEntity
 import com.github.nothing2512.football_v2.testing.TestUtil
-import com.github.nothing2512.football_v2.utils.Constants
-import com.github.nothing2512.football_v2.utils.LiveDataTestUtil.getValue
+import com.github.nothing2512.football_v2.utils.data.source.DatabaseUtil
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
@@ -29,57 +27,54 @@ class DatabaseTest {
     @JvmField
     val countingExecutorRule = CountingExecutorRule()
 
-    private lateinit var db: FootballDatabase
+    private lateinit var db: DatabaseUtil
+    private lateinit var helper: DatabaseHelper
 
     @Before
     fun setUp() {
 
-        db = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            FootballDatabase::class.java
-        ).build()
+        db = DatabaseUtil(ApplicationProvider.getApplicationContext())
+        helper = DatabaseHelper(db)
     }
 
     @Test
     fun leagueTest() {
 
         val league = TestUtil.LEAGUE_ENTITY
-        db.leagueDao().insert(league)
-        val loaded = getValue(db.leagueDao().get(league.idLeague))
+        helper.insert(league)
+        val loaded = helper.getLeague(league.idLeague)
         assertThat(loaded, notNullValue())
-        assertThat<String>(loaded.strLeague, `is`<String>(league.strLeague))
+        assertThat<String>(loaded?.strLeague, `is`<String>(league.strLeague))
     }
 
     @Test
     fun detailEventTest() {
 
         val event = TestUtil.EVENT_ENTITY
-        db.eventDao().insert(event)
-        val loaded = getValue(db.eventDao().get(event.idEvent))
+        helper.insert(event)
+        val loaded = helper.getEvent(event.idEvent)
         assertThat(loaded, notNullValue())
-        assertThat<String>(loaded.strEvent, `is`<String>(event.strEvent))
+        assertThat<String>(loaded?.strEvent, `is`<String>(event.strEvent))
     }
 
     @Test
     fun eventPreviusTest() {
 
         val events = TestUtil.PREVIUS_EVENT
-        val idLeague = events.idLeague
-        db.eventDao().insert(events)
-        val loaded = getValue(db.eventDao().getInLeague(idLeague, Constants.STATE_PREVIUS))
+        helper.insert(events)
+        val loaded = helper.getPreviusEvent(events.idLeague)
         assertThat(loaded, notNullValue())
-        assertThat<Int>(loaded.size, `is`<Int>(1))
+        assertThat<Int>(loaded?.size, `is`<Int>(1))
     }
 
     @Test
     fun eventNextTest() {
 
         val events = TestUtil.NEXT_EVENT
-        val idLeague = events.idLeague
-        db.eventDao().insert(events)
-        val loaded = getValue(db.eventDao().getInLeague(idLeague, Constants.STATE_NEXT))
+        helper.insert(events)
+        val loaded = helper.getNextEvent(events.idLeague)
         assertThat(loaded, notNullValue())
-        assertThat<Int>(loaded.size, `is`<Int>(1))
+        assertThat<Int>(loaded?.size, `is`<Int>(1))
     }
 
     @Test
@@ -87,11 +82,11 @@ class DatabaseTest {
 
         val events = TestUtil.EVENT_ENTITY
         val query = events.strEvent
-        db.eventDao().insert(events)
-        db.eventDao().insert(SearchEntity(events.idEvent, query))
-        val loaded = getValue(db.eventDao().search(query))
+        helper.insert(events)
+        helper.insert(SearchEntity(events.idEvent, query))
+        val loaded = helper.search(query)
         assertThat(loaded, notNullValue())
-        assertThat<Int>(loaded.size, `is`<Int>(1))
+        assertThat<Int>(loaded?.size, `is`<Int>(1))
     }
 
     @Test
@@ -99,9 +94,10 @@ class DatabaseTest {
 
         val events = TestUtil.EVENT_ENTITY
         val id = events.idEvent
-        db.eventDao().insert(events)
-        db.eventDao().setLove(true, id)
-        val loaded = getValue(db.eventDao().getLoved())
+        helper.insert(events)
+        events.love = 1
+        helper.insert(events)
+        val loaded = helper.getLovedEvent()
         assertThat(loaded, notNullValue())
     }
 
@@ -109,15 +105,16 @@ class DatabaseTest {
     fun lovedLeagueTest() {
 
         val leagues = TestUtil.LEAGUE_ENTITY
-        val id = leagues.idLeague
-        db.leagueDao().insert(leagues)
-        db.leagueDao().setLove(true, id)
-        val loaded = getValue(db.leagueDao().getLoved())
+        helper.insert(leagues)
+        leagues.love = 1
+        helper.insert(leagues)
+        val loaded = helper.getLovedLeague()
         assertThat(loaded, notNullValue())
     }
 
     @After
     fun tearDown() {
         db.close()
+        db.drop()
     }
 }

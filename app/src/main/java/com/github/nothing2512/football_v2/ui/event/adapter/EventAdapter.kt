@@ -4,7 +4,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.ui.view.EventItemUI
+import com.github.nothing2512.football_v2.ui.view.event.EventItemUI
 import org.jetbrains.anko.AnkoContext
 
 class EventAdapter(private val data: List<EventEntity> = ArrayList()) :
@@ -17,7 +17,7 @@ class EventAdapter(private val data: List<EventEntity> = ArrayList()) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder =
         MainHolder(
             EventItemUI(
-                data[viewType],
+                if(data.isNotEmpty()) data[viewType] else null,
                 data.isEmpty()
             ).createView(AnkoContext.create(parent.context, parent))
         )

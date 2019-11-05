@@ -66,14 +66,10 @@ dependencies {
 
     implementation deps.support.app_compat
     implementation deps.support.recyclerview
-    implementation deps.support.cardview
     implementation deps.support.design
     implementation deps.support.core_ktx
-    implementation deps.support.paging
     implementation deps.support.annotations
     implementation deps.support.legacy
-    implementation deps.support.design
-    implementation deps.support.constraint_layout
 
     implementation deps.anko.common
     implementation deps.anko.anko
@@ -85,8 +81,6 @@ dependencies {
 
     implementation deps.coroutine.core
     implementation deps.coroutine.android
-
-    implementation deps.room.runtime
 
     implementation deps.lifecycle.viewmodel_ktx
     implementation deps.lifecycle.livedata_ktx
@@ -111,8 +105,7 @@ dependencies {
     implementation deps.koin.scope
     implementation deps.koin.androidx
 
-    kapt deps.room.compiler
-    kapt deps.lifecycle.compiler
+    annotationProcessor deps.lifecycle.compiler
 
     testImplementation deps.coroutine.test
     testImplementation deps.junit
@@ -126,7 +119,6 @@ dependencies {
 
     androidTestImplementation deps.support.app_compat
     androidTestImplementation deps.support.recyclerview
-    androidTestImplementation deps.support.cardview
     androidTestImplementation deps.support.design
 
     androidTestImplementation deps.espresso.core
@@ -154,38 +146,6 @@ project.tasks.whenTaskAdded {
 
 configurations.all {
     resolutionStrategy.eachDependency { details ->
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-runtime')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-testing')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-rxjava2')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-common')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-migration')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-compiler')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.paging'
-                && !details.requested.name.contains('paging-runtime-ktx')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.paging'
-                && !details.requested.name.contains('paging-runtime')) {
-            details.useVersion deps.versions.detail
-        }
         if (details.requested.group == 'androidx.arch.core'
                 && !details.requested.name.contains('core-runtime')) {
             details.useVersion deps.versions.detail

@@ -4,9 +4,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.binding.FoulBinding
-import com.github.nothing2512.football_v2.ui.view.FoulAwayItemUI
-import com.github.nothing2512.football_v2.ui.view.FoulHomeItemUI
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.ui.view.foul.FoulAwayItemUI
+import com.github.nothing2512.football_v2.ui.view.foul.FoulHomeItemUI
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import org.jetbrains.anko.AnkoContext
 
 class FoulAdapter(

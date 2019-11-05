@@ -32,11 +32,10 @@ abstract class NetworkBoundService<RESULT, REQUEST>
 
                 is ApiSuccessResponse -> {
                     appExecutors.diskIO.execute {
-                        saveCallResult(processResponse(response))
+                        val process = processResponse(response)
+                        saveCallResult(process)
                         appExecutors.mainThread.execute {
-                            result.addSource(loadFromDb()) {
-                                setValue(Resource.success(it))
-                            }
+                            setValue(Resource.success(onSuccessCall(process)))
                         }
                     }
 
@@ -97,5 +96,8 @@ abstract class NetworkBoundService<RESULT, REQUEST>
 
     @MainThread
     protected abstract fun createCall(): LiveData<ApiResponse<REQUEST>>
+
+    @MainThread
+    protected abstract fun onSuccessCall(item: REQUEST): RESULT?
 
 }

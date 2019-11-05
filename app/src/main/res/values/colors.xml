@@ -8,4 +8,6 @@
     <color name="main_grey">#A0A0A0</color>
     <color name="secondary_grey">#DDDDDD</color>
     <color name="state_enabled">#FF5CE8E5</color>
+    <color name="main_yellow">#E3DF12</color>
+    <color name="main_red">#FF0000</color>
 </resources>

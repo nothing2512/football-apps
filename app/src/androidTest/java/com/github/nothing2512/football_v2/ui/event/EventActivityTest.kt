@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -36,7 +37,7 @@ class EventActivityTest {
 
     @Test
     fun loadEvent() {
-        onView(withId(R.id.tvEventTitle)).check(matches(withText(TestUtil.EVENT_ENTITY.strEvent)))
-        onView(withId(R.id.tvLeague)).check(matches(withText(TestUtil.EVENT_ENTITY.strLeague)))
+        onView(withId(Id.tvEventTitle)).check(matches(withText(TestUtil.EVENT_ENTITY.strEvent)))
+        onView(withId(Id.tvLeague)).check(matches(withText(TestUtil.EVENT_ENTITY.strLeague)))
     }
 }

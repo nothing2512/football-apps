@@ -9,6 +9,7 @@ import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.league.LeagueActivity
 import com.github.nothing2512.football_v2.utils.RecyclerViewAssertions
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -37,7 +38,7 @@ class EventNextFragmentTest {
 
     @Test
     fun loadNextEvent() {
-        onView(withId(R.id.btStateNext)).perform(click())
-        onView(withId(R.id.eventRecyclerView)).check(RecyclerViewAssertions(TestUtil.NEXT_EVENT_COUNT))
+        onView(withId(Id.btStateNext)).perform(click())
+        onView(withId(Id.eventRecyclerView)).check(RecyclerViewAssertions(TestUtil.NEXT_EVENT_COUNT))
     }
 }

@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
-import com.github.nothing2512.football_v2.ui.view.LeagueItemUI
+import com.github.nothing2512.football_v2.ui.view.league.LeagueItemUI
 import org.jetbrains.anko.AnkoContext
 
 class LeagueAdapter(

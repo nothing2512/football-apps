@@ -11,7 +11,7 @@ import com.github.nothing2512.football_v2.repositories.LeagueRepository
 import com.github.nothing2512.football_v2.testing.OpenForTesting
 import com.github.nothing2512.football_v2.ui.loved.fragment.LovedEventFragment
 import com.github.nothing2512.football_v2.ui.loved.fragment.LovedLeagueFragment
-import com.github.nothing2512.football_v2.utils.Constants
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.launchMain
 
 @Suppress("PropertyName")
@@ -41,7 +41,7 @@ class LovedViewModel constructor(
 
         val events = MutableLiveData<List<EventEntity>>()
 
-        launchMain { eventRepository.getLoved()?.observeForever { events.postValue(it) } }
+        launchMain { events.postValue(eventRepository.getLoved()) }
 
         return events
     }
@@ -50,7 +50,7 @@ class LovedViewModel constructor(
 
         val leagues = MutableLiveData<List<LeagueEntity>>()
 
-        launchMain { leagueRepository.getLoved()?.observeForever { leagues.postValue(it) } }
+        launchMain { leagues.postValue(leagueRepository.getLoved())}
 
         return leagues
     }

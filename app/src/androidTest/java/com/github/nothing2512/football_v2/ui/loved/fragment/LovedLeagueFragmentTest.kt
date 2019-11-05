@@ -9,6 +9,7 @@ import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.loved.LovedActivity
 import com.github.nothing2512.football_v2.utils.RecyclerViewAssertions
+import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
 import com.github.nothing2512.football_v2.utils.rule.KoinRule
@@ -37,7 +38,7 @@ class LovedLeagueFragmentTest {
 
     @Test
     fun loadLeagues() {
-        onView(withId(R.id.tvLeagueLoved)).perform(click())
-        onView(withId(R.id.leagueRecyclerview)).check(RecyclerViewAssertions(TestUtil.LOVED_COUNT))
+        onView(withId(Id.tvLeagueLoved)).perform(click())
+        onView(withId(Id.leagueRecyclerView)).check(RecyclerViewAssertions(TestUtil.LOVED_COUNT))
     }
 }

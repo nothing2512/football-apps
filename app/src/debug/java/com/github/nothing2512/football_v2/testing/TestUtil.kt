@@ -12,7 +12,7 @@ object TestUtil {
 
     val EVENT_ENTITY = EventEntity(
         1,
-        0,
+        1,
         "event",
         "league",
         "homeTeam",
@@ -61,8 +61,8 @@ object TestUtil {
     )
 
     val NEXT_EVENT = EventEntity(
-        0,
-        0,
+        1,
+        1,
         "event",
         "league",
         "homeTeam",
@@ -84,7 +84,7 @@ object TestUtil {
 
     val PREVIUS_EVENT = EventEntity(
         1,
-        0,
+        1,
         "event",
         "league",
         "homeTeam",
