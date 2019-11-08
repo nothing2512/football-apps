@@ -3,7 +3,6 @@ package com.github.nothing2512.football_v2.utils
 import android.os.Handler
 import android.os.Looper
 import com.github.nothing2512.football_v2.testing.OpenForTesting
-import com.github.nothing2512.football_v2.utils.resources.Constants
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 

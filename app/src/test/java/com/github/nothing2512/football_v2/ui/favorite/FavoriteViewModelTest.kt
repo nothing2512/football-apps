@@ -1,4 +1,4 @@
-package com.github.nothing2512.football_v2.ui.loved
+package com.github.nothing2512.football_v2.ui.favorite
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.fragment.app.Fragment
@@ -18,7 +18,7 @@ import org.koin.test.KoinTest
 
 @Suppress("LocalVariableName")
 @ExperimentalCoroutinesApi
-class LovedViewModelTest : KoinTest {
+class FavoriteViewModelTest : KoinTest {
 
     @Rule
     @JvmField
@@ -34,7 +34,7 @@ class LovedViewModelTest : KoinTest {
 
     private val leagueRepository = mockk<LeagueRepository>()
     private val eventRepository = mockk<EventRepository>()
-    private lateinit var viewModel: LovedViewModel
+    private lateinit var viewModel: FavoriteViewModel
 
     @Test
     fun setFragment() {
@@ -51,25 +51,25 @@ class LovedViewModelTest : KoinTest {
     }
 
     @Test
-    fun loadLeagues() {
+    fun loadFavoriteLeagues() {
 
         val data = listOf(TestUtil.LEAGUE_ENTITY)
-        coEvery { leagueRepository.getLoved() } returns data
-        viewModel = LovedViewModel(eventRepository, leagueRepository)
+        coEvery { leagueRepository.getFavorite() } returns data
+        viewModel = FavoriteViewModel(eventRepository, leagueRepository)
         viewModel.getLeagues()
-        coVerify { leagueRepository.getLoved() }
+        coVerify { leagueRepository.getFavorite() }
         confirmVerified(leagueRepository)
         assertThat(viewModel.getLeagues().value, `is`(data))
     }
 
     @Test
-    fun loadEvents() {
+    fun loadFavoriteEvents() {
 
         val data = listOf(TestUtil.EVENT_ENTITY)
-        coEvery { eventRepository.getLoved() } returns data
-        viewModel = LovedViewModel(eventRepository, leagueRepository)
+        coEvery { eventRepository.getFavorite() } returns data
+        viewModel = FavoriteViewModel(eventRepository, leagueRepository)
         viewModel.getEvents()
-        coVerify { eventRepository.getLoved() }
+        coVerify { eventRepository.getFavorite() }
         confirmVerified(eventRepository)
         assertThat(viewModel.getEvents().value, `is`(data))
     }

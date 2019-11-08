@@ -8,7 +8,7 @@ import org.koin.core.context.startKoin
 import timber.log.Timber
 
 @Suppress("unused")
-class MainApplication: Application() {
+class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -19,6 +19,6 @@ class MainApplication: Application() {
             modules(appModule)
         }
 
-        if ( BuildConfig.DEBUG ) Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 }

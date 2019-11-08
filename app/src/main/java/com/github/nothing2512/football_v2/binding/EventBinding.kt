@@ -1,8 +1,8 @@
 package com.github.nothing2512.football_v2.binding
 
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.TimeUtil
+import com.github.nothing2512.football_v2.utils.resources.Constants
 
 data class EventBinding(
     val strEvent: String,

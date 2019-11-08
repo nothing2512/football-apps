@@ -5,15 +5,14 @@ import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.binding.LeagueItemBindingData
-import com.github.nothing2512.football_v2.utils.bindImage
+import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.resources.Dimens
 import com.github.nothing2512.football_v2.utils.resources.Id
+import com.github.nothing2512.football_v2.utils.resources.Strings
 import org.jetbrains.anko.*
 import org.jetbrains.anko.constraint.layout.constraintLayout
-import org.jetbrains.anko.sdk27.coroutines.onClick
 
-class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<ViewGroup> {
+class LeagueItemUI : AnkoComponent<ViewGroup> {
     override fun createView(ui: AnkoContext<ViewGroup>) = with(ui) {
         constraintLayout {
 
@@ -25,11 +24,9 @@ class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<V
                     dip(Dimens.SPACING)
                 )
             }
-            onClick { league?.onClick?.invoke() }
 
             imageView {
                 id = Id.imLogo
-                bindImage(league?.logo, false)
             }.lparams(
                 dip(Dimens.LOGO_ITEM_SIZE), dip(
                     Dimens.LOGO_ITEM_SIZE
@@ -42,7 +39,6 @@ class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<V
 
             textView {
                 id = Id.tvName
-                text = league?.name
                 textAlignment = TEXT_ALIGNMENT_CENTER
                 textColorResource = android.R.color.black
                 setTypeface(typeface, Typeface.BOLD)
@@ -60,7 +56,6 @@ class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<V
             textView {
                 id = Id.tvDesc
                 maxLines = 2
-                text = league?.desc
                 textColorResource = R.color.main_grey
             }.lparams(0, wrapContent) {
                 setMargins(
@@ -71,6 +66,21 @@ class LeagueItemUI(private val league: LeagueItemBindingData?) : AnkoComponent<V
                 )
                 startToEnd = Id.imLogo
                 topToBottom = Id.tvName
+            }
+
+            textView(Strings.LEAGUE_NOT_FOUND) {
+                id = Id.tvNotFound
+                maxLines = 1
+                textAlignment = TEXT_ALIGNMENT_CENTER
+                textColorResource = R.color.main_grey
+                textSize = Dimens.TITLE_DESC_SIZE
+                setTypeface(typeface, Typeface.BOLD)
+                hide()
+            }.lparams(wrapContent, wrapContent) {
+                setMargins(0, dip(Dimens.SPACING), 0, 0)
+                endToEnd = PARENT_ID
+                startToStart = PARENT_ID
+                topToTop = PARENT_ID
             }
         }
     }

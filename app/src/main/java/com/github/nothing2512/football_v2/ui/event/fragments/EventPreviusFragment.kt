@@ -16,16 +16,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.ui.event.EventViewModel
 import com.github.nothing2512.football_v2.ui.event.adapter.EventAdapter
 import com.github.nothing2512.football_v2.ui.view.event.EventFragmentUI
-import com.github.nothing2512.football_v2.utils.*
+import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.launchMain
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.resources.Id
+import com.github.nothing2512.football_v2.utils.show
 import com.github.nothing2512.football_v2.vo.Status
 import org.jetbrains.anko.AnkoContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EventPreviusFragment(private val idLeague: Int) : Fragment() {
+class EventPreviusFragment : Fragment() {
 
     private val eventViewModel: EventViewModel by viewModel()
 
+    private var idLeague = 0
     private lateinit var bar: ProgressBar
     private lateinit var eventRecyclerView: RecyclerView
 
@@ -35,11 +39,15 @@ class EventPreviusFragment(private val idLeague: Int) : Fragment() {
     ): View? {
 
         val ankoContext = context?.let { AnkoContext.create(it, this, false) }
-        val v = ankoContext?.let { EventFragmentUI<EventPreviusFragment>()
-            .createView(it) }
+        val v = ankoContext?.let {
+            EventFragmentUI<EventPreviusFragment>()
+                .createView(it)
+        }
 
         v?.findViewById<ProgressBar>(Id.bar)?.let { bar = it }
         v?.findViewById<RecyclerView>(Id.eventRecyclerView)?.let { eventRecyclerView = it }
+
+        idLeague = arguments?.getInt(Constants.EXTRA_ID) ?: 0
 
         return v
     }
@@ -100,6 +108,11 @@ class EventPreviusFragment(private val idLeague: Int) : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(idLeague: Int) = EventPreviusFragment(idLeague)
+        fun newInstance(idLeague: Int) = EventPreviusFragment().apply {
+            val bundle = Bundle().apply {
+                putInt(Constants.EXTRA_ID, idLeague)
+            }
+            arguments = bundle
+        }
     }
 }

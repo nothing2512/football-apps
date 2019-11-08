@@ -1,4 +1,4 @@
-package com.github.nothing2512.football_v2.ui.loved.fragment
+package com.github.nothing2512.football_v2.ui.favorite.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,21 +10,22 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.github.nothing2512.football_v2.ui.league.LeagueAdapter
-import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
-import com.github.nothing2512.football_v2.ui.view.league.LeagueFragmentUI
+import com.github.nothing2512.football_v2.ui.event.adapter.EventAdapter
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteViewModel
+import com.github.nothing2512.football_v2.ui.view.event.EventFragmentUI
 import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
 import com.github.nothing2512.football_v2.utils.resources.Id
+import com.github.nothing2512.football_v2.utils.show
 import org.jetbrains.anko.AnkoContext
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class LovedLeagueFragment : Fragment() {
+class FavoriteEventFragment : Fragment() {
 
-    private val lovedViewModel: LovedViewModel by sharedViewModel()
+    private val lovedViewModel: FavoriteViewModel by sharedViewModel()
 
     private lateinit var bar: ProgressBar
-    private lateinit var leagueRecyclerview: RecyclerView
+    private lateinit var eventRecyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,27 +34,36 @@ class LovedLeagueFragment : Fragment() {
 
         val ankoContext = context?.let { AnkoContext.create(it, this, false) }
         val v = ankoContext?.let {
-            LeagueFragmentUI<LovedLeagueFragment>()
+            EventFragmentUI<FavoriteEventFragment>()
                 .createView(it)
         }
 
         v?.findViewById<ProgressBar>(Id.bar)?.let { bar = it }
-        v?.findViewById<RecyclerView>(Id.leagueRecyclerView)?.let { leagueRecyclerview = it }
+        v?.findViewById<RecyclerView>(Id.eventRecyclerView)?.let { eventRecyclerView = it }
 
         return v
     }
 
+    override fun onResume() {
+        super.onResume()
+        getData()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getData()
+    }
 
-        lovedViewModel.getLeagues().observe(this, Observer {
+    private fun getData() {
+        lovedViewModel.getEvents().observe(this, Observer {
             launchMain {
                 bar.hide()
-                leagueRecyclerview.apply {
+                eventRecyclerView.show()
+                eventRecyclerView.apply {
                     isNestedScrollingEnabled = true
                     layoutManager = LinearLayoutManager(context)
                     addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
-                    adapter = LeagueAdapter(it)
+                    adapter = EventAdapter(it)
                     clearFocus()
                 }
             }
@@ -63,6 +73,6 @@ class LovedLeagueFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance() = LovedLeagueFragment()
+        fun newInstance() = FavoriteEventFragment()
     }
 }

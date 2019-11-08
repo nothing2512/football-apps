@@ -32,17 +32,94 @@ object TestUtil {
         0
     )
 
-    val EVENT_RESPONSE = EventResponse(listOf(
-        EVENT_ENTITY,
-        EVENT_ENTITY,
-        EVENT_ENTITY
-    ))
+    val EVENT_RESPONSE = EventResponse(
+        listOf(
+            EVENT_ENTITY,
+            EVENT_ENTITY,
+            EVENT_ENTITY
+        )
+    )
 
-    val SEARCH_RESPONSE = SearchResponse(listOf(
-        EVENT_ENTITY,
-        EVENT_ENTITY,
-        EVENT_ENTITY
-    ))
+    val ARSENAL_RESPONSE = SearchResponse(
+        listOf(
+            EventEntity(
+                1,
+                1,
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                0,
+                0,
+                0,
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                0,
+                0
+            ),
+            EventEntity(
+                2,
+                1,
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                0,
+                0,
+                0,
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                "arsenal",
+                0,
+                0
+            )
+        )
+    )
+
+    val BARCELONA_RESPONSE = SearchResponse(
+        listOf(
+            EventEntity(
+                3,
+                1,
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                0,
+                0,
+                0,
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                "barcelona",
+                0,
+                0
+            )
+        )
+    )
+
+    val SEARCH_RESPONSE = SearchResponse(
+        listOf(
+            EVENT_ENTITY,
+            EVENT_ENTITY,
+            EVENT_ENTITY
+        )
+    )
 
     val LEAGUE_ENTITY = LeagueEntity(
         1,
@@ -109,7 +186,8 @@ object TestUtil {
 
     const val NEXT_EVENT_COUNT = 3
     const val PREVIUS_EVENT_COUNT = 3
-    const val SEARCH_COUNT = 1
+    const val BARCELONA_COUNT = 1
+    const val ARSENAL_COUNT = 2
     const val LEAGUE_BINDING_COUNT = 1
     const val LOVED_COUNT = 1
 }

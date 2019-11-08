@@ -8,9 +8,9 @@ import com.github.nothing2512.football_v2.data.source.remote.adapter.CallAdapter
 import com.github.nothing2512.football_v2.repositories.EventRepository
 import com.github.nothing2512.football_v2.repositories.LeagueRepository
 import com.github.nothing2512.football_v2.ui.event.EventViewModel
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteViewModel
 import com.github.nothing2512.football_v2.ui.home.HomeViewModel
 import com.github.nothing2512.football_v2.ui.league.LeagueViewModel
-import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
 import com.github.nothing2512.football_v2.utils.AppExecutors
 import com.github.nothing2512.football_v2.utils.resources.Constants
 import org.koin.android.ext.koin.androidContext
@@ -30,7 +30,7 @@ val appModule = module {
     viewModel { HomeViewModel() }
     viewModel { EventViewModel(get()) }
     viewModel { LeagueViewModel(get()) }
-    viewModel { LovedViewModel(get(), get()) }
+    viewModel { FavoriteViewModel(get(), get()) }
 }
 
 private fun provideService() = Retrofit.Builder()

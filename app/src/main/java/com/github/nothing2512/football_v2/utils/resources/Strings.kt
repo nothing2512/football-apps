@@ -19,6 +19,7 @@ object Strings {
     const val LEAGUE = "league"
     const val EVENT = "event"
     const val EVENT_NOT_FOUND = "Event Not Found"
+    const val LEAGUE_NOT_FOUND = "League Not Found"
     const val SEARCH_MATCH = "Search Match"
 
     val FOOTBALL_NAME = arrayOf(

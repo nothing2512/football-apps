@@ -15,7 +15,7 @@ class CountingExecutorRule : CountingTaskExecutorRule() {
 
     private val callbacks = CopyOnWriteArrayList<IdlingResource.ResourceCallback>()
 
-    private val idlingResources = object: IdlingResource {
+    private val idlingResources = object : IdlingResource {
         override fun getName(): String = "resource $id"
 
         override fun isIdleNow(): Boolean = isIdle
@@ -39,6 +39,6 @@ class CountingExecutorRule : CountingTaskExecutorRule() {
 
     override fun onIdle() {
         super.onIdle()
-        for ( item in callbacks ) item.onTransitionToIdle()
+        for (item in callbacks) item.onTransitionToIdle()
     }
 }

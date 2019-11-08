@@ -126,7 +126,7 @@ dependencies {
     androidTestImplementation deps.espresso.intents
 
     androidTestImplementation deps.arch_core.testing
-    androidTestImplementation (deps.mockk.instrumented) {
+    androidTestImplementation(deps.mockk.instrumented) {
         exclude module: deps.objenesis.module
     }
     androidTestImplementation deps.objenesis.main

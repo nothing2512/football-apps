@@ -6,10 +6,10 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.ui.event.fragments.SearchFragment
-import com.github.nothing2512.football_v2.utils.post
+import com.github.nothing2512.football_v2.ui.league.LeagueFragment
+import com.github.nothing2512.football_v2.utils.SearchViewAction
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
 import com.github.nothing2512.football_v2.utils.rule.IdlingRule
@@ -19,6 +19,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.util.concurrent.TimeUnit
 
 @RunWith(AndroidJUnit4::class)
 class HomeActivityTest {
@@ -42,13 +43,17 @@ class HomeActivityTest {
     @Test
     fun testLeagueFragment() {
         onView(withId(Id.btBackHome)).check(matches(not(isDisplayed())))
+        assertTrue(koinRule.homeViewModel.fragment.value is LeagueFragment)
     }
 
     @Test
     fun testSearchFragment() {
-        koinRule.homeViewModel.query.post(countingExecutorRule, TestUtil.STRING)
-        koinRule.homeViewModel.submitQuery()
-        onView(withId(Id.btBackHome)).check(matches(not(isDisplayed())))
+        onView(withId(Id.searchView)).perform(SearchViewAction("arsenal"))
+        countingExecutorRule.drainTasks(
+            Constants.SERVICE_LATENCY_IN_MILLIS.toInt(),
+            TimeUnit.MILLISECONDS
+        )
+        onView(withId(Id.btBackHome)).check(matches(isDisplayed()))
         assertTrue(koinRule.homeViewModel.fragment.value is SearchFragment)
     }
 }

@@ -56,10 +56,10 @@ class LeagueViewModel(
     }
 
     fun love(league: LeagueEntity?) {
-        launchMain { repository.setLoved(true, league) }
+        launchMain { repository.setFavorite(true, league) }
     }
 
     fun unlove(league: LeagueEntity?) {
-        launchMain { repository.setLoved(false, league) }
+        launchMain { repository.setFavorite(false, league) }
     }
 }

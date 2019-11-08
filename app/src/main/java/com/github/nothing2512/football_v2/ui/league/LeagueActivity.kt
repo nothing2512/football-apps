@@ -11,14 +11,15 @@ import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.facebook.shimmer.ShimmerFrameLayout
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.data.source.local.entity.LeagueEntity
 import com.github.nothing2512.football_v2.ui.view.league.LeagueActivityUI
-import com.github.nothing2512.football_v2.utils.*
+import com.github.nothing2512.football_v2.utils.bindImage
+import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.launchMain
 import com.github.nothing2512.football_v2.utils.resources.Constants
+import com.github.nothing2512.football_v2.utils.show
 import com.github.nothing2512.football_v2.vo.Status
-import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.setContentView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 

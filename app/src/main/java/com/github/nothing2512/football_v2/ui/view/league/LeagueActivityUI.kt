@@ -18,6 +18,7 @@ import com.github.nothing2512.football_v2.ui.league.LeagueViewModel
 import com.github.nothing2512.football_v2.utils.bindFragment
 import com.github.nothing2512.football_v2.utils.bindImage
 import com.github.nothing2512.football_v2.utils.bindText
+import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.resources.Dimens
 import com.github.nothing2512.football_v2.utils.resources.Id
@@ -71,7 +72,7 @@ class LeagueActivityUI(
                         }
 
                         ui.owner.btLeagueLoved = imageView {
-                            id = Id.btLeagueLoved
+                            id = Id.btLeagueFavorite
                             imageResource = R.drawable.love_inactive
 
                         }.lparams(
@@ -88,6 +89,7 @@ class LeagueActivityUI(
                             id = Id.card
                             topPadding = dip(Dimens.SPACING)
                             radius = dip(Dimens.SPACING).toFloat()
+                            hide()
 
                             constraintLayout {
 

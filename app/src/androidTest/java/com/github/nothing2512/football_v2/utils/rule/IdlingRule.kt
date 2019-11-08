@@ -6,7 +6,7 @@ import com.github.nothing2512.football_v2.utils.EspressoIdlingResource
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class IdlingRule (activityTestRule: ActivityTestRule<*>): TestWatcher() {
+class IdlingRule(activityTestRule: ActivityTestRule<*>) : TestWatcher() {
 
     private val resource =
         DataBindingIdlingResources(activityTestRule)

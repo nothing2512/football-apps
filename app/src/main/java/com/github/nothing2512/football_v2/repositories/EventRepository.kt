@@ -184,7 +184,7 @@ class EventRepository(
         event.observeForever { detailEvent.postValue(it) }
     }
 
-    suspend fun setLove(love: Boolean, event: EventEntity?) {
+    suspend fun setFavorite(love: Boolean, event: EventEntity?) {
         withContext(Dispatchers.IO) {
             if (love) event?.love = 1
             else event?.love = 0
@@ -192,7 +192,7 @@ class EventRepository(
         }
     }
 
-    suspend fun getLoved() = withContext(Dispatchers.IO) {
-        helper.getLovedEvent()
+    suspend fun getFavorite() = withContext(Dispatchers.IO) {
+        helper.getFavoriteEvent()
     }
 }

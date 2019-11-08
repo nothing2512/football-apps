@@ -9,14 +9,18 @@ import com.github.nothing2512.football_v2.data.source.remote.response.LeagueResp
 import com.github.nothing2512.football_v2.data.source.remote.response.SearchResponse
 
 class NetworkServiceUtil : NetworkService {
-    override fun detailLeague(leagueId: Int?): LiveData<ApiResponse<LeagueResponse>> = MutableLiveData()
+    override fun detailLeague(leagueId: Int?): LiveData<ApiResponse<LeagueResponse>> =
+        MutableLiveData()
 
     override fun nextEvent(leagueId: Int?): LiveData<ApiResponse<EventResponse>> = MutableLiveData()
 
-    override fun previusEvent(leagueId: Int?): LiveData<ApiResponse<EventResponse>> = MutableLiveData()
+    override fun previusEvent(leagueId: Int?): LiveData<ApiResponse<EventResponse>> =
+        MutableLiveData()
 
-    override fun detailEvent(eventId: Int?): LiveData<ApiResponse<EventResponse>> = MutableLiveData()
+    override fun detailEvent(eventId: Int?): LiveData<ApiResponse<EventResponse>> =
+        MutableLiveData()
 
-    override fun search(query: String?): LiveData<ApiResponse<SearchResponse>> = MutableLiveData()
+    override fun search(query: String?): LiveData<ApiResponse<SearchResponse>> =
+        MutableLiveData<ApiResponse<SearchResponse>>()
 
 }

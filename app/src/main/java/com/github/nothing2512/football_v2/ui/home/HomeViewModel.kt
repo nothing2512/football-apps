@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.github.nothing2512.football_v2.testing.OpenForTesting
 import com.github.nothing2512.football_v2.ui.event.fragments.SearchFragment
 import com.github.nothing2512.football_v2.ui.league.LeagueFragment
-import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.launchMain
+import com.github.nothing2512.football_v2.utils.resources.Constants
 
 @OpenForTesting
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val fragments = arrayListOf(
         LeagueFragment.newInstance(),

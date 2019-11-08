@@ -45,7 +45,7 @@ class LeagueRepositoryTest : KoinTest {
         val data = TestUtil.LEAGUE_ENTITY
         every { helper.getLeague(TestUtil.INT) } returns data
         repository = LeagueRepository(appExecutors, helper, service)
-        suspend {
+        coroutineRule.runAsync {
             repository.getDetail(TestUtil.INT)
             coVerify { repository.getDetail(TestUtil.INT) }
             confirmVerified(helper)
@@ -60,7 +60,7 @@ class LeagueRepositoryTest : KoinTest {
         leagues.value = data
         repository = mockk()
         every { repository.leagues } returns leagues
-        suspend {
+        coroutineRule.runAsync {
             repository.getLeagues(null)
             coVerify { repository.getLeagues(null) }
             confirmVerified(repository)
@@ -69,15 +69,15 @@ class LeagueRepositoryTest : KoinTest {
     }
 
     @Test
-    fun loadLovedLeagues() {
+    fun loadFavoriteLeagues() {
         val data = listOf(TestUtil.LEAGUE_ENTITY)
-        every { helper.getLovedLeague() } returns data
+        every { helper.getFavoriteLeague() } returns data
         repository = LeagueRepository(appExecutors, helper, service)
-        suspend {
-            repository.getLoved()
-            coVerify { repository.getLoved() }
+        coroutineRule.runAsync {
+            repository.getFavorite()
+            coVerify { repository.getFavorite() }
             confirmVerified(helper)
-            assertThat(repository.getLoved(), `is`(data))
+            assertThat(repository.getFavorite(), `is`(data))
         }
     }
 }

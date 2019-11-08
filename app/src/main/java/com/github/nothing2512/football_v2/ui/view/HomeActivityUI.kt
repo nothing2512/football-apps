@@ -7,9 +7,9 @@ import android.view.View.TEXT_ALIGNMENT_CENTER
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteActivity
 import com.github.nothing2512.football_v2.ui.home.HomeActivity
 import com.github.nothing2512.football_v2.ui.home.HomeViewModel
-import com.github.nothing2512.football_v2.ui.loved.LovedActivity
 import com.github.nothing2512.football_v2.utils.bindFragment
 import com.github.nothing2512.football_v2.utils.bindText
 import com.github.nothing2512.football_v2.utils.hide
@@ -75,7 +75,7 @@ class HomeActivityUI(private val homeViewModel: HomeViewModel) : AnkoComponent<H
                         id = Id.btHomeLove
                         backgroundResource = R.drawable.love_active
                         onClick {
-                            startActivity<LovedActivity>()
+                            startActivity<FavoriteActivity>()
                         }
                     }.lparams(
                         dip(Dimens.ICON_SIZE), dip(

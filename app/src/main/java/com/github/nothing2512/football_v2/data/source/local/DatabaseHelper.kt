@@ -51,14 +51,14 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         ).exec { parseList<EventEntity>(classParser()) }
     }
 
-    fun getLovedLeague() = footballDatabase?.use {
+    fun getFavoriteLeague() = footballDatabase?.use {
         select("league").whereArgs(
             "love = {love}",
             "love" to 1
         ).exec { parseList<LeagueEntity>(classParser()) }
     }
 
-    fun getLovedEvent() = footballDatabase?.use {
+    fun getFavoriteEvent() = footballDatabase?.use {
         select("event").whereArgs(
             "love = {love}",
             "love" to 1
@@ -84,7 +84,7 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         insert("event", null, event?.getValue())
     }
 
-    fun insert(league: LeagueEntity?) {
+    final fun insert(league: LeagueEntity?) {
         insert("league", null, league?.getvalue())
     }
 

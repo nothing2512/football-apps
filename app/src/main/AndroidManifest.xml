@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.loved.LovedActivity" />
+        <activity android:name=".ui.favorite.FavoriteActivity" />
         <activity android:name=".ui.league.LeagueActivity" />
         <activity android:name=".ui.event.EventActivity" />
     </application>

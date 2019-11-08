@@ -25,7 +25,6 @@ import com.github.nothing2512.football_v2.utils.show
 import com.github.nothing2512.football_v2.vo.Status
 import org.jetbrains.anko.setContentView
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class EventActivity : AppCompatActivity() {
 
@@ -82,9 +81,11 @@ class EventActivity : AppCompatActivity() {
                         awayFoul = setFouls(event.strAwayYellowCards, Constants.YELLOW)
                         awayFoul.addAll(setFouls(event.strAwayRedCards, Constants.RED))
 
-                        if (homeFoul.isNotEmpty()) homeFouls.adapter = FoulAdapter(homeFoul, Constants.TYPE_HOME)
+                        if (homeFoul.isNotEmpty()) homeFouls.adapter =
+                            FoulAdapter(homeFoul, Constants.TYPE_HOME)
 
-                        if (awayFoul.isNotEmpty()) awayFouls.adapter = FoulAdapter(awayFoul, Constants.TYPE_AWAY)
+                        if (awayFoul.isNotEmpty()) awayFouls.adapter =
+                            FoulAdapter(awayFoul, Constants.TYPE_AWAY)
                     }
 
                     setLove(it.data)

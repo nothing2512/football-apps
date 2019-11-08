@@ -56,6 +56,7 @@ class HomeActivity : AppCompatActivity() {
 
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
+                    homeViewModel.setQuery(query ?: "")
                     homeViewModel.submitQuery()
                     if (!query.isNullOrEmpty()) btBackHome.show()
                     imBackground.requestFocus()
@@ -63,10 +64,7 @@ class HomeActivity : AppCompatActivity() {
                     return true
                 }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    homeViewModel.setQuery(newText ?: "")
-                    return true
-                }
+                override fun onQueryTextChange(newText: String?): Boolean = true
 
             })
         }

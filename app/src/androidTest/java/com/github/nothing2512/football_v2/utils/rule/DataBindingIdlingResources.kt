@@ -9,9 +9,9 @@ import androidx.test.rule.ActivityTestRule
 import java.util.*
 
 @Suppress("LiftReturnOrAssignment")
-class DataBindingIdlingResources (
+class DataBindingIdlingResources(
     private val activity: ActivityTestRule<*>
-): IdlingResource {
+) : IdlingResource {
 
     private val idlingCallbacks = mutableListOf<IdlingResource.ResourceCallback>()
     private val id = UUID.randomUUID().toString()
@@ -29,7 +29,8 @@ class DataBindingIdlingResources (
         } else {
 
             wasNotIdle = true
-            activity.activity.findViewById<View>(android.R.id.content).postDelayed({ isIdleNow }, 16)
+            activity.activity.findViewById<View>(android.R.id.content)
+                .postDelayed({ isIdleNow }, 16)
         }
 
         return idle

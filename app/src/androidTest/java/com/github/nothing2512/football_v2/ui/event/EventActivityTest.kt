@@ -6,7 +6,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule

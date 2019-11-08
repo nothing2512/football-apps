@@ -2,11 +2,9 @@ package com.github.nothing2512.football_v2.ui.view.foul
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.FoulBinding
-import com.github.nothing2512.football_v2.utils.bindImage
 import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.resources.Dimens
 import com.github.nothing2512.football_v2.utils.resources.Id
@@ -30,7 +28,8 @@ class FoulHomeItemUI(private val foul: FoulBinding) : AnkoComponent<ViewGroup> {
                 id = Id.textWatcher
                 text = foul.name
                 textAlignment = View.TEXT_ALIGNMENT_CENTER
-                textColorResource = if (foul.type == Constants.YELLOW) R.color.main_yellow else R.color.main_red
+                textColorResource =
+                    if (foul.type == Constants.YELLOW) R.color.main_yellow else R.color.main_red
                 textSize = Dimens.FOULS_TEXT_ITEM_SIZE
             }.lparams(0, wrapContent) {
                 setMargins(dip(Dimens.SPACING), 0, 0, 0)

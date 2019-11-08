@@ -49,9 +49,10 @@ class LeagueRepository(
                 data == null
 
 
-            override fun loadFromDb(): LiveData<LeagueEntity> = MutableLiveData<LeagueEntity>().apply {
-                postValue(helper.getLeague(idLeague))
-            }
+            override fun loadFromDb(): LiveData<LeagueEntity> =
+                MutableLiveData<LeagueEntity>().apply {
+                    postValue(helper.getLeague(idLeague))
+                }
 
             override fun createCall(): LiveData<ApiResponse<LeagueResponse>> =
                 EspressoIdlingResource.handle {
@@ -94,7 +95,7 @@ class LeagueRepository(
         leagues.postValue(football)
     }
 
-    suspend fun setLoved(love: Boolean, league: LeagueEntity?) {
+    suspend fun setFavorite(love: Boolean, league: LeagueEntity?) {
         withContext(Dispatchers.IO) {
             if (love) league?.love = 1
             else league?.love = 0
@@ -102,7 +103,7 @@ class LeagueRepository(
         }
     }
 
-    suspend fun getLoved() = withContext(Dispatchers.IO) {
-        helper.getLovedLeague()
+    suspend fun getFavorite() = withContext(Dispatchers.IO) {
+        helper.getFavoriteLeague()
     }
 }

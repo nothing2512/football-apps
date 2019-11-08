@@ -43,7 +43,7 @@ fun <T> ImageView.bindImage(owner: LifecycleOwner, liveData: LiveData<T>, data: 
     })
 }
 
-fun ImageView.bindImage(source: Any?, blur: Boolean) {
+fun ImageView.bindImage(source: Any?, blur: Boolean = false) {
     val builder: LoadRequestBuilder.() -> Unit = if (!blur) {
         { placeholder(R.mipmap.ic_launcher) }
     } else {

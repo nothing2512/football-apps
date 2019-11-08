@@ -38,7 +38,7 @@ class DatabaseTest {
     }
 
     @Test
-    fun leagueTest() {
+    fun detailLeagueTest() {
 
         val league = TestUtil.LEAGUE_ENTITY
         helper.insert(league)
@@ -90,31 +90,30 @@ class DatabaseTest {
     }
 
     @Test
-    fun lovedEventTest() {
+    fun favoriteEventTest() {
 
         val events = TestUtil.EVENT_ENTITY
         val id = events.idEvent
         helper.insert(events)
         events.love = 1
         helper.insert(events)
-        val loaded = helper.getLovedEvent()
+        val loaded = helper.getFavoriteEvent()
         assertThat(loaded, notNullValue())
     }
 
     @Test
-    fun lovedLeagueTest() {
+    fun favoriteLeagueTest() {
 
         val leagues = TestUtil.LEAGUE_ENTITY
         helper.insert(leagues)
         leagues.love = 1
         helper.insert(leagues)
-        val loaded = helper.getLovedLeague()
+        val loaded = helper.getFavoriteLeague()
         assertThat(loaded, notNullValue())
     }
 
     @After
     fun tearDown() {
         db.close()
-        db.drop()
     }
 }

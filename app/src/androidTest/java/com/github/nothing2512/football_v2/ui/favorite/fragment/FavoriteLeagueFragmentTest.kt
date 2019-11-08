@@ -1,13 +1,12 @@
-package com.github.nothing2512.football_v2.ui.loved.fragment
+package com.github.nothing2512.football_v2.ui.favorite.fragment
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.testing.TestUtil
-import com.github.nothing2512.football_v2.ui.loved.LovedActivity
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteActivity
 import com.github.nothing2512.football_v2.utils.RecyclerViewAssertions
 import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.rule.CountingExecutorRule
@@ -18,11 +17,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class LovedEventFragmentTest {
+class FavoriteLeagueFragmentTest {
 
     @Rule
     @JvmField
-    val activityTestRule = ActivityTestRule(LovedActivity::class.java)
+    val activityTestRule = ActivityTestRule(FavoriteActivity::class.java)
 
     @Rule
     @JvmField
@@ -37,8 +36,8 @@ class LovedEventFragmentTest {
     val koinRule = KoinRule()
 
     @Test
-    fun loadEvents() {
-        onView(withId(Id.tvEvent)).perform(click())
-        onView(withId(Id.eventRecyclerView)).check(RecyclerViewAssertions(TestUtil.LOVED_COUNT))
+    fun loadLeagues() {
+        onView(withId(Id.tvLeagueFavorite)).perform(click())
+        onView(withId(Id.leagueRecyclerView)).check(RecyclerViewAssertions(TestUtil.LOVED_COUNT))
     }
 }

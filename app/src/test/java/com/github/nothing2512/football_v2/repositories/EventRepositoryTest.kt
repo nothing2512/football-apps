@@ -43,7 +43,7 @@ class EventRepositoryTest : KoinTest {
         val data = TestUtil.EVENT_ENTITY
         every { helper.getEvent(TestUtil.INT) }
         repository = EventRepository(appExecutors, helper, service)
-        suspend {
+        coroutineRule.runAsync {
             repository.getDetail(TestUtil.INT)
             coVerify { repository.getDetail(TestUtil.INT) }
             confirmVerified(helper)
@@ -56,7 +56,7 @@ class EventRepositoryTest : KoinTest {
         val data = listOf(TestUtil.EVENT_ENTITY)
         every { helper.getNextEvent(TestUtil.INT) }
         repository = EventRepository(appExecutors, helper, service)
-        suspend {
+        coroutineRule.runAsync {
             repository.getNextEvent(TestUtil.INT)
             coVerify { repository.getNextEvent(TestUtil.INT) }
             confirmVerified(helper)
@@ -69,7 +69,7 @@ class EventRepositoryTest : KoinTest {
         val data = listOf(TestUtil.EVENT_ENTITY)
         every { helper.getPreviusEvent(TestUtil.INT) }
         repository = EventRepository(appExecutors, helper, service)
-        suspend {
+        coroutineRule.runAsync {
             repository.getPreviusEvent(TestUtil.INT)
             coVerify { repository.getPreviusEvent(TestUtil.INT) }
             confirmVerified(helper)
@@ -82,7 +82,7 @@ class EventRepositoryTest : KoinTest {
         val data = listOf(TestUtil.EVENT_ENTITY)
         every { helper.search(TestUtil.STRING) }
         repository = EventRepository(appExecutors, helper, service)
-        suspend {
+        coroutineRule.runAsync {
             repository.searchEvent(TestUtil.STRING)
             coVerify { repository.searchEvent(TestUtil.STRING) }
             confirmVerified(helper)
@@ -91,15 +91,15 @@ class EventRepositoryTest : KoinTest {
     }
 
     @Test
-    fun loadLovedEvent() {
+    fun loadFavoriteEvent() {
         val data = listOf(TestUtil.EVENT_ENTITY)
-        every { helper.getLovedEvent() }
+        every { helper.getFavoriteEvent() }
         repository = EventRepository(appExecutors, helper, service)
-        suspend {
-            repository.getLoved()
-            coVerify { repository.getLoved() }
+        coroutineRule.runAsync {
+            repository.getFavorite()
+            coVerify { repository.getFavorite() }
             confirmVerified(helper)
-            assertThat(repository.getLoved(), `is`(data))
+            assertThat(repository.getFavorite(), `is`(data))
         }
     }
 }

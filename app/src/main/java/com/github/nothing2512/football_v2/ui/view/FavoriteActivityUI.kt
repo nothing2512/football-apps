@@ -5,11 +5,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintSet.PARENT_ID
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.ui.loved.LovedActivity
-import com.github.nothing2512.football_v2.ui.loved.LovedViewModel
-import com.github.nothing2512.football_v2.utils.resources.Constants
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteActivity
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteViewModel
 import com.github.nothing2512.football_v2.utils.bindFragment
-import com.github.nothing2512.football_v2.utils.hide
+import com.github.nothing2512.football_v2.utils.resources.Constants
 import com.github.nothing2512.football_v2.utils.resources.Dimens
 import com.github.nothing2512.football_v2.utils.resources.Id
 import com.github.nothing2512.football_v2.utils.resources.Strings
@@ -18,8 +17,9 @@ import org.jetbrains.anko.constraint.layout.constraintLayout
 import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.support.v4.nestedScrollView
 
-class LovedActivityUI(private val lovedViewModel: LovedViewModel) : AnkoComponent<LovedActivity> {
-    override fun createView(ui: AnkoContext<LovedActivity>) = with(ui) {
+class FavoriteActivityUI(private val lovedViewModel: FavoriteViewModel) :
+    AnkoComponent<FavoriteActivity> {
+    override fun createView(ui: AnkoContext<FavoriteActivity>) = with(ui) {
 
         nestedScrollView {
 
@@ -46,8 +46,11 @@ class LovedActivityUI(private val lovedViewModel: LovedViewModel) : AnkoComponen
                     onClick {
                         ui.owner.onBackPressed()
                     }
-                }.lparams(dip(Dimens.ICON_SIZE), dip(
-                    Dimens.ICON_SIZE)) {
+                }.lparams(
+                    dip(Dimens.ICON_SIZE), dip(
+                        Dimens.ICON_SIZE
+                    )
+                ) {
                     setMargins(
                         dip(Dimens.SPACING),
                         dip(Dimens.SPACING),
@@ -114,7 +117,7 @@ class LovedActivityUI(private val lovedViewModel: LovedViewModel) : AnkoComponen
 
                 textView(Strings.LEAGUE) {
 
-                    id = Id.tvLeagueLoved
+                    id = Id.tvLeagueFavorite
                     onClick {
                         lovedViewModel.setFragment(Constants.STATE_LEAGUE)
                     }
@@ -164,7 +167,7 @@ class LovedActivityUI(private val lovedViewModel: LovedViewModel) : AnkoComponen
                         0
                     )
                     topToBottom = Id.dummyView
-                    startToEnd = Id.tvLeagueLoved
+                    startToEnd = Id.tvLeagueFavorite
                     endToEnd = PARENT_ID
                 }
 

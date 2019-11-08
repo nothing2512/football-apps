@@ -9,8 +9,8 @@ import org.jetbrains.anko.db.*
 @Suppress("LeakingThis")
 @OpenForTesting
 @SuppressLint("StaticFieldLeak")
-class FootballDatabase(context: Context, dbName: String = "football")
-    : ManagedSQLiteOpenHelper(context, dbName, null, 1) {
+class FootballDatabase(context: Context, dbName: String = "football") :
+    ManagedSQLiteOpenHelper(context, dbName, null, 1) {
 
     init {
         instance = this
@@ -34,7 +34,7 @@ class FootballDatabase(context: Context, dbName: String = "football")
             "strLeague" to TEXT,
             "strHomeTeam" to TEXT,
             "strAwayTeam" to TEXT,
-            "intAwayScore" to INTEGER ,
+            "intAwayScore" to INTEGER,
             "intHomeScore" to INTEGER,
             "intRound" to INTEGER,
             "strHomeYellowCards" to TEXT,
