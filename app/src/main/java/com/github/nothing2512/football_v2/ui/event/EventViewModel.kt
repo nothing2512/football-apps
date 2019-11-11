@@ -37,11 +37,11 @@ class EventViewModel(private val repository: EventRepository) : ViewModel() {
         return detailEvent
     }
 
-    fun love(idEvent: Int) {
-        launchMain { repository.setLove(true, idEvent) }
+    fun love(event: EventEntity?) {
+        launchMain { repository.setFavorite(true, event) }
     }
 
-    fun unlove(idEvent: Int) {
-        launchMain { repository.setLove(false, idEvent) }
+    fun unlove(event: EventEntity?) {
+        launchMain { repository.setFavorite(false, event) }
     }
 }

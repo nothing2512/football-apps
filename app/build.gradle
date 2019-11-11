@@ -78,8 +78,6 @@ dependencies {
     implementation deps.coroutine.core
     implementation deps.coroutine.android
 
-    implementation deps.room.runtime
-
     implementation deps.lifecycle.viewmodel_ktx
     implementation deps.lifecycle.livedata_ktx
     implementation deps.lifecycle.runtime
@@ -97,13 +95,16 @@ dependencies {
 
     implementation deps.coil
 
+    implementation deps.sqlite
+
     implementation deps.koin.core
     implementation deps.koin.ext
     implementation deps.koin.viewmodel
     implementation deps.koin.scope
     implementation deps.koin.androidx
 
-    kapt deps.room.compiler
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     kapt deps.lifecycle.compiler
 
     testImplementation deps.coroutine.test
@@ -126,7 +127,7 @@ dependencies {
     androidTestImplementation deps.espresso.intents
 
     androidTestImplementation deps.arch_core.testing
-    androidTestImplementation (deps.mockk.instrumented) {
+    androidTestImplementation(deps.mockk.instrumented) {
         exclude module: deps.objenesis.module
     }
     androidTestImplementation deps.objenesis.main
@@ -146,30 +147,6 @@ project.tasks.whenTaskAdded {
 
 configurations.all {
     resolutionStrategy.eachDependency { details ->
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-runtime')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-testing')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-rxjava2')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-common')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-migration')) {
-            details.useVersion deps.versions.detail
-        }
-        if (details.requested.group == 'androidx.room'
-                && !details.requested.name.contains('room-compiler')) {
-            details.useVersion deps.versions.detail
-        }
         if (details.requested.group == 'androidx.paging'
                 && !details.requested.name.contains('paging-runtime-ktx')) {
             details.useVersion deps.versions.detail
@@ -192,4 +169,3 @@ configurations.all {
         }
     }
 }
-

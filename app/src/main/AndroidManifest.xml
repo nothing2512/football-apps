@@ -5,6 +5,7 @@
     package="com.github.nothing2512.football_v2">
 
     <dist:module dist:instant="true" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.team.TeamActivity"></activity>
         <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.loved.LovedActivity" />
+        <activity android:name=".ui.favorite.FavoriteActivity" />
         <activity android:name=".ui.league.LeagueActivity" />
         <activity android:name=".ui.event.EventActivity" />
     </application>

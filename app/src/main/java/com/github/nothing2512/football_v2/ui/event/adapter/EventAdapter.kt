@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.EventBinding
 import com.github.nothing2512.football_v2.data.source.local.entity.EventEntity
-import com.github.nothing2512.football_v2.databinding.EventItemBinding
+import com.github.nothing2512.football_v2.databinding.ItemEventBinding
 import com.github.nothing2512.football_v2.ui.event.EventActivity
 import com.github.nothing2512.football_v2.utils.Constants
 import com.github.nothing2512.football_v2.utils.getBinding
@@ -22,7 +22,7 @@ class EventAdapter(private val data: List<EventEntity> = ArrayList()) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder =
-        MainHolder(getBinding(R.layout.event_item, parent))
+        MainHolder(getBinding(R.layout.item_event, parent))
 
     override fun getItemCount(): Int = if (data.isEmpty()) 1 else data.size
 
@@ -31,7 +31,7 @@ class EventAdapter(private val data: List<EventEntity> = ArrayList()) :
         else holder.bind(data[position])
     }
 
-    class MainHolder(private val binding: EventItemBinding) :
+    class MainHolder(private val binding: ItemEventBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(data: EventEntity) {

@@ -16,7 +16,7 @@ class LeagueDialog(
     parent: ViewGroup
 ) : AlertDialog.Builder(ContextThemeWrapper(activity, R.style.DescriptionDialog)) {
 
-    private var binding: DialogLeagueBinding =
+    private val binding: DialogLeagueBinding =
         getBinding(R.layout.dialog_league, parent)
     private var alertDialog: AlertDialog
 

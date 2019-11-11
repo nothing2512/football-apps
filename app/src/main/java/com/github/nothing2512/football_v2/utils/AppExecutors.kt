@@ -11,7 +11,6 @@ import java.util.concurrent.Executors
 class AppExecutors
 constructor(
     val diskIO: Executor = Executors.newSingleThreadExecutor(),
-    val networkIO: Executor = Executors.newFixedThreadPool(Constants.THREAD_COUNT),
     val mainThread: Executor = MainThreadExecutor()
 ) {
 

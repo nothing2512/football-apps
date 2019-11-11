@@ -26,7 +26,13 @@ class EventViewModelUtil : EventViewModel(EventRepositoryUtil()) {
 
     override fun searchEvent(query: String): LiveData<Resource<SearchResponse>> {
         val events = MutableLiveData<Resource<SearchResponse>>()
-        events.postValue(Resource.success(TestUtil.SEARCH_RESPONSE))
+        events.postValue(
+            when (query) {
+                "arsenal" -> Resource.success(TestUtil.ARSENAL_RESPONSE)
+                "barcelona" -> Resource.success(TestUtil.BARCELONA_RESPONSE)
+                else -> Resource.success(SearchResponse(listOf()))
+            }
+        )
         return events
     }
 

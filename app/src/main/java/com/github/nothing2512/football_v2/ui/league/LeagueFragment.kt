@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.databinding.FragmentLeagueBinding
+import com.github.nothing2512.football_v2.ui.league.adapter.LeagueAdapter
 import com.github.nothing2512.football_v2.utils.getBinding
 import com.github.nothing2512.football_v2.utils.launchMain
 import org.koin.androidx.viewmodel.ext.android.viewModel

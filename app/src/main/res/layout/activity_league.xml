@@ -268,9 +268,9 @@
                         android:orientation="vertical"
                         app:layout_constraintTop_toBottomOf="@id/tvsStateNext">
 
-                        <include layout="@layout/shimmer_item" />
+                        <include layout="@layout/item_shimmer" />
 
-                        <include layout="@layout/shimmer_item" />
+                        <include layout="@layout/item_shimmer" />
 
                     </LinearLayout>
 

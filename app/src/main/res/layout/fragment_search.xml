@@ -20,11 +20,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/shimmer_item" />
+                <include layout="@layout/item_shimmer" />
 
-                <include layout="@layout/shimmer_item" />
+                <include layout="@layout/item_shimmer" />
 
-                <include layout="@layout/shimmer_item" />
+                <include layout="@layout/item_shimmer" />
 
             </LinearLayout>
 

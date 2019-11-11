@@ -5,8 +5,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.binding.FoulBinding
-import com.github.nothing2512.football_v2.databinding.FoulAwayItemBinding
-import com.github.nothing2512.football_v2.databinding.FoulHomeItemBinding
+import com.github.nothing2512.football_v2.databinding.ItemFoulAwayBinding
+import com.github.nothing2512.football_v2.databinding.ItemFoulHomeBinding
 import com.github.nothing2512.football_v2.utils.Constants
 import com.github.nothing2512.football_v2.utils.getBinding
 
@@ -16,8 +16,8 @@ class FoulAdapter(
 ) : RecyclerView.Adapter<FoulAdapter.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder =
-        if (type == Constants.TYPE_HOME) MainHolder(getBinding(R.layout.foul_home_item, parent))
-        else MainHolder(getBinding(R.layout.foul_away_item, parent))
+        if (type == Constants.TYPE_HOME) MainHolder(getBinding(R.layout.item_foul_home, parent))
+        else MainHolder(getBinding(R.layout.item_foul_away, parent))
 
     override fun getItemCount(): Int = data.size
 
@@ -29,8 +29,8 @@ class FoulAdapter(
 
         fun bind(data: FoulBinding) {
 
-            if (binding is FoulHomeItemBinding) binding.fouls = data
-            if (binding is FoulAwayItemBinding) binding.fouls = data
+            if (binding is ItemFoulHomeBinding) binding.fouls = data
+            if (binding is ItemFoulAwayBinding) binding.fouls = data
         }
     }
 }

@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.databinding.ActivityHomeBinding
-import com.github.nothing2512.football_v2.ui.loved.LovedActivity
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteActivity
 import com.github.nothing2512.football_v2.utils.getBinding
 import com.github.nothing2512.football_v2.utils.hide
 import com.github.nothing2512.football_v2.utils.launchMain
@@ -37,7 +37,7 @@ class HomeActivity : AppCompatActivity() {
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
         binding.btHomeLove.setOnClickListener {
-            startActivity(Intent(applicationContext, LovedActivity::class.java))
+            startActivity(Intent(applicationContext, FavoriteActivity::class.java))
         }
 
         binding.swipe.setOnRefreshListener {
@@ -63,6 +63,7 @@ class HomeActivity : AppCompatActivity() {
 
                 override fun onQueryTextSubmit(query: String?): Boolean {
 
+                    homeViewModel.setQuery(query ?: "")
                     homeViewModel.submitQuery()
                     if (!query.isNullOrEmpty()) binding.btBackHome.show()
                     binding.imBackground.requestFocus()
@@ -70,10 +71,7 @@ class HomeActivity : AppCompatActivity() {
                     return true
                 }
 
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    homeViewModel.setQuery(newText ?: "")
-                    return true
-                }
+                override fun onQueryTextChange(newText: String?) = true
 
             })
         }
