@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/sssbackground"
+        android:src="@color/secondary_grey"
+        android:scaleX="-1"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_background_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ssscard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/main_grey"
+        android:layout_marginStart="@dimen/spacing"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssbackground"
+        app:layout_constraintBottom_toBottomOf="@id/sssbackground">
+
+        <ImageView
+            android:layout_margin="@dimen/spacing"
+            android:layout_width="180dp"
+            android:layout_height="240dp"
+            tools:ignore="ContentDescription" />
+
+    </androidx.cardview.widget.CardView>
+
+    <View
+        android:id="@+id/sssplayerName"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/placeholder_text_normal"
+        android:background="@color/main_grey"
+        android:layout_marginEnd="@dimen/spacing"
+        android:layout_marginBottom="@dimen/spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ssscard"/>
+
+    <View
+        android:id="@+id/sssdateBorn"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssplayerName"/>
+
+    <View
+        android:id="@+id/sssbornLocation"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssdateBorn"/>
+
+    <View
+        android:id="@+id/ssscolumnTeam"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:layout_marginStart="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toEndOf="@id/ssscard"
+        app:layout_constraintTop_toBottomOf="@id/sssbackground"/>
+
+    <View
+        android:id="@+id/ssscolumnSigned"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:layout_marginStart="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toEndOf="@id/ssscard"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnTeam"/>
+
+    <View
+        android:id="@+id/ssscolumnWage"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:layout_marginStart="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toEndOf="@id/ssscard"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnSigned"/>
+
+    <View
+        android:id="@+id/ssscolumnNumber"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscard"/>
+
+    <View
+        android:id="@+id/sssnumber"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnNumber"/>
+
+    <View
+        android:id="@+id/ssscolumnKit"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssnumber"/>
+
+    <View
+        android:id="@+id/ssskit"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnKit"/>
+
+    <View
+        android:id="@+id/ssscolumnSide"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssskit"/>
+
+    <View
+        android:id="@+id/sssside"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnSide"/>
+
+    <View
+        android:id="@+id/ssscolumnPosition"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssside"/>
+
+    <View
+        android:id="@+id/sssposition"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnPosition"/>
+
+    <View
+        android:id="@+id/ssscolumnHeight"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssposition"/>
+
+    <View
+        android:id="@+id/sssheight"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssscolumnHeight"/>
+
+    <View
+        android:id="@+id/sssdummy"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sssheight"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

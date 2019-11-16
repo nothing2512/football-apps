@@ -17,6 +17,8 @@ object Constants {
     const val TIME_COLUMN = 1
 
     const val EXTRA_ID = "eid"
+    const val EXTRA_PARCELABLE = "EPe"
+
     const val LEAGUE_TITLE = "Leagues"
     const val SEARCH_TITLE = "Matches"
 
@@ -25,4 +27,5 @@ object Constants {
 
     const val STATE_LEAGUE = 0
     const val STATE_EVENT = 1
+    const val STATE_TEAM = 2
 }

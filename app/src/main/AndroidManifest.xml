@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".ui.team.TeamActivity"></activity>
+        <activity android:name=".ui.team.activity.SearchTeamActivity" />
+        <activity android:name=".ui.player.PlayerActivity" />
+        <activity android:name=".ui.team.activity.TeamActivity" />
         <activity android:name=".ui.home.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

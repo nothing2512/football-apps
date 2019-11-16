@@ -8,6 +8,7 @@ import org.jetbrains.anko.db.classParser
 import org.jetbrains.anko.db.parseList
 import org.jetbrains.anko.db.select
 import org.jetbrains.anko.doAsync
+import timber.log.Timber
 
 @OpenForTesting
 @Suppress("SameParameterValue")
@@ -44,7 +45,14 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         select("team").whereArgs(
             "idLeague = {idLeague}",
             "idLeague" to idLeague
-        ).exec { parseList<TeamEntity>(classParser()) }
+        ).exec {
+            try {
+                parseList<TeamEntity>(classParser())
+            } catch (e: Exception) {
+                Timber.e(e.message)
+                listOf<TeamEntity>()
+            }
+        }
     }
 
     fun detailTeam(idTeam: Int) = footballDatabase?.use {
@@ -97,6 +105,13 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         ).exec { parseList<LeagueEntity>(classParser()) }
     }
 
+    fun getFavoriteTeam() = footballDatabase?.use {
+        select("team").whereArgs(
+            "love = {love}",
+            "love" to 1
+        ).exec { parseList<TeamEntity>(classParser()) }
+    }
+
     fun getFavoriteEvent() = footballDatabase?.use {
         select("event").whereArgs(
             "love = {love}",
@@ -115,34 +130,49 @@ class DatabaseHelper(private val footballDatabase: FootballDatabase?) {
         data
     }
 
+    fun searchTeams(keyword: String) = footballDatabase?.use {
+
+        val cursor = rawQuery(
+            "SELECT t.* FROM team t, search_team s WHERE t.idTeam = s.idTeam AND s.keyword = ?",
+            arrayOf(keyword)
+        )
+        val data = cursor.parseList<TeamEntity>(classParser())
+        cursor.close()
+        data
+    }
+
     fun insert(klasemen: KlasemenEntity) {
-        insert("klasemen", null, klasemen.getValue())
+        insert("klasemen", klasemen.getValue())
     }
 
     fun insert(player: PlayerEntity) {
-        insert("player", null, player.getValue())
+        insert("player", player.getValue())
     }
 
-    fun insert(team: TeamEntity) {
-        insert("team", null, team.getValue())
+    fun insert(team: TeamEntity?) {
+        insert("team", team?.getValue())
     }
 
     fun insert(search: SearchEntity) {
-        insert("search", null, search.getValue())
+        insert("search", search.getValue())
     }
 
     fun insert(event: EventEntity?) {
-        insert("event", null, event?.getValue())
+        insert("event", event?.getValue())
+    }
+
+    fun insert(search: SearchTeamEntity?) {
+        insert("search_team", search?.getValue())
     }
 
     final fun insert(league: LeagueEntity?) {
-        insert("league", null, league?.getvalue())
+        insert("league", league?.getvalue())
     }
 
-    private fun insert(table: String, columnHack: String?, value: ContentValues?) {
+    private fun insert(table: String, value: ContentValues?) {
         doAsync {
             footballDatabase?.use {
-                replace(table, columnHack, value)
+                replace(table, null, value)
             }
         }
     }

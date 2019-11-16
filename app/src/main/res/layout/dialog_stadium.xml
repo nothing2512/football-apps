@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="team"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.TeamEntity" />
+    </data>
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@color/content"
+        android:scrollbars="none"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing">
+
+            <ImageView
+                android:id="@+id/stadiumThumb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/main_background_height"
+                android:scaleType="centerCrop"
+                source='@{team.strStadiumThumb ?? ""}'
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/stadiumName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{team.strStadium ?? ""}'
+                android:textSize="@dimen/title_text_size"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="@dimen/spacing"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stadiumThumb"/>
+
+            <TextView
+                android:id="@+id/locationColumn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                android:layout_marginTop="@dimen/double_spacing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stadiumName" />
+
+            <TextView
+                android:id="@+id/stadiumLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{team.strStadiumLocation ?? ""}'
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/locationColumn" />
+
+            <TextView
+                android:id="@+id/capacityColumn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/capacity"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                android:layout_marginTop="@dimen/spacing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stadiumLocation" />
+
+            <TextView
+                android:id="@+id/stadiumCapacity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{Integer.toString(team.intStadiumCapacity)}'
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/capacityColumn" />
+
+            <TextView
+                android:id="@+id/descriptionColumn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description_sub_title"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                android:layout_marginTop="@dimen/spacing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stadiumCapacity" />
+
+            <TextView
+                android:id="@+id/stadiumDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{team.strStadiumDescription ?? ""}'
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size"
+                android:padding="@dimen/spacing"
+                android:textAlignment="center"
+                app:layout_constraintTop_toBottomOf="@id/descriptionColumn" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

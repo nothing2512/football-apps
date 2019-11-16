@@ -32,4 +32,11 @@
     <dimen name="text_item_size">18sp</dimen>
     <dimen name="fouls_text_item_size">14sp</dimen>
     <dimen name="card_fouls_width">10dp</dimen>
+    <dimen name="team_logo_item">150dp</dimen>
+    <dimen name="badge_big_size">120dp</dimen>
+    <dimen name="player_divider">150dp</dimen>
+    <dimen name="fanart_width">320dp</dimen>
+    <dimen name="fanart_height">180dp</dimen>
+    <dimen name="player_width">120dp</dimen>
+    <dimen name="player_height">180dp</dimen>
 </resources>

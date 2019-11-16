@@ -1,4 +1,4 @@
-package com.github.nothing2512.football_v2.ui.league
+package com.github.nothing2512.football_v2.ui.team.dialog
 
 import android.app.Activity
 import android.graphics.Color
@@ -6,18 +6,17 @@ import android.graphics.drawable.ColorDrawable
 import android.view.*
 import androidx.appcompat.app.AlertDialog
 import com.github.nothing2512.football_v2.R
-import com.github.nothing2512.football_v2.binding.DialogBinding
-import com.github.nothing2512.football_v2.databinding.DialogLeagueBinding
+import com.github.nothing2512.football_v2.data.source.local.entity.TeamEntity
+import com.github.nothing2512.football_v2.databinding.DialogStadiumBinding
 import com.github.nothing2512.football_v2.utils.getBinding
 
-class LeagueDialog(
+class StadiumDialog(
     activity: Activity,
-    description: String,
-    parent: ViewGroup
+    parent: ViewGroup,
+    data: TeamEntity?
 ) : AlertDialog.Builder(ContextThemeWrapper(activity, R.style.DescriptionDialog)) {
 
-    private val binding: DialogLeagueBinding =
-        getBinding(R.layout.dialog_league, parent)
+    private val binding: DialogStadiumBinding = getBinding(R.layout.dialog_stadium, parent)
     private var alertDialog: AlertDialog
 
     init {
@@ -26,16 +25,7 @@ class LeagueDialog(
 
         alertDialog = this.create()
 
-        binding.swipe.apply {
-            setOnRefreshListener {
-                isRefreshing = false
-                alertDialog.dismiss()
-            }
-            setColorSchemeResources(android.R.color.transparent)
-        }
-
-        binding.dialogData =
-            DialogBinding(description) { alertDialog.dismiss() }
+        binding.team = data
 
         alertDialog.apply {
 
@@ -58,10 +48,7 @@ class LeagueDialog(
     }
 
     override fun show(): AlertDialog {
-
         alertDialog.show()
-
         return alertDialog
     }
-
 }

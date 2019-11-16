@@ -38,7 +38,10 @@ class LeagueRepository(
         val data = object :
             NetworkBoundService<KlasemenResponse, KlasemenResponse>(appExecutors) {
             override fun saveCallResult(item: KlasemenResponse) {
-                item.table.forEach { helper.insert(it) }
+                item.table.forEach {
+                    it.idLeague = idLeague
+                    helper.insert(it)
+                }
             }
 
             override fun shouldFetch(data: KlasemenResponse?) =

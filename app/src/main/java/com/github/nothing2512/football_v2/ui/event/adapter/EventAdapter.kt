@@ -27,7 +27,7 @@ class EventAdapter(private val data: List<EventEntity> = ArrayList()) :
     override fun getItemCount(): Int = if (data.isEmpty()) 1 else data.size
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
-        if(data.isEmpty()) holder.bindNull()
+        if (data.isEmpty()) holder.bindNull()
         else holder.bind(data[position])
     }
 

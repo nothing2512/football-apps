@@ -125,8 +125,24 @@
                 android:textAlignment="center"
                 android:textColor="@android:color/black"
                 android:textSize="22sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvTeamLoved"
                 app:layout_constraintStart_toEndOf="@id/tvLeagueLoved"
+                app:layout_constraintTop_toBottomOf="@id/dummyView" />
+
+            <TextView
+                android:id="@+id/tvTeamLoved"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> viewModel.setFragment(constants.STATE_TEAM)}"
+                android:paddingStart="@dimen/spacing"
+                android:paddingTop="@dimen/double_spacing"
+                android:paddingEnd="@dimen/spacing"
+                android:text="@string/teams"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvEvent"
                 app:layout_constraintTop_toBottomOf="@id/dummyView" />
 
             <ImageView

@@ -126,11 +126,6 @@ object TestUtil {
         "name",
         10,
         10,
-        10,
-        10,
-        10,
-        10,
-        10,
         10
     )
 
@@ -141,7 +136,7 @@ object TestUtil {
         "player",
         "team",
         "born",
-        10,
+        "10",
         "date",
         "wage",
         "kit",
@@ -154,6 +149,7 @@ object TestUtil {
     )
 
     val TEAM_ENTITY = TeamEntity(
+        1,
         1,
         1,
         "a",
@@ -179,7 +175,7 @@ object TestUtil {
         "1",
         "1",
         "1",
-        "1"
+        0
     )
 
     val LEAGUE_ENTITY = LeagueEntity(

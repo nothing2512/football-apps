@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="player"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.PlayerEntity" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.github.nothing2512.football_v2.ui.player.PlayerActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="@color/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/playerShimmer"
+                app:shimmer_duration="1000"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include layout="@layout/shimmer_player" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/background"
+                        android:src="@drawable/background_gradient"
+                        android:scaleX="-1"
+                        android:scaleType="centerCrop"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_background_height"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btBack"
+                        android:layout_margin="@dimen/spacing"
+                        android:src="@drawable/left_arrow"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/background"
+                        app:layout_constraintBottom_toBottomOf="@id/background">
+
+                        <ImageView
+                            android:scaleType="centerCrop"
+                            android:layout_width="@dimen/player_width"
+                            android:layout_height="@dimen/player_height"
+                            source='@{player.strThumb ?? ""}'
+                            tools:ignore="ContentDescription" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/playerName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='@{player.strPlayer}'
+                        android:textColor="@android:color/black"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/title_text_size"
+                        android:layout_marginEnd="@dimen/spacing"
+                        android:layout_marginBottom="@dimen/spacing"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/card"/>
+
+                    <TextView
+                        android:id="@+id/dateBorn"
+                        android:text='@{player.dateBorn ?? "not found"}'
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="@dimen/spacing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/playerName"/>
+
+                    <TextView
+                        android:id="@+id/bornLocation"
+                        android:text='@{player.strBirthLocation ?? "not found"}'
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        android:layout_marginEnd="@dimen/spacing"
+                        android:textAlignment="textEnd"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/card"
+                        app:layout_constraintTop_toBottomOf="@id/dateBorn"/>
+
+                    <TextView
+                        android:id="@+id/columnTeam"
+                        android:text="@string/team"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/card"
+                        app:layout_constraintTop_toBottomOf="@id/background"/>
+
+                    <TextView
+                        android:id="@+id/columnSigned"
+                        android:text="@string/date_signed"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/card"
+                        app:layout_constraintTop_toBottomOf="@id/columnTeam"/>
+
+                    <TextView
+                        android:id="@+id/columnWage"
+                        android:text="@string/wage"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/card"
+                        app:layout_constraintTop_toBottomOf="@id/columnSigned"/>
+
+                    <TextView
+                        android:id="@+id/team"
+                        android:text='@{player.strTeam ?? "not found"}'
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/columnTeam"
+                        app:layout_constraintTop_toBottomOf="@id/background"/>
+
+                    <TextView
+                        android:id="@+id/signed"
+                        android:text='@{player.dateSigned ?? "not found"}'
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/columnSigned"
+                        app:layout_constraintTop_toBottomOf="@id/columnTeam"/>
+
+                    <TextView
+                        android:id="@+id/wage"
+                        android:text='@{player.strWage ?? "not found"}'
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:layout_marginStart="@dimen/spacing"
+                        app:layout_constraintStart_toEndOf="@id/columnWage"
+                        app:layout_constraintTop_toBottomOf="@id/columnSigned"/>
+
+                    <TextView
+                        android:id="@+id/columnNumber"
+                        android:text="@string/number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="@dimen/double_spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card"/>
+
+                    <TextView
+                        android:id="@+id/number"
+                        android:text='@{player.strNumber ?? "not found"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/columnNumber"/>
+
+                    <TextView
+                        android:id="@+id/columnKit"
+                        android:text="@string/kit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="@dimen/spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/number"/>
+
+                    <TextView
+                        android:id="@+id/kit"
+                        android:text='@{player.strKit ?? "not found"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/columnKit"/>
+
+                    <TextView
+                        android:id="@+id/columnSide"
+                        android:text="@string/side"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="@dimen/spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/kit"/>
+
+                    <TextView
+                        android:id="@+id/side"
+                        android:text='@{player.strSide ?? "not found"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/columnSide"/>
+
+                    <TextView
+                        android:id="@+id/columnPosition"
+                        android:text="@string/position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="@dimen/spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/side"/>
+
+                    <TextView
+                        android:id="@+id/position"
+                        android:text='@{player.strPosition ?? "not found"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/columnPosition"/>
+
+                    <TextView
+                        android:id="@+id/columnHeight"
+                        android:text="@string/height"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="@dimen/spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/position"/>
+
+                    <TextView
+                        android:id="@+id/height"
+                        android:text='@{player.strHeight ?? "not found"}'
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size"
+                        android:textColor="@android:color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/columnHeight"/>
+
+                    <View
+                        android:id="@+id/dummy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dummy_bottom_spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/height"/>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/imContent"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:src="@drawable/main_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/spacing"
+                android:paddingTop="@dimen/double_spacing"
+                android:paddingEnd="@dimen/spacing"
+                android:text="@string/description_sub_title"
+                android:textAlignment="center"
+                android:textColor="@color/main_grey"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toTopOf="@id/divider" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:visibility="gone"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:src="@drawable/arrow_top"
+                app:layout_constraintBottom_toBottomOf="@id/tvDescription"
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/divider"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:layout_marginBottom="@dimen/spacing"
+                android:src="@color/main_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/imContent"
+                app:layout_constraintStart_toStartOf="@id/imContent"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>

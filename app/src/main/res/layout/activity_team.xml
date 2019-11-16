@@ -1,9 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.github.nothing2512.football_v2.ui.team.TeamActivity">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="team"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.TeamEntity" />
+
+        <variable
+            name="teamClick"
+            type="com.github.nothing2512.football_v2.binding.TeamBinding" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context="com.github.nothing2512.football_v2.ui.team.activity.TeamActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/teamShimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_duration="1000"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/shimmer_team" />
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scroll"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/banner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_background_height"
+                        source='@{team.strTeamBanner ?? ""}'
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btTeamLove"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:padding="@dimen/spacing"
+                        android:src="@drawable/love_inactive"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:ignore="ContentDescription" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card"
+                        android:layout_width="@dimen/badge_big_size"
+                        android:layout_height="@dimen/badge_big_size"
+                        android:layout_marginStart="@dimen/double_spacing"
+                        app:layout_constraintBottom_toBottomOf="@id/banner"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/banner">
+
+                        <ImageView
+                            android:id="@+id/badge"
+                            source='@{team.strTeamBadge ?? ""}'
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:ignore="ContentDescription" />
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:id="@+id/teamName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing"
+                        android:maxLines="1"
+                        android:text="@{team.strTeam}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@id/formed"
+                        app:layout_constraintStart_toEndOf="@id/card" />
+
+                    <TextView
+                        android:id="@+id/formed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/spacing"
+                        android:maxLines="1"
+                        android:text="@{Integer.toString(team.intFormedYear)}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/title_text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@id/banner"
+                        app:layout_constraintStart_toEndOf="@id/card" />
+
+                    <ImageView
+                        android:id="@+id/lovedPic"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginStart="@dimen/spacing"
+                        android:padding="@dimen/spacing"
+                        android:src="@drawable/love_active"
+                        app:layout_constraintStart_toEndOf="@id/card"
+                        app:layout_constraintTop_toBottomOf="@id/banner"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Integer.toString(team.intLoved)}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        app:layout_constraintBottom_toBottomOf="@id/lovedPic"
+                        app:layout_constraintStart_toEndOf="@id/lovedPic"
+                        app:layout_constraintTop_toTopOf="@id/lovedPic" />
+
+                    <TextView
+                        android:id="@+id/league"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:text="@{team.strLeague}"
+                        android:textSize="@dimen/text_item_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/card" />
+
+                    <ImageView
+                        android:id="@+id/btWebsite"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:onClick="@{() -> teamClick.onWebClick.invoke()}"
+                        android:src="@drawable/domain"
+                        app:layout_constraintEnd_toStartOf="@id/btFacebook"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/league"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btFacebook"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:onClick="@{() -> teamClick.onFacebookClick.invoke()}"
+                        android:src="@drawable/facebook"
+                        app:layout_constraintEnd_toStartOf="@id/btTwitter"
+                        app:layout_constraintStart_toEndOf="@id/btWebsite"
+                        app:layout_constraintTop_toBottomOf="@id/league"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btTwitter"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:onClick="@{() -> teamClick.onTwitterClick.invoke()}"
+                        android:src="@drawable/twitter"
+                        app:layout_constraintEnd_toStartOf="@id/btInstagram"
+                        app:layout_constraintStart_toEndOf="@id/btFacebook"
+                        app:layout_constraintTop_toBottomOf="@id/league"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btInstagram"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:onClick="@{() -> teamClick.onInstagramClick.invoke()}"
+                        android:src="@drawable/instagram"
+                        app:layout_constraintEnd_toStartOf="@id/btYoutube"
+                        app:layout_constraintStart_toEndOf="@id/btTwitter"
+                        app:layout_constraintTop_toBottomOf="@id/league"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btYoutube"
+                        android:layout_width="@dimen/icon_size"
+                        android:layout_height="@dimen/icon_size"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:onClick="@{() -> teamClick.onYoutubeClick.invoke()}"
+                        android:src="@drawable/youtube"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btInstagram"
+                        app:layout_constraintTop_toBottomOf="@id/league"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/tvPlayer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing"
+                        android:text="@string/show_players"
+                        android:textSize="@dimen/text_item_size"
+                        app:layout_constraintStart_toStartOf="@id/playerDivider"
+                        app:layout_constraintTop_toBottomOf="@id/btTwitter" />
+
+                    <ImageView
+                        android:id="@+id/btPlayer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_plus"
+                        app:layout_constraintBottom_toBottomOf="@id/tvPlayer"
+                        app:layout_constraintEnd_toEndOf="@id/playerDivider"
+                        app:layout_constraintTop_toTopOf="@id/tvPlayer"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/playerDivider"
+                        android:layout_width="@dimen/player_divider"
+                        android:layout_height="1dp"
+                        android:src="@color/main_grey"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvPlayer"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/jersey"
+                        source='@{team.strTeamJersey ?? ""}'
+                        android:layout_width="200dp"
+                        android:layout_height="200dp"
+                        android:scaleType="centerCrop"
+                        android:layout_marginTop="@dimen/spacing"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/playerDivider"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/genderColumn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/double_spacing"
+                        android:text="@string/gender"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/jersey" />
+
+                    <TextView
+                        android:id="@+id/gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{team.strGender}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/genderColumn" />
+
+                    <TextView
+                        android:id="@+id/countryColumn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/double_spacing"
+                        android:text="@string/country"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/gender" />
+
+                    <TextView
+                        android:id="@+id/country"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{team.strCountry}"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/text_size"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/countryColumn" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/fanartList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/double_spacing"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/country" />
+
+                    <Button
+                        android:id="@+id/btStadium"
+                        android:text="@string/show_stadium"
+                        android:textSize="@dimen/text_item_size"
+                        android:textColor="@android:color/black"
+                        android:background="@drawable/stadium_container"
+                        android:layout_marginTop="@dimen/card_spacing_big"
+                        android:paddingEnd="@dimen/spacing"
+                        android:paddingStart="@dimen/spacing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.core.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/imContent"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:onClick="@{() -> teamClick.onDescriptionClick.invoke()}"
+                android:src="@drawable/main_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> teamClick.onDescriptionClick.invoke()}"
+                android:paddingStart="@dimen/spacing"
+                android:paddingTop="@dimen/double_spacing"
+                android:paddingEnd="@dimen/spacing"
+                android:text="@string/description_sub_title"
+                android:textAlignment="center"
+                android:textColor="@color/main_grey"
+                android:textSize="@dimen/text_size"
+                app:layout_constraintBottom_toTopOf="@id/divider" />
+
+            <ImageView
+                android:id="@+id/arrow"
+                android:visibility="gone"
+                android:layout_width="@dimen/icon_size"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:onClick="@{() -> teamClick.onDescriptionClick.invoke()}"
+                android:src="@drawable/arrow_top"
+                app:layout_constraintBottom_toBottomOf="@id/tvDescription"
+                app:layout_constraintEnd_toEndOf="@id/tvDescription"
+                app:layout_constraintTop_toTopOf="@id/tvDescription"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/divider"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/divider_height"
+                android:layout_marginStart="@dimen/double_spacing"
+                android:layout_marginEnd="@dimen/double_spacing"
+                android:layout_marginBottom="@dimen/spacing"
+                android:onClick="@{() -> teamClick.onDescriptionClick.invoke()}"
+                android:src="@color/main_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/imContent"
+                app:layout_constraintStart_toStartOf="@id/imContent"
+                tools:ignore="ContentDescription" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

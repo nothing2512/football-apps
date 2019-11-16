@@ -25,7 +25,10 @@ fun ImageView.bind(source: Any, blur: Boolean) {
     }
 
     when (source) {
-        is String -> load(source, builder = builder)
+        is String -> {
+            if (source != "") load(source, builder = builder)
+            else load(R.mipmap.ic_launcher, builder = builder)
+        }
         is Int -> load(source, builder = builder)
         is Uri -> load(source, builder = builder)
         is Drawable -> load(source, builder = builder)

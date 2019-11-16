@@ -20,11 +20,12 @@ import com.github.nothing2512.football_v2.utils.*
 import com.github.nothing2512.football_v2.vo.Status
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class EventNextFragment(private val idLeague: Int) : Fragment() {
+class EventNextFragment : Fragment() {
 
     private lateinit var binding: FragmentEventBinding
 
     private val eventViewModel: EventViewModel by viewModel()
+    private var idLeague = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +41,8 @@ class EventNextFragment(private val idLeague: Int) : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         launchMain {
+
+            idLeague = arguments?.getInt(Constants.EXTRA_ID) ?: 0
 
             binding.eventRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
@@ -91,6 +94,11 @@ class EventNextFragment(private val idLeague: Int) : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(idLeague: Int) = EventNextFragment(idLeague)
+        fun newInstance(idLeague: Int) = EventNextFragment().apply {
+            val bundle = Bundle().apply {
+                putInt(Constants.EXTRA_ID, idLeague)
+            }
+            arguments = bundle
+        }
     }
 }

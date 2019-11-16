@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Football</string>
     <string name="app_desc">lorem ipsum dolor sit amet</string>
-    <string name="description_sub_title">description</string>
+    <string name="description_sub_title">Description</string>
 
     <string-array name="football_name">
         <item>English Premier League</item>
@@ -121,4 +121,27 @@ Sky Sports currently show live League One matches with highlights shown on BBC O
     <string name="league">League</string>
     <string name="event">Event</string>
     <string name="event_not_found">Event Not Found</string>
+    <string name="klasemen">Klasemen</string>
+    <string name="win">Win:</string>
+    <string name="loss">Loss:</string>
+    <string name="draw">Draw:</string>
+    <string name="klasemen_sub_title">Klasemen</string>
+    <string name="teams">Teams</string>
+    <string name="more"><![CDATA[more >]]></string>
+    <string name="show_players">Show Players</string>
+    <string name="show_stadium"><![CDATA[Show Stadium >]]></string>
+    <string name="team">Team : </string>
+    <string name="date_signed">Date Signed :</string>
+    <string name="wage">Wage :</string>
+    <string name="number">Number</string>
+    <string name="kit">Kit</string>
+    <string name="side">Side</string>
+    <string name="position">Position</string>
+    <string name="height">Height</string>
+    <string name="not_found">Not Found</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location">Location</string>
+    <string name="capacity">Capacity</string>
 </resources>

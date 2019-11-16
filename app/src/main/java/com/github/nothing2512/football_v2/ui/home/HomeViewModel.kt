@@ -10,7 +10,7 @@ import com.github.nothing2512.football_v2.utils.Constants
 import com.github.nothing2512.football_v2.utils.launchMain
 
 @OpenForTesting
-class HomeViewModel: ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val fragments = arrayListOf(
         LeagueFragment.newInstance(),

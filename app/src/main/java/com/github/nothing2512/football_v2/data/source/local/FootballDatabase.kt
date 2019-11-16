@@ -73,14 +73,9 @@ class FootballDatabase(context: Context, dbName: String = "football") :
                 "teamId" to INTEGER + PRIMARY_KEY + UNIQUE,
                 "idLeague" to INTEGER,
                 "name" to TEXT,
-                "played" to INTEGER,
-                "goalsfor" to INTEGER,
-                "goalsagainst" to INTEGER,
-                "goalsdifference" to INTEGER,
                 "win" to INTEGER,
                 "draw" to INTEGER,
-                "loss" to INTEGER,
-                "total" to INTEGER
+                "loss" to INTEGER
             )
 
             createTable(
@@ -101,7 +96,7 @@ class FootballDatabase(context: Context, dbName: String = "football") :
                 "dateSigned" to TEXT,
                 "strWage" to TEXT,
                 "strKit" to TEXT,
-                "strBidthLocation" to TEXT,
+                "strBirthLocation" to TEXT,
                 "strDescriptionEN" to TEXT,
                 "strSide" to TEXT,
                 "strPosition" to TEXT,
@@ -112,6 +107,7 @@ class FootballDatabase(context: Context, dbName: String = "football") :
             createTable(
                 "team", true,
                 "idTeam" to INTEGER + PRIMARY_KEY + UNIQUE,
+                "idLeague" to INTEGER,
                 "intLoved" to INTEGER,
                 "strTeam" to TEXT,
                 "intFormedYear" to INTEGER,
@@ -131,12 +127,18 @@ class FootballDatabase(context: Context, dbName: String = "football") :
                 "strCountry" to TEXT,
                 "strBadge" to TEXT,
                 "strTeamJersey" to TEXT,
-                "strTeamLogo" to TEXT,
                 "strTeamFanart1" to TEXT,
                 "strTeamFanart2" to TEXT,
                 "strTeamFanart3" to TEXT,
                 "strTeamFanart4" to TEXT,
-                "strTeamBanner" to TEXT
+                "strTeamBanner" to TEXT,
+                "love" to INTEGER
+            )
+
+            createTable(
+                "search_team", true,
+                "idTeam" to INTEGER + PRIMARY_KEY,
+                "keyword" to TEXT
             )
         }
     }
@@ -149,6 +151,7 @@ class FootballDatabase(context: Context, dbName: String = "football") :
             dropTable("klasemen", true)
             dropTable("player", true)
             dropTable("team", true)
+            dropTable("search_team", true)
         }
 
     }

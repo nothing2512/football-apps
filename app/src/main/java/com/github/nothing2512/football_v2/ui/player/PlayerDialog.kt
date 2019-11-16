@@ -5,12 +5,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.github.nothing2512.football_v2.R
 import com.github.nothing2512.football_v2.data.source.local.entity.PlayerEntity
 import com.github.nothing2512.football_v2.databinding.DialogPlayerBinding
 import com.github.nothing2512.football_v2.utils.getBinding
 
-class PlayerDialog (
+class PlayerDialog(
     activity: Activity,
     parent: ViewGroup,
     players: List<PlayerEntity>
@@ -24,6 +27,13 @@ class PlayerDialog (
         setView(binding.root)
 
         alertDialog = this.create()
+
+        binding.playerList.apply {
+            layoutManager = LinearLayoutManager(activity)
+            addItemDecoration(DividerItemDecoration(activity, RecyclerView.VERTICAL))
+            adapter = PlayerAdapter(players)
+            clearFocus()
+        }
 
         binding.swipe.apply {
             setOnRefreshListener {

@@ -20,7 +20,7 @@ import org.koin.test.KoinTest
 
 
 @ExperimentalCoroutinesApi
-class PlayerRepositoryTest: KoinTest {
+class PlayerRepositoryTest : KoinTest {
 
     @Rule
     @JvmField

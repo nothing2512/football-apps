@@ -36,4 +36,7 @@ interface NetworkService {
 
     @GET("lookupplayer.php")
     fun detailPlayer(@Query("id") idPlayer: Int): LiveData<ApiResponse<PlayerResponse>>
+
+    @GET("searchteams.php")
+    fun searchTeams(@Query("t") keyword: String): LiveData<ApiResponse<TeamResponse>>
 }

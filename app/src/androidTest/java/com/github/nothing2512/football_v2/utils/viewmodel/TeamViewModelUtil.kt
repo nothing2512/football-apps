@@ -24,4 +24,10 @@ class TeamViewModelUtil : TeamViewModel(TeamRepositoryUtil(), PlayerRepositoryUt
         players.postValue(Resource.success(PlayersResponse(listOf(TestUtil.PLAYER_ENTITY))))
         return players
     }
+
+    override fun searchTeam(keyword: String): LiveData<Resource<TeamResponse>> {
+        val teams = MutableLiveData<Resource<TeamResponse>>()
+        teams.postValue(Resource.success(TeamResponse(listOf(TestUtil.TEAM_ENTITY))))
+        return teams
+    }
 }

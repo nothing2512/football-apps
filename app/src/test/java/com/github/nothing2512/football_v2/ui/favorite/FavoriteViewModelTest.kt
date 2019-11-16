@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.repositories.EventRepository
 import com.github.nothing2512.football_v2.repositories.LeagueRepository
+import com.github.nothing2512.football_v2.repositories.TeamRepository
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.util.CoroutineRule
 import com.github.nothing2512.football_v2.util.KoinRule
@@ -34,6 +35,7 @@ class FavoriteViewModelTest : KoinTest {
 
     private val leagueRepository = mockk<LeagueRepository>()
     private val eventRepository = mockk<EventRepository>()
+    private val teamRepository = mockk<TeamRepository>()
     private lateinit var viewModel: FavoriteViewModel
 
     @Test
@@ -55,7 +57,7 @@ class FavoriteViewModelTest : KoinTest {
 
         val data = listOf(TestUtil.LEAGUE_ENTITY)
         coEvery { leagueRepository.getFavorite() } returns data
-        viewModel = FavoriteViewModel(eventRepository, leagueRepository)
+        viewModel = FavoriteViewModel(eventRepository, leagueRepository, teamRepository)
         viewModel.getLeagues()
         coVerify { leagueRepository.getFavorite() }
         confirmVerified(leagueRepository)
@@ -67,10 +69,22 @@ class FavoriteViewModelTest : KoinTest {
 
         val data = listOf(TestUtil.EVENT_ENTITY)
         coEvery { eventRepository.getFavorite() } returns data
-        viewModel = FavoriteViewModel(eventRepository, leagueRepository)
+        viewModel = FavoriteViewModel(eventRepository, leagueRepository, teamRepository)
         viewModel.getEvents()
         coVerify { eventRepository.getFavorite() }
         confirmVerified(eventRepository)
         assertThat(viewModel.getEvents().value, `is`(data))
+    }
+
+    @Test
+    fun loadFavoriteTeams() {
+
+        val data = listOf(TestUtil.TEAM_ENTITY)
+        coEvery { teamRepository.getFavorite() } returns data
+        viewModel = FavoriteViewModel(eventRepository, leagueRepository, teamRepository)
+        viewModel.getTeams()
+        coVerify { teamRepository.getFavorite() }
+        confirmVerified(teamRepository)
+        assertThat(viewModel.getTeams().value, `is`(data))
     }
 }

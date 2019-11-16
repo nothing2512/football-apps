@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/ssbanner"
+        android:layout_width="match_parent"
+        android:background="@color/secondary_grey"
+        android:layout_height="@dimen/main_background_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <Button
+        android:id="@+id/ssbtStadium"
+        android:text="@string/show_stadium"
+        android:textSize="@dimen/text_item_size"
+        android:textColor="@color/main_grey"
+        android:background="@drawable/stadium_container_shimmer"
+        android:layout_marginTop="@dimen/card_spacing_big"
+        android:paddingEnd="@dimen/spacing"
+        android:paddingStart="@dimen/spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sscard"
+        app:cardBackgroundColor="@color/main_grey"
+        android:layout_width="@dimen/badge_big_size"
+        android:layout_height="@dimen/badge_big_size"
+        android:layout_marginStart="@dimen/double_spacing"
+        app:layout_constraintBottom_toBottomOf="@id/ssbanner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssbanner"/>
+
+    <TextView
+        android:id="@+id/ssteamName"
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_title_placeholder_height"
+        android:layout_margin="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintBottom_toTopOf="@id/ssformed"
+        app:layout_constraintStart_toEndOf="@id/sscard" />
+
+    <View
+        android:id="@+id/ssformed"
+        android:layout_width="@dimen/league_year_place_holder_width"
+        android:layout_height="@dimen/league_year_place_holder_"
+        android:layout_margin="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintBottom_toBottomOf="@id/ssbanner"
+        app:layout_constraintStart_toEndOf="@id/sscard" />
+
+    <ImageView
+        android:id="@+id/sslovedPic"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginStart="@dimen/spacing"
+        android:padding="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintStart_toEndOf="@id/sscard"
+        app:layout_constraintTop_toBottomOf="@id/ssbanner"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:layout_width="@dimen/league_title_placeholder_width"
+        android:layout_height="@dimen/league_title_placeholder_height"
+        android:background="@color/main_grey"
+        app:layout_constraintBottom_toBottomOf="@id/sslovedPic"
+        app:layout_constraintStart_toEndOf="@id/sslovedPic"
+        app:layout_constraintTop_toTopOf="@id/sslovedPic" />
+
+    <View
+        android:id="@+id/ssleague"
+        android:layout_width="@dimen/content_placeholder_width"
+        android:layout_height="@dimen/league_title_placeholder_height"
+        android:layout_marginTop="@dimen/spacing"
+        android:background="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sscard" />
+
+    <ImageView
+        android:id="@+id/ssbtWebsite"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toStartOf="@id/ssbtFacebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssleague"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssbtFacebook"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toStartOf="@id/ssbtTwitter"
+        app:layout_constraintStart_toEndOf="@id/ssbtWebsite"
+        app:layout_constraintTop_toBottomOf="@id/ssleague"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssbtTwitter"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toStartOf="@id/ssbtInstagram"
+        app:layout_constraintStart_toEndOf="@id/ssbtFacebook"
+        app:layout_constraintTop_toBottomOf="@id/ssleague"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssbtInstagram"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toStartOf="@id/ssbtYoutube"
+        app:layout_constraintStart_toEndOf="@id/ssbtTwitter"
+        app:layout_constraintTop_toBottomOf="@id/ssleague"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssbtYoutube"
+        android:layout_width="@dimen/icon_size"
+        android:layout_height="@dimen/icon_size"
+        android:layout_marginTop="@dimen/spacing"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ssbtInstagram"
+        app:layout_constraintTop_toBottomOf="@id/ssleague"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/sstvPlayer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing"
+        android:text="@string/show_players"
+        android:textSize="@dimen/text_item_size"
+        app:layout_constraintStart_toStartOf="@id/ssplayerDivider"
+        app:layout_constraintTop_toBottomOf="@id/ssbtTwitter" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_plus"
+        app:layout_constraintBottom_toBottomOf="@id/sstvPlayer"
+        app:layout_constraintEnd_toEndOf="@id/ssplayerDivider"
+        app:layout_constraintTop_toTopOf="@id/sstvPlayer"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssplayerDivider"
+        android:layout_width="@dimen/player_divider"
+        android:layout_height="1dp"
+        android:src="@color/main_grey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sstvPlayer"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/ssjersey"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@color/main_grey"
+        android:layout_marginTop="@dimen/spacing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ssplayerDivider"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

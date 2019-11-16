@@ -15,7 +15,7 @@ import com.github.nothing2512.football_v2.vo.Resource
 class TeamViewModel(
     private val repository: TeamRepository,
     private val playerRepository: PlayerRepository
-): ViewModel() {
+) : ViewModel() {
 
     fun loadPlayers(idTeam: Int): LiveData<Resource<PlayersResponse>> {
         val players = playerRepository.players
@@ -27,5 +27,19 @@ class TeamViewModel(
         val team = repository.team
         launchMain { repository.getTeamDetail(idTeam) }
         return team
+    }
+
+    fun searchTeam(keyword: String): LiveData<Resource<TeamResponse>> {
+        val teams = repository.searchData
+        launchMain { repository.searchTeams(keyword) }
+        return teams
+    }
+
+    fun love(league: TeamEntity?) {
+        launchMain { repository.setFavorite(true, league) }
+    }
+
+    fun unlove(league: TeamEntity?) {
+        launchMain { repository.setFavorite(false, league) }
     }
 }

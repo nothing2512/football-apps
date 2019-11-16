@@ -9,9 +9,9 @@ import com.github.nothing2512.football_v2.repositories.LeagueRepository
 import com.github.nothing2512.football_v2.repositories.PlayerRepository
 import com.github.nothing2512.football_v2.repositories.TeamRepository
 import com.github.nothing2512.football_v2.ui.event.EventViewModel
+import com.github.nothing2512.football_v2.ui.favorite.FavoriteViewModel
 import com.github.nothing2512.football_v2.ui.home.HomeViewModel
 import com.github.nothing2512.football_v2.ui.league.LeagueViewModel
-import com.github.nothing2512.football_v2.ui.favorite.FavoriteViewModel
 import com.github.nothing2512.football_v2.ui.player.PlayerViewModel
 import com.github.nothing2512.football_v2.ui.team.TeamViewModel
 import com.github.nothing2512.football_v2.utils.AppExecutors
@@ -36,7 +36,7 @@ val appModule = module {
     viewModel { HomeViewModel() }
     viewModel { EventViewModel(get()) }
     viewModel { LeagueViewModel(get(), get()) }
-    viewModel { FavoriteViewModel(get(), get()) }
+    viewModel { FavoriteViewModel(get(), get(), get()) }
     viewModel { PlayerViewModel(get()) }
     viewModel { TeamViewModel(get(), get()) }
 

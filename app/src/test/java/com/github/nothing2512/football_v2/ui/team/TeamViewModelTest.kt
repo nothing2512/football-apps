@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.github.nothing2512.football_v2.data.source.local.entity.TeamEntity
 import com.github.nothing2512.football_v2.data.source.remote.response.PlayersResponse
+import com.github.nothing2512.football_v2.data.source.remote.response.TeamResponse
 import com.github.nothing2512.football_v2.repositories.PlayerRepository
 import com.github.nothing2512.football_v2.repositories.TeamRepository
 import com.github.nothing2512.football_v2.testing.TestUtil
@@ -14,7 +15,6 @@ import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.core.Is
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -70,6 +70,23 @@ class TeamViewModelTest : KoinTest {
         viewModel.loadPlayers(TestUtil.INT)
         coVerify { viewModel.loadPlayers(TestUtil.INT) }
         confirmVerified(playerRepository)
-        assertThat(viewModel.loadPlayers(TestUtil.INT).value, Is.`is`(data))
+        assertThat(viewModel.loadPlayers(TestUtil.INT).value, `is`(data))
+    }
+
+    @Test
+    fun searchTeams() {
+
+        val data = Resource.success(TeamResponse(listOf(TestUtil.TEAM_ENTITY)))
+        val teams = MutableLiveData<Resource<TeamResponse>>()
+        teams.value = data
+        coEvery { repository.searchData } returns teams
+        coEvery { repository.searchTeams(TestUtil.STRING) } answers object : Answer<Unit> {
+            override fun answer(call: Call) {}
+        }
+        viewModel = TeamViewModel(repository, playerRepository)
+        viewModel.searchTeam(TestUtil.STRING)
+        coVerify { viewModel.searchTeam(TestUtil.STRING) }
+        confirmVerified(repository)
+        assertThat(viewModel.searchTeam(TestUtil.STRING).value, `is`(data))
     }
 }

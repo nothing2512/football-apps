@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="klasemen"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.KlasemenEntity" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:padding="@dimen/spacing"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/klasemenName"
+            android:text="@{klasemen.name}"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvWin"
+            android:text="@{Integer.toString(klasemen.win)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvWinColumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/win"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvWin"/>
+
+        <TextView
+            android:id="@+id/tvLoss"
+            android:text="@{Integer.toString(klasemen.loss)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvWinColumn" />
+
+        <TextView
+            android:id="@+id/tvLossColumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loss"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvLoss"/>
+
+        <TextView
+            android:id="@+id/tvDraw"
+            android:text="@{Integer.toString(klasemen.draw)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/spacing"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvLossColumn" />
+
+        <TextView
+            android:id="@+id/tvDrawColumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/draw"
+            app:layout_constraintBottom_toBottomOf="@id/klasemenName"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvDraw"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <data>
+        <variable
+            name="team"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.TeamEntity" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_margin="@dimen/spacing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imLogo"
+            android:layout_width="@dimen/team_logo_item"
+            android:layout_height="@dimen/team_logo_item"
+            source='@{team.strTeamBadge ?? ""}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvTeamName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text='@{team.strTeam ?? ""}'
+            android:textSize="@dimen/text_item_size"
+            app:layout_constraintStart_toStartOf="@id/imLogo"
+            app:layout_constraintTop_toBottomOf="@id/imLogo"
+            app:layout_constraintEnd_toEndOf="@id/imLogo"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:src="@color/main_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTeamName"
+            tools:ignore="ContentDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

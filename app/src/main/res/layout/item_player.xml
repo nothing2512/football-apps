@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="player"
+            type="com.github.nothing2512.football_v2.data.source.local.entity.PlayerEntity" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:padding="@dimen/spacing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/itemThumb"
+            android:layout_width="120dp"
+            android:layout_height="180dp"
+            source='@{player.strThumb}'
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/itemPlayerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{player.strPlayer ?? ""}'
+            android:textSize="@dimen/text_item_size"
+            android:layout_marginStart="@dimen/spacing"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/itemThumb"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/itemPlayerDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{player.dateBorn ?? ""}'
+            android:textSize="@dimen/text_item_size"
+            android:layout_marginStart="@dimen/spacing"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/itemThumb"
+            app:layout_constraintTop_toBottomOf="@id/itemPlayerName"/>
+
+        <TextView
+            android:id="@+id/itemPlayerBorn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{player.strBirthLocation ?? ""}'
+            android:textSize="@dimen/text_item_size"
+            android:layout_marginStart="@dimen/spacing"
+            android:textColor="@android:color/black"
+            app:layout_constraintStart_toEndOf="@id/itemThumb"
+            app:layout_constraintTop_toBottomOf="@id/itemPlayerDate"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

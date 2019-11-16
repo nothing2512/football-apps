@@ -3,6 +3,7 @@ package com.github.nothing2512.football_v2.repositories
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.github.nothing2512.football_v2.data.source.local.DatabaseHelper
 import com.github.nothing2512.football_v2.data.source.remote.NetworkService
+import com.github.nothing2512.football_v2.data.source.remote.response.TeamResponse
 import com.github.nothing2512.football_v2.testing.InstantAppExecutors
 import com.github.nothing2512.football_v2.testing.TestUtil
 import com.github.nothing2512.football_v2.util.CoroutineRule
@@ -12,8 +13,10 @@ import io.mockk.confirmVerified
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.core.Is.`is`
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.koin.test.KoinTest
@@ -61,6 +64,32 @@ class TeamRepositoryTest : KoinTest {
             coVerify { repository.getTeamDetail(TestUtil.INT) }
             confirmVerified(helper)
             assertThat(repository.team.value?.data, `is`(data))
+        }
+    }
+
+    @Test
+    fun searchTeam() {
+        val data = listOf(TestUtil.TEAM_ENTITY)
+        every { helper.searchTeams(TestUtil.STRING) } returns data
+        repository = TeamRepository(appExecutors, helper, service)
+        coroutineRule.runAsync {
+            repository.searchTeams(TestUtil.STRING)
+            coVerify { repository.searchTeams(TestUtil.STRING) }
+            confirmVerified(helper)
+            assertThat(repository.searchData.value?.data?.teams, `is`(data))
+        }
+    }
+
+    @Test
+    fun loadFavoriteLeagues() {
+        val data = listOf(TestUtil.TEAM_ENTITY)
+        every { helper.getFavoriteTeam() } returns data
+        repository = TeamRepository(appExecutors, helper, service)
+        coroutineRule.runAsync {
+            repository.getFavorite()
+            coVerify { repository.getFavorite() }
+            confirmVerified(helper)
+            Assert.assertThat(repository.getFavorite(), `is`(data))
         }
     }
 }
